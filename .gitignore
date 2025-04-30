@@ -1,0 +1,53 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Eclipse
+.settings/
+.project
+.classpath
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Maven
+log/
+target/
+
+# Gradle
+.gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# OS 별 파일
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# VSCode (혹시 사용할 경우)
+.vscode/
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+~$*
+
+
+# AWS credentials (if accidentally included)
+*.pem
+*.key
+*.der
+
+**/lib/
+**/ConnectionProvider.*

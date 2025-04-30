@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+/*========================================================
+ 레이아웃
+========================================================*/
+header *{font-family:'Noto Sans KR';}
+main,
+.wrap{max-width:1260px;margin:0 auto;}
+
+header nav{display:flex;height:70px;align-items:center;}
+header nav ul{display:flex;flex:1 0 auto;}
+header nav ul li{flex:1 0 auto;text-align:center;align-content:center;}
+.menu-list{}
+.menu-list li{}
+.menu-list li a{padding:3px 10px;font-size:18px;font-weight:600;background:transparent;border-radius:15px;}
+.menu-list li a:hover{background-color:#e8e8e8;}
+
+.util-box{justify-content:flex-end;flex-grow:0;}
+.util-box li:after{content:'';display:inline-block;width:1px;height:12px;background:#333;}
+.util-box li:last-child:after{content:none;}
+.util-box li a{padding:3px 5px;font-size:14px;font-weight:600;}
+.util-box li a span{border-bottom:1px solid transparent;}
+.util-box li a:hover span{border-color:#333;}
+
+footer{margin-top:40px;border-top:1px solid #e8e8e8;}
+footer nav{display:flex;align-items:center;}
+footer .footer-list{display:flex;flex:1 0 auto;}
+footer .footer-list li{flex:0 1 auto;text-align:center;align-content:center;padding:5px 10px;}
+
+
+/*========================================================
+ 상세구성
+ - Table
+ - Paging
+========================================================*/
+h2{margin-top:40px;padding-bottom:20px;font-size:28px;}
+
+
+/* Table ---------------------------------------- */
+/* 공통 클래스 */
+/* table tbody td.vt-top{vertical-align:top;}
+table tbody td.vt-mid{vertical-align:middle;} */
+table[class*="table"]{width:100%;min-width:100%;table-layout:fixed;}/* border-top:2px solid #000; */
+table[class*="table"] * {box-sizing:border-box;}
+table[class*="table"],
+table[class*="table"] th,
+table[class*="table"] td{border-collapse:collapse;position:relative;}
+table[class*="table"] th,
+table[class*="table"] td{height:30px;padding:16px 15px;border:1px solid #e5e5e5;border-left-width:0;border-right-width:0;background:#fff;color:#4c4c4c;font-size:16px;line-height:20px;text-align:center;vertical-align:middle;word-wrap:break-word;word-break:keep-all;}/* height:60px;border-width:1px 0 1px 0; */
+table[class*="table"] th{background-color:#f5f6f7;}
+table[class*="table"] td{/* font-family:'NotoSansKrRegular'; */}
+table[class*="table"] thead th{/* font-family:'NotoSansKrBold',"NotoSansKrRegular"; */}
+table[class*="table"] thead th .btn[class*="transper"]{padding:0;}
+table[class*="table"] thead th .btn i{margin:-4px 0 0 0;}
+table[class*="table"] td a{overflow:hidden;display:block;text-overflow:ellipsis;white-space:nowrap;}
+table[class*="table"] td a span{padding-bottom:2px;border-bottom:1px solid transparent;}
+table[class*="table"] td a:focus span,
+table[class*="table"] td a:hover span{border-bottom-color:#000;}
+table[class*="table"] td [class*="ico-file"]{float:left;margin-top:2px;}
+table[class*="table"] td [class*="ico-file"] + a{padding-left:30px;}
+table[class*="table"] td a [class*="badge-"]{margin-right:5px;}
+table[class*="table"] td.num{/* font-family:'NotoSansKrRegular'; */}
+table[class*="table"] td.date{color:#888;}
+table[class*="table"] colgroup + tbody tr:first-child > *,
+table[class*="table"] caption + tbody tr:first-child > *{border-top:1px solid #888;}
+table[class*="table"] tbody img{width:auto;}
+table[class*="table"] th .required + [class*="ico-"],
+table[class*="table"] td .required + [class*="ico-"]{margin-left:5px;}
+/* 주요공지 */[class*="table"] .import-notice{}
+
+
+
+
+/* Paging ---------------------------------------- */
+.paging-area{ margin-top:60px;}
+.paging-area .btn{padding:6px 10px;}
+.paging-area .btn,
+.paging-area .pagination li { height:32px; min-width: 32px; border-radius: 16px; border: solid 1px #e5e5e5; background-color: #fff; color: #4c4c4c; font-size: 14px; line-height: 18px; font-weight: normal; text-align: center; box-sizing: border-box;} /* padding: 6px 10px; */
+.paging-area .pagination li a{display: block;padding:6px 10px;}
+.paging-area,
+.paging-area .pagination { display:flex; justify-content:center;} /* gap:8px; */
+.paging-area .btn-paging,
+.paging-area .pagination li{margin:0 4px;}
+.paging-area .pagination li.on { border-color:#27AE60; background-color:#27AE60; font-weight: bold; color:#fff; } 
+.paging-area+.bg-box-md-line-deepgrey{margin-top: 100px;}
+.paging-area .btn:hover{border-color:#27AE60;}
+.pagination li:hover{border-color:#27AE60;}

@@ -1,0 +1,82 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap');
+/* 
+// <weight>: Use a value from 100 to 900
+// <width>: Use a value from 75 to 100
+// <uniquifier>: Use a unique and descriptive class name
+.roboto-<uniquifier> {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+.noto-sans-kr-<uniquifier> {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+} */
+
+/*========================================================
+ Reset
+========================================================*/
+html{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; /*-ms-touch-action:none;*/ }
+html,body{height:100%; color:#333; font-size:14px; font-weight:400; /*line-height:1.4; */font-family:'Roboto','Noto Sans KR', 'Apple SD Gothic Neo',-apple-system,system-ui,BlinkMacSystemFont,Roboto,NotoSans,'Malgun Gothic','맑은 고딕',sans-serif;word-break: break-all;}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {margin:0; padding:0; border:0; vertical-align:baseline; -webkit-font-smoothing:antialiased; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section{display:block;}
+ol, ul{list-style:none;}
+blockquote, q{quotes:none;}
+blockquote:before, blockquote:after, q:before, q:after{content:''; content:none;}
+table{border-collapse:collapse; border-spacing:0;}
+table td,table th{word-break: keep-all; word-wrap: break-word;}
+address, caption, cite, code, dfn, em, strong, th, var{font-style:normal;}
+hr{display:block; -webkit-box-sizing:content-box; -moz-box-sizing:content-box; box-sizing:content-box; height:1px; border:0; border-top:1px solid #b5b1b2; margin:0; padding:0; overflow:visible;}
+a{background:transparent; text-decoration:none; color:inherit;}
+a:hover, a:active{text-decoration:none; outline:0;}
+address, caption, strong[lang=en], em, cite, b {font-weight:normal; font-style:normal; }
+sub, sup{font-size:75%; line-height:0; position:relative; vertical-align:baseline;}
+sub{bottom:-0.25em;}
+sup{top:-0.5em;}
+legend,caption{position:absolute; left:-99999px; display:block; width:1px; height:1px; overflow:hidden; text-indent:-99999px; clip:rect(0,0,0,0);}
+fieldset, img{border:0}
+label, select, input, textarea {vertical-align:middle; }
+img{max-width: 100%; vertical-align: top;}
+img:not([src]){visibility: hidden;}
+select::-ms-expand{display:none;}
+legend.block{display:block; position:static; left:0; width:auto; height:auto; overflow:visible; text-indent:0;}
+
+/* skip navigation */
+.skip-navi a{ position:absolute;top:-999em;}
+.skip-navi a:focus {display:block; left:0; top:0; z-index:9999; width:100%; height:30px; line-height:30px; background:#000; color:#fff; text-align:center;}
+
+
+/*========================================================
+ Common
+========================================================*/
+.blind{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.hide{display:none !important;}
+.v-hidden{visibility:hidden;}
+.dis-inb{display:inline-block;}
+
+/**** Float ****/
+.fl{float:left;}
+.fr{float:right;}
+.fn{float:none;}
+
+/**** Text Align,Style ****/
+.text-left{text-align:left !important;}
+.text-right{text-align:right !important;}
+.text-center{text-align:center !important;}
+.text-normal{font-weight:400 !important;}
+.text-md{font-weight:500 !important;}
+.text-bold{font-weight:700 !important;}
+
+/* ellipsis */
+.text-elps{text-overflow:ellipsis; white-space:nowrap; overflow:hidden; word-break: break-all;}
+.text-elps2{display:block; display:-webkit-box !important; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; word-break: keep-all;}
+.text-elps3{display:block; display:-webkit-box !important; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; text-overflow:ellipsis; word-break: keep-all;}
+table td .title-elps{display:inline-block; vertical-align: middle; max-width:94%; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; word-break: keep-all;}
+
