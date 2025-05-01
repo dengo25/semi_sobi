@@ -26,7 +26,7 @@
 			</ul>
 			<ul class="util-box">
 				<li>
-					<a href="javascript();"><span>로그인</span></a>
+					<a href="${pageContext.request.contextPath}/v1/views/user/Login.do"><span>로그인</span></a>
 				</li>
 				<li>
 					<a href="javascript();"><span>로그아웃</span></a>
