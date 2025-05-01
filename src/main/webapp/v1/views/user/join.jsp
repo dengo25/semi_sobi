@@ -113,7 +113,7 @@
                 return;
             }
 
-            fetch("/ajax/user/checkId?member_id=" + encodeURIComponent(id)) // ← 경로 수정됨
+            fetch("/checkId.do?member_id=" + encodeURIComponent(id))
                 .then(res => res.json())
                 .then(data => {
                     const msg = document.getElementById("idCheckMsg");

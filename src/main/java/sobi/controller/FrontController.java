@@ -1,69 +1,83 @@
 package sobi.controller;
 
-import java.io.IOException;
+import sobi.action.*;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
+import java.io.IOException;
+import java.util.HashMap;
 
-/**
- * Servlet implementation class FrontController
- */
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FrontController() {
-        super();
-    }
-
-    private void process(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
-		String uri =request.getRequestURI(); // 현재 주소 
-		String page = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf(".")); // .do 를 뺀 주소
-		// ex) /sobi_test/board/content.do → page = "content"
+	private HashMap<String, SobiAction> map = new HashMap<>();
+	
+	@Override
+	public void init() throws ServletException {
+		System.out.println("FrontController init()");
 		
-		String folder = uri.split("/")[uri.split("/").length -2];
-		// ex) "board"
+		// 요청 이름에 맞게 액션 등록
+		map.put("join_process", new JoinProcessAction());
+		map.put("checkId", new CheckIdAction());
+		// 필요 시 여기에 추가 등록
+	}
+	
+	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uri = request.getRequestURI(); // ex: /board_test/v1/views/user/login.do
+		String context = request.getContextPath(); // ex: /board_test
+		String path = uri.substring(context.length()); // ex: /v1/views/user/login.do
 		
-		String contentPage = "/v1/views/" + folder + "/" + page + ".jsp"; // /WEB-INF/
-		String title = page.toUpperCase(); // title만 변경
+		// 🔧 정확한 페이지명 추출 (login)
+		String page = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
 		
-		request.setAttribute("contentPage", contentPage);
-		request.setAttribute("title", title);
+		// 🔧 폴더명 추출 (user)
+		String[] parts = path.split("/");
+		String folder = parts.length >= 4 ? parts[3] : "user"; // /v1/views/user/login.do 기준
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp"); // /WEB-INF
-		dispatcher.forward(request, response);
+		try {
+			if (map.containsKey(page)) {
+				SobiAction action = map.get(page);
+				String view = action.pro(request, response);
+				
+				if (view == null) return; // JSON 응답 등 직접 처리
+				
+				if (view.startsWith("redirect:")) {
+					response.sendRedirect(view.substring("redirect:".length()));
+					return;
+				}
+				
+				request.setAttribute("contentPage", view);
+				request.setAttribute("title", page.toUpperCase());
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
+				dispatcher.forward(request, response);
+				return;
+			}
+			
+			// ⛔ fallback JSP 경로 설정 (ex: /v1/views/user/login.jsp)
+			String contentPage = "/v1/views/" + folder + "/" + page + ".jsp";
+			request.setAttribute("contentPage", contentPage);
+			request.setAttribute("title", page.toUpperCase());
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
+			dispatcher.forward(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ServletException("[FrontController 처리 중 오류] " + e.getMessage());
+		}
 		
 		System.out.println("uri: " + uri);
 		System.out.println("page: " + page);
 		System.out.println("folder: " + folder);
-		System.out.println("contentPage: " + contentPage);
-		System.out.println("-----------------");
-
 	}
-    
-    
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("-----------------");
-		System.out.println("doGet start!");
-		process(request,response);
+		process(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost start!");		
-		process(request,response);
+		process(request, response);
 	}
-
 }
