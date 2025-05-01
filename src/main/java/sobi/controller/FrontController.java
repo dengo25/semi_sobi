@@ -17,30 +17,28 @@ public class FrontController extends HttpServlet {
 	public void init() throws ServletException {
 		System.out.println("FrontController init()");
 		
-		// 요청 이름에 맞게 액션 등록
+		// 액션 클래스 등록
 		map.put("join_process", new JoinProcessAction());
 		map.put("checkId", new CheckIdAction());
-		// 필요 시 여기에 추가 등록
+		map.put("login_process", new JoinProcessAction());
+		// 필요 시 계속 추가
 	}
 	
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uri = request.getRequestURI(); // ex: /board_test/v1/views/user/login.do
-		String context = request.getContextPath(); // ex: /board_test
-		String path = uri.substring(context.length()); // ex: /v1/views/user/login.do
+		String uri = request.getRequestURI();                // 예: /board_test/v1/views/user/login.do
+		String context = request.getContextPath();           // 예: /board_test
+		String path = uri.substring(context.length());       // 예: /v1/views/user/login.do 또는 /checkId.do
 		
-		// 🔧 정확한 페이지명 추출 (login)
 		String page = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
-		
-		// 🔧 폴더명 추출 (user)
 		String[] parts = path.split("/");
-		String folder = parts.length >= 4 ? parts[3] : "user"; // /v1/views/user/login.do 기준
+		String folder = (parts.length >= 5 && "views".equals(parts[2])) ? parts[3] : null;
 		
 		try {
 			if (map.containsKey(page)) {
 				SobiAction action = map.get(page);
 				String view = action.pro(request, response);
 				
-				if (view == null) return; // JSON 응답 등 직접 처리
+				if (view == null) return; // 직접 응답 완료된 경우
 				
 				if (view.startsWith("redirect:")) {
 					response.sendRedirect(view.substring("redirect:".length()));
@@ -54,12 +52,16 @@ public class FrontController extends HttpServlet {
 				return;
 			}
 			
-			// ⛔ fallback JSP 경로 설정 (ex: /v1/views/user/login.jsp)
-			String contentPage = "/v1/views/" + folder + "/" + page + ".jsp";
-			request.setAttribute("contentPage", contentPage);
-			request.setAttribute("title", page.toUpperCase());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
-			dispatcher.forward(request, response);
+			// fallback JSP 처리 (folder가 있는 경우만)
+			if (folder != null) {
+				String contentPage = "/v1/views/" + folder + "/" + page + ".jsp";
+				request.setAttribute("contentPage", contentPage);
+				request.setAttribute("title", page.toUpperCase());
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				throw new ServletException("잘못된 요청 경로: " + path);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
