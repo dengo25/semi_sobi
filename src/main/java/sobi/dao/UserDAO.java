@@ -112,4 +112,36 @@ public class UserDAO {
       return 0;
     }
   }
+  
+  public UserVO loginConfirm(String id, String password) {
+    UserVO u = new UserVO();
+    String sql = "select * from MEMBER where member_id =? and member_password = ?";
+    
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      
+      pstmt.setString(1, id);
+      pstmt.setString(2, password);
+      
+      ResultSet rs = pstmt.executeQuery();
+      while (rs.next()) {
+        u.setMemberId(rs.getString("member_id"));
+        u.setMemberPassword(rs.getString("member_password"));
+        u.setMemberName(rs.getString("member_name"));
+        u.setMemberGender(rs.getString("member_gender"));
+        u.setMemberEmail(rs.getString("member_email"));
+        u.setMemberBirth(rs.getString("member_birth"));
+        u.setMemberAddr(rs.getString("member_addr"));
+        u.setMemberZip(rs.getString("member_zip"));
+        u.setMemberReg(rs.getTimestamp("member_reg"));
+        u.setIsActive(rs.getString("is_active"));
+      }
+      
+    } catch (Exception e) {
+      System.out.println("예외 발생 " + e.getMessage());
+    }
+    return u;
+  }
+  
 }

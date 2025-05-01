@@ -1,12 +1,13 @@
-package sobi.action;
+package sobi.action.user;
 
+import sobi.action.SobiAction;
 import sobi.dao.UserDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-public class CheckIdAction implements SobiAction{
+public class CheckIdAction implements SobiAction {
   @Override
   public String pro(HttpServletRequest request, HttpServletResponse response) throws Exception {
     String id = request.getParameter("member_id");

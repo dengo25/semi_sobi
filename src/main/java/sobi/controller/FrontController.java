@@ -1,6 +1,10 @@
 package sobi.controller;
 
-import sobi.action.*;
+import sobi.action.SobiAction;
+import sobi.action.user.CheckIdAction;
+import sobi.action.user.JoinProcessAction;
+import sobi.action.user.LoginProcessAction;
+
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +24,7 @@ public class FrontController extends HttpServlet {
 		// 액션 클래스 등록
 		map.put("join_process", new JoinProcessAction());
 		map.put("checkId", new CheckIdAction());
-		map.put("login_process", new JoinProcessAction());
+		map.put("login_process", new LoginProcessAction());
 		// 필요 시 계속 추가
 	}
 	

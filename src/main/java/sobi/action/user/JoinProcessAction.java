@@ -1,6 +1,7 @@
-package sobi.action;
+package sobi.action.user;
 
 
+import sobi.action.SobiAction;
 import sobi.dao.UserDAO;
 import sobi.vo.UserVO;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//회원 가입
 public class JoinProcessAction implements SobiAction {
   
   @Override

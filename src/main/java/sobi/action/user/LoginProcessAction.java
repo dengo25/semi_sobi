@@ -1,0 +1,34 @@
+package sobi.action.user;
+
+import sobi.action.SobiAction;
+import sobi.dao.UserDAO;
+import sobi.vo.UserVO;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+//로그인
+public class LoginProcessAction implements SobiAction {
+  
+  @Override
+  public String pro(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    request.setCharacterEncoding("utf-8");
+    
+    String id = request.getParameter("memberId");
+    String password = request.getParameter("password");
+
+    
+    UserDAO dao = new UserDAO();
+    UserVO userVO = dao.loginConfirm(id, password);
+    
+    if (userVO != null) {
+      HttpSession session = request.getSession();
+      session.setAttribute("loginUser", userVO);
+      return "redirect:/v1/views/main/main.do";
+    } else {
+      request.setAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
+      return "/v1/views/user/login.jsp";
+    }
+  }
+}
