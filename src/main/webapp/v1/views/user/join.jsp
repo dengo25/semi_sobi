@@ -37,7 +37,11 @@
     <div class="join-wrap">
         <h2>회원가입</h2>
         <form action="join_process.do" method="post" onsubmit="return prepareAddress();">
-            <input type="text" name="member_id" placeholder="아이디" required />
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                <input type="text" name="member_id" id="member_id" placeholder="아이디" required style="flex: 1;">
+                <button type="button" onclick="checkId()" style="width: 130px;">중복확인</button>
+            </div>
+            <span id="idCheckMsg" style="font-size: 14px;"></span>
             <input type="password" name="member_password" placeholder="비밀번호" required />
             <input type="text" name="member_name" placeholder="이름" required />
             <input type="text" name="member_email" placeholder="이메일" required />
@@ -54,7 +58,7 @@
             <span id="guide" style="color:#999; display:none"></span><br>
 
             <input type="text" id="sample4_detailAddress" placeholder="상세주소">
-            <input type="text" id="sample4_extraAddress" placeholder="참고항목" readonly>
+            <input type="text" id="sample4_extraAddress" style="display:none;" placeholder="참고항목" readonly>
 
             <!-- 서버로 전송할 최종 주소 값 -->
             <input type="hidden" name="member_addr" id="member_addr_final">
@@ -99,6 +103,31 @@
             const fullAddr = (road + ' ' + detail).trim();
             document.getElementById("member_addr_final").value = fullAddr;
             return true; // submit 진행
+        }
+
+        // 중복 id체크
+        function checkId() {
+            const id = document.getElementById("member_id").value.trim();
+            if (!id) {
+                alert("아이디를 입력하세요");
+                return;
+            }
+
+            fetch("/ajax/user/checkId?member_id=" + encodeURIComponent(id)) // ← 경로 수정됨
+                .then(res => res.json())
+                .then(data => {
+                    const msg = document.getElementById("idCheckMsg");
+                    if (data.exists) {
+                        msg.style.color = "red";
+                        msg.textContent = "이미 존재하는 아이디입니다.";
+                    } else {
+                        msg.style.color = "green";
+                        msg.textContent = "사용 가능한 아이디입니다.";
+                    }
+                })
+                .catch(err => {
+                    console.error("중복확인 실패", err);
+                });
         }
     </script>
 </main>

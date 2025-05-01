@@ -1,0 +1,91 @@
+package sobi.dao;
+
+
+import sobi.db.ConnectionProvider;
+import sobi.vo.UserVO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class UserDAO {
+  
+  public boolean isIdExist(String id) {
+    boolean result = false;
+    String sql = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID = ?";
+    
+    try (Connection conn = ConnectionProvider.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      
+      pstmt.setString(1, id);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        result = rs.getInt(1) > 0;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    return result;
+  }
+  
+  
+  public UserVO findByName(String name) {
+    UserVO u = new UserVO();
+    
+    String sql = "select * from member_id where member_id = ";
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, name);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        u.setMemberId(rs.getString("member_id"));
+        u.setBlackList(rs.getInt("blacklist"));
+        u.setMemberName(rs.getString("member_name"));
+        u.setMemberAddr(rs.getString("member_addr"));
+        u.setMemberZip(rs.getString("member_zip"));
+        u.setMemberGender(rs.getString("member_gender"));
+        u.setMemberEmail(rs.getString("member_email"));
+        u.setMemberReg(rs.getTimestamp("member_reg"));
+        u.setIsActive(rs.getString("is_active"));
+        
+      }
+      ConnectionProvider.close(conn, pstmt, rs);
+    } catch (SQLException e) {
+      System.out.println("예외 발생" + e.getMessage());
+    }
+    return u;
+  }
+  
+  
+  
+  public UserVO findById(int no) {
+    UserVO u = new UserVO();
+
+    String sql = "select * from member_id where member_id = ?";
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, no);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        u.setMemberId(rs.getString("member_id"));
+        u.setBlackList(rs.getInt("blacklist"));
+        u.setMemberName(rs.getString("member_name"));
+        u.setMemberAddr(rs.getString("member_addr"));
+        u.setMemberZip(rs.getString("member_zip"));
+        u.setMemberGender(rs.getString("member_gender"));
+        u.setMemberEmail(rs.getString("member_email"));
+        u.setMemberReg(rs.getTimestamp("member_reg"));
+        u.setIsActive(rs.getString("is_active"));
+        
+      }
+      ConnectionProvider.close(conn, pstmt, rs);
+    } catch (SQLException e) {
+      System.out.println("예외 발생" + e.getMessage());
+    }
+    return u;
+  }
+}
