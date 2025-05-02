@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="sobi.db.ConnectionProvider" %>
 <main>
     <style>
         .login-wrap {
@@ -77,11 +78,12 @@
         .sns-facebook { color: #1877f2; font-weight: bold; }
     </style>
 
+
     <div class="login-wrap">
         <h1>sobi</h1>
 
         <form action="login_process.do" method="post">
-            <input type="text" name="memberId" placeholder="이메일 또는 휴대폰 아이디" required />
+            <input type="text" name="memberId" placeholder="아이디" required />
             <input type="password" name="password" placeholder="비밀번호" required />
 
             <div class="checkbox-area">
@@ -94,12 +96,36 @@
             <div class="link-line">
                 <a href="#">아이디찾기</a> | <a href="#">비밀번호 찾기</a>
             </div>
+
+            <button type="button" class="login-btn" onclick="location.href='${pageContext.request.contextPath}/v1/views/user/join.do'">
+                회원가입
+            </button>
         </form>
 
         <div class="sns-btns">
             <button class="sns-naver">네이버 아이디로 로그인</button>
-            <button class="sns-kakao">카카오 아이디로 로그인</button>
+
+            <!-- ✅ 카카오 로그인 버튼 -->
+            <button class="sns-kakao" onclick="loginWithKakao()">카카오 아이디로 로그인</button>
+
             <button class="sns-facebook">페이스북 아이디로 로그인</button>
         </div>
     </div>
 </main>
+
+<!-- ✅ JS SDK + 로그인 호출 -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.5/kakao.min.js"
+        integrity="sha384-dok87au0gKqJdxs7msEdBPNnKSRT+/mhTVzq+qOhcL464zXwvcrpjeWvyj1kCdq6"
+        crossorigin="anonymous"></script>
+
+<script>
+    const KAKAO_REDIRECT_URI = '<%= ConnectionProvider.KAKAO_REDIRECT_URI %>';
+
+    Kakao.init('e68b9631d90143101d14aecdc86c2140');
+
+    function loginWithKakao() {
+        Kakao.Auth.authorize({
+            redirectUri: KAKAO_REDIRECT_URI
+        });
+    }
+</script>
