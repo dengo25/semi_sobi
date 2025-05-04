@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import sobi.db.ConnectionProvider;
 import sobi.review.vo.ReviewVO;
 
 public class ReviewDAO {
@@ -13,16 +14,7 @@ public class ReviewDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	public void disconnect() {
-		try {
-			if (rs != null) rs.close();
-			if (pstmt != null) pstmt.close();
-			if (conn != null) conn.close();
-		} catch (Exception e) {
-			System.out.println("예외발생: " + e.getMessage());
-		}
-	}
-
+	
 	// 후기 전체 조회
 	public List<ReviewVO> getAllReviews() {
 		List<ReviewVO> reviewList = new ArrayList<>();
@@ -53,7 +45,7 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 
 		return reviewList;
@@ -81,7 +73,7 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 
 		return result;
@@ -107,7 +99,7 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 
 		return result;
@@ -126,7 +118,7 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			System.out.println("예외처리: " + e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 
 		return result;
@@ -163,7 +155,7 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 
 		return reviewList;
@@ -204,7 +196,7 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 
 		return reviewList;
@@ -249,7 +241,7 @@ public class ReviewDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 
 		return list;

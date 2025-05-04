@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import sobi.db.ConnectionProvider;
 import sobi.review.vo.CategoryVO;
 
 
@@ -14,16 +15,7 @@ public class CategoryDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public void disconnect() {
-		try {
-			if( conn != null) conn.close();
-			if( pstmt!= null) pstmt.close();
-			if( rs != null) rs.close();
-			
-		} catch (Exception e) {
-			System.out.println("예외발생: "+e.getMessage());
-		}
-	}
+	
 	// 전체 카테고리 조회
 	public List<CategoryVO> getAllCategories(){
 		List<CategoryVO> list = new ArrayList<>();
@@ -45,7 +37,7 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);;
 		}
 		return list;
 	}
@@ -70,7 +62,7 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 				
 		return vo;
@@ -91,7 +83,7 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		return result;
@@ -114,7 +106,7 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		
@@ -136,7 +128,7 @@ public class CategoryDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		

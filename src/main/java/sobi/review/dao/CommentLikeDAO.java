@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import sobi.db.ConnectionProvider;
 import sobi.review.vo.CommentLikeVO;
 
 public class CommentLikeDAO {
@@ -11,15 +12,6 @@ public class CommentLikeDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public void disconnect() {
-		try {
-			if (rs != null) rs.close();
-			if (pstmt != null) pstmt.close();
-			if (conn != null) conn.close();
-		} catch (Exception e) {
-			System.out.println("예외발생: "+e.getMessage());
-		}
-	}
 	
 	// 댓글 좋아요 추가
 	public int insertLike(CommentLikeVO vo) {
@@ -37,7 +29,7 @@ public class CommentLikeDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 				
 		return result;
@@ -57,7 +49,7 @@ public class CommentLikeDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);;
 		}
 		
 		return result;
@@ -81,7 +73,7 @@ public class CommentLikeDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		return count;
@@ -106,7 +98,7 @@ public class CommentLikeDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		

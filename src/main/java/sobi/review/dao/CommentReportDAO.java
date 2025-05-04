@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import sobi.db.ConnectionProvider;
 import sobi.review.vo.CommentReportVO;
 
 public class CommentReportDAO {
@@ -13,18 +14,7 @@ public class CommentReportDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public void disconnect() {
-		try {
-			if (conn != null) conn.close();
-			if (pstmt != null) pstmt.close();
-			if (rs != null) rs.close();
-				
-		} catch (Exception e) {
-			System.out.println("예외발생: "+e.getMessage());
-		}
 		
-	}
-	
 	// 댓글 신고 등록
 	public int insertReport(CommentReportVO vo) {
 	    int result = 0;
@@ -47,7 +37,7 @@ public class CommentReportDAO {
 	    } catch (Exception e) {
 	        System.out.println("예외발생: " + e.getMessage());
 	    } finally {
-	        disconnect();
+	    	ConnectionProvider.close(conn, pstmt);
 	    }
 
 	    return result;
@@ -80,7 +70,7 @@ public class CommentReportDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		return list;
 	}
@@ -99,7 +89,7 @@ public class CommentReportDAO {
         } catch (Exception e) {
             System.out.println("예외 발생: " + e.getMessage());
         } finally {
-            disconnect();
+        	ConnectionProvider.close(conn, pstmt);
         }
 
         return result;

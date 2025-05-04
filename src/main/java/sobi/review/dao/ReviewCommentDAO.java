@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import sobi.db.ConnectionProvider;
 import sobi.review.vo.ReviewCommentVO;
 
 public class ReviewCommentDAO {
@@ -13,16 +14,7 @@ public class ReviewCommentDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	public void disconnect() {
-		try {
-			if(rs != null) rs.close();
-			if(pstmt != null) pstmt.close();
-			if(conn != null) conn.close();
-			
-		} catch (Exception e) {
-			System.out.println("예외발생: "+e.getMessage());
-		}
-	}
+	
 	// 후기에 달린 모든 댓글 조회
 	public List<ReviewCommentVO> getCommentsByReviewId(int reviewId){
 		List<ReviewCommentVO> list = new ArrayList<>();
@@ -48,7 +40,7 @@ public class ReviewCommentDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		return list;
@@ -71,7 +63,7 @@ public class ReviewCommentDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		return result;
@@ -90,7 +82,7 @@ public class ReviewCommentDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		
@@ -114,7 +106,7 @@ public class ReviewCommentDAO {
 		} catch (Exception e) {
 			System.out.println("예외발생: "+e.getMessage());
 		} finally {
-			disconnect();
+			ConnectionProvider.close(conn, pstmt);
 		}
 		
 		
