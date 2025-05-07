@@ -80,7 +80,7 @@ public class ReviewLikeDAO {
 		return count;
 	}
 	
-	// 사용자가 특정 후기에 좋아요 놀렀는지 확인
+	// 사용자가 특정 후기에 좋아요 눌렀는지 확인
 	public boolean hasUserLiked(int reviewId, String memberId) {
 		boolean liked = false;
 		String sql = "SELECT COUNT(*) FROM REVIEW_LIKE WHERE REVIEW_ID = ? AND MEMBER_ID = ?";

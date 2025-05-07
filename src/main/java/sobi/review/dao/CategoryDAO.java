@@ -43,14 +43,14 @@ public class CategoryDAO {
 	}
 	
 	// 카테고리 ID로 조회
-	public CategoryVO getCategoryById(int id) {
+	public CategoryVO getCategoryById(int reviewCategoryId) {
 		CategoryVO vo = null;
 		String sql = "SELECT * FROM CATEGORY WHERE REVIEW_CATEGORY_ID= ?";
 		
 		try {
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1,id);
+			pstmt.setInt(1,reviewCategoryId);
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -68,7 +68,7 @@ public class CategoryDAO {
 		return vo;
 	}
 	
-	// 카테고리 추가 ID는 자동증가
+	// 카테고리 추가 (ID는 자동증가)
 	public int insertCategory(CategoryVO vo) {
 		int result = 0;
 		String sql = "INSERT INTO CATEGORY(REVIEW_CATEGORY_ID, REVIEW_CATEGORY_NAME) "
@@ -114,14 +114,14 @@ public class CategoryDAO {
 	}
 	
 	// 카테고리 삭제
-	public int deleteCategory(int id) {
+	public int deleteCategory(int reviewCategoryId) {
 		int result = 0;
 		String sql = "DELETE FROM CATEGORY WHERE REVIEW_CATEGORY_ID =?";
 				
 		try {
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, reviewCategoryId);
 			
 			result = pstmt.executeUpdate();
 						
