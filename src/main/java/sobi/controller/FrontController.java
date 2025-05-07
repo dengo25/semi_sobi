@@ -1,6 +1,6 @@
 package sobi.controller;
 
-import sobi.action.SobiAction;
+import sobi.action.common.SobiAction;
 import sobi.action.member.CheckIdAction;
 import sobi.action.member.JoinProcessAction;
 import sobi.action.member.LoginProcessAction;

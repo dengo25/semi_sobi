@@ -1,6 +1,6 @@
 package sobi.action.member;
 
-import sobi.action.SobiAction;
+import sobi.action.common.SobiAction;
 import sobi.dao.MemberDAO;
 import sobi.vo.MemberVO;
 

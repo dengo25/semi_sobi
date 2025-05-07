@@ -1,4 +1,4 @@
-package sobi.action;
+package sobi.action.common;
 
 
 import javax.servlet.http.HttpServletRequest;
