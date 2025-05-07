@@ -1,9 +1,9 @@
-package sobi.action.user;
+package sobi.action.member;
 
 
 import sobi.action.SobiAction;
-import sobi.dao.UserDAO;
-import sobi.vo.UserVO;
+import sobi.dao.MemberDAO;
+import sobi.vo.MemberVO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +18,8 @@ public class JoinProcessAction implements SobiAction {
     
     request.setCharacterEncoding("utf-8");
     
-    UserVO u = new UserVO();
-    UserDAO dao = new UserDAO();
+    MemberVO u = new MemberVO();
+    MemberDAO dao = new MemberDAO();
     
     u.setMemberId(request.getParameter("member_id"));
     u.setMemberPassword(request.getParameter("member_password"));

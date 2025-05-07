@@ -2,14 +2,14 @@ package sobi.dao;
 
 
 import sobi.db.ConnectionProvider;
-import sobi.vo.UserVO;
+import sobi.vo.MemberVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAO {
+public class MemberDAO {
   
   public boolean isIdExist(String id) { //아이디 중복확인
     boolean result = false;
@@ -31,8 +31,8 @@ public class UserDAO {
   }
   
   
-  public UserVO findByName(String name) {
-    UserVO u = new UserVO();
+  public MemberVO findByName(String name) {
+    MemberVO u = new MemberVO();
     
     String sql = "select * from MEMBER where member_id = ";
     try {
@@ -61,8 +61,8 @@ public class UserDAO {
   
   
   
-  public UserVO findById(int no) {
-    UserVO u = new UserVO();
+  public MemberVO findById(int no) {
+    MemberVO u = new MemberVO();
     
     String sql = "select * from MEMBER where member_id = ?";
     try {
@@ -89,7 +89,7 @@ public class UserDAO {
     return u;
   }
   
-  public int insert(UserVO u) {
+  public int insert(MemberVO u) {
     String sql = "insert into MEMBER (member_id, member_password, member_name, member_email, member_birth, member_zip, member_addr) " +
         " values (?, ?, ?, ?, ?, ?, ?)";
     
@@ -113,8 +113,8 @@ public class UserDAO {
     }
   }
   
-  public UserVO loginConfirm(String id, String password) {
-    UserVO u = new UserVO();
+  public MemberVO loginConfirm(String id, String password) {
+    MemberVO u = new MemberVO();
     String sql = "select * from MEMBER where member_id =? and member_password = ?";
     
     try {

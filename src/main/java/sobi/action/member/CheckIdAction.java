@@ -1,7 +1,7 @@
-package sobi.action.user;
+package sobi.action.member;
 
 import sobi.action.SobiAction;
-import sobi.dao.UserDAO;
+import sobi.dao.MemberDAO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ public class CheckIdAction implements SobiAction {
     boolean exists = false;
     
     if (id != null && !id.trim().isEmpty()) {
-      UserDAO dao = new UserDAO();
+      MemberDAO dao = new MemberDAO();
       exists = dao.isIdExist(id);
     }
     

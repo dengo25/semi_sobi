@@ -1,4 +1,4 @@
-package sobi.action.user;
+package sobi.action.member;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

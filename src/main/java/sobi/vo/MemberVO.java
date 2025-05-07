@@ -2,7 +2,7 @@ package sobi.vo;
 
 import java.util.Date;
 
-public class UserVO {
+public class MemberVO {
   
   private String memberId;
   private int blackList;
@@ -16,11 +16,11 @@ public class UserVO {
   private Date memberReg;
   private String isActive;
   
-  public UserVO() {
+  public MemberVO() {
   }
   
-  public UserVO(String memberId, int blackList, String memberPassword, String memberName, String memberGender,
-                String memberEmail, String memberBirth, String memberAddr, String memberZip, Date memberReg, String isActive) {
+  public MemberVO(String memberId, int blackList, String memberPassword, String memberName, String memberGender,
+                  String memberEmail, String memberBirth, String memberAddr, String memberZip, Date memberReg, String isActive) {
     this.memberId = memberId;
     this.blackList = blackList;
     this.memberPassword = memberPassword;

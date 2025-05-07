@@ -1,9 +1,9 @@
 package sobi.controller;
 
 import sobi.action.SobiAction;
-import sobi.action.user.CheckIdAction;
-import sobi.action.user.JoinProcessAction;
-import sobi.action.user.LoginProcessAction;
+import sobi.action.member.CheckIdAction;
+import sobi.action.member.JoinProcessAction;
+import sobi.action.member.LoginProcessAction;
 
 
 import javax.servlet.*;
@@ -29,8 +29,8 @@ public class FrontController extends HttpServlet {
 	}
 	
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uri = request.getRequestURI();                // 예: /board_test/v1/views/user/login.do
-		String context = request.getContextPath();           // 예: /board_test
+		String uri = request.getRequestURI();                // 예: /v1/views/user/login.do
+		String context = request.getContextPath();           // 예: /
 		String path = uri.substring(context.length());       // 예: /v1/views/user/login.do 또는 /checkId.do
 		
 		String page = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));

@@ -1,8 +1,8 @@
-package sobi.action.user;
+package sobi.action.member;
 
 import sobi.action.SobiAction;
-import sobi.dao.UserDAO;
-import sobi.vo.UserVO;
+import sobi.dao.MemberDAO;
+import sobi.vo.MemberVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +19,12 @@ public class LoginProcessAction implements SobiAction {
     String password = request.getParameter("password");
 
     
-    UserDAO dao = new UserDAO();
-    UserVO userVO = dao.loginConfirm(id, password);
+    MemberDAO dao = new MemberDAO();
+    MemberVO memberVO = dao.loginConfirm(id, password);
     
-    if (userVO != null) {
+    if (memberVO != null) {
       HttpSession session = request.getSession();
-      session.setAttribute("loginUser", userVO);
+      session.setAttribute("loginUser", memberVO);
       return "redirect:/v1/views/main/main.do";
     } else {
       request.setAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
