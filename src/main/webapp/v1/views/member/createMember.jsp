@@ -125,7 +125,7 @@
         return;
       }
 
-      fetch("/checkId.json?member_id=" + encodeURIComponent(id))
+      fetch("/checkId.do?member_id=" + encodeURIComponent(id))
               .then(res => res.json())
               .then(data => {
                 const msg = document.getElementById("idCheckMsg");
