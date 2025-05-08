@@ -3,7 +3,6 @@ package sobi.controller;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -56,7 +55,7 @@ public class FrontController extends HttpServlet {
 		
 		
 		try {
-			Reader menuReader = new FileReader(path + "/sobi.menu.properties", StandardCharsets.UTF_8);
+			Reader menuReader = new FileReader(path + "/sobi.menu.properties");
 			Properties menuProp = new Properties();
 			menuProp.load(menuReader);
 			System.out.println("메뉴 프로퍼티 로드 완료!");
