@@ -1,13 +1,21 @@
 package sobi.controller;
 
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import sobi.action.common.SobiAction;
 
 /**
  * Servlet implementation class FrontController
@@ -15,8 +23,35 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
+	HashMap<String, SobiAction> map = new HashMap<String, SobiAction>();
+	
+    public void init(ServletConfig config) throws ServletException{
+		String path = config.getServletContext().getRealPath("WEB-INF");
+		// System.out.println("path : "+path);
+		// path : /Users/wang_si/semi_sobi/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/semi_sobi/WEB-INF
+		try {
+			Reader reader = new FileReader(path + "/sobi.properties");
+			Properties prop = new Properties();
+			prop.load(reader);
+			
+			Iterator iter = prop.keySet().iterator();
+			while(iter.hasNext()) {
+				String key = (String)iter.next();
+				String clsName = prop.getProperty(key);
+				/* 모든 프로퍼티의 키, 값이 나
+				System.out.println("key : " + key);
+				System.out.println("clsName : " + clsName);
+				*/
+				Object obj = Class.forName(clsName).newInstance();	// 객체화 처리 
+				map.put(key, (SobiAction)obj); // 객체화 해준 클래스 key, value 를 map 에 넣는다
+			}
+		
+		}catch(Exception e) {
+			System.out.println("int Exception : "+e.getMessage());
+		}
+	}
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public FrontController() {
