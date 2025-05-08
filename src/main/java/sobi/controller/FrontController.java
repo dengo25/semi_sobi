@@ -3,6 +3,7 @@ package sobi.controller;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import sobi.action.common.SobiAction;
+import sobi.vo.common.MenuVO;
 
 /**
  * Servlet implementation class FrontController
@@ -45,9 +47,55 @@ public class FrontController extends HttpServlet {
 				Object obj = Class.forName(clsName).newInstance();	// 객체화 처리 
 				map.put(key, (SobiAction)obj); // 객체화 해준 클래스 key, value 를 map 에 넣는다
 			}
-		
+			System.out.println("front action 완료!");
 		}catch(Exception e) {
-			System.out.println("int Exception : "+e.getMessage());
+			System.out.println("int action Exception : "+e.getMessage());
+		}
+		
+		
+		try {
+			Reader menuReader = new FileReader(path + "/sobi.menu.properties");
+			Properties menuProp = new Properties();
+			menuProp.load(menuReader);
+			System.out.println("메뉴 프로퍼티 로드 완료!");
+			
+			ArrayList<MenuVO> menuList = new ArrayList<>();
+			for(int i = 2; i <= 5; i++) {
+				String name = menuProp.getProperty("menu."+i+".name");
+				String link = menuProp.getProperty("menu."+i+".link");
+
+				if(name != null && link != null) {
+					menuList.add(new MenuVO(name,link));
+					System.out.println("기본 메뉴 : "+i+" / "+name+" / "+link);
+				}
+			}
+			config.getServletContext().setAttribute("menuList", menuList);
+			
+			HashMap<Integer, String> otherMenu = new HashMap<Integer, String>();
+			// 1,6,7,8,9,
+			otherMenu.put(1,"main");
+			otherMenu.put(6,"admin");
+			otherMenu.put(7,"login");
+			otherMenu.put(8,"logout");
+			otherMenu.put(9,"mypage");
+			System.out.println(otherMenu); 
+			
+			for(HashMap.Entry<Integer, String> entry : otherMenu.entrySet()) {
+				int menuNum = entry.getKey();
+				String menuName = entry.getValue();
+				
+				String name = menuProp.getProperty("menu."+menuNum+".name");
+				String link = menuProp.getProperty("menu."+menuNum+".link");
+				
+				if(name != null && link != null) {
+					MenuVO vo = new MenuVO(name,link);
+					System.out.println("그외 메뉴 : "+menuName+" / "+name+" / "+link);
+					config.getServletContext().setAttribute(menuName, vo);
+				}
+			}
+			System.out.println("메뉴 프로퍼티 완료!");
+		} catch (Exception e) {
+			System.out.println("int menu Exception : "+e.getMessage());
 		}
 	}
 
