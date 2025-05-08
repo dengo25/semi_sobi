@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 import sobi.review.dao.ReviewDAO;
 import sobi.review.dao.ReviewImageDAO;
+import sobi.review.vo.ReviewVO;
 
 import java.io.*;
 import java.util.*;
@@ -87,14 +88,14 @@ public class WriteReviewServlet extends HttpServlet {
       ReviewVO review = new ReviewVO();
       review.setMemberId(memberId);
       review.setProductName(productName);
-      review.setReviewTitle(reviewTitle);
+      review.setTitle(reviewTitle);
       review.setRating(rating);
-      review.setReviewCategoryId(reviewCategoryId);
+      review.setCategoryId(reviewCategoryId);
       review.setContent(finalContent);  // 수정된 내용
       review.setImageUrl(thumbnail);  // 썸네일 이미지 URL
       
       // 리뷰를 데이터베이스에 삽입하고 리뷰 ID 반환
-      int reviewId = ReviewDAO.insertReview(review);     
+      int reviewId = reviewDao.insertReview(review);   
       // 이미지 정보들을 ReviewImageVO 객체에 저장하고 데이터베이스에 삽입
       for (ReviewImageVO image : imageList) {
         image.setReviewId(reviewId);  // 리뷰 ID 설정

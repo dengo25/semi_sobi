@@ -1,8 +1,6 @@
 package sobi.review.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,16 +48,15 @@ public class ReviewDAO {
         return reviewList;
     }
 
-    // 후기 등록 (MySQL용: REVIEW_ID는 AUTO_INCREMENT 컬럼)
+    // 후기 등록 후 생성된 리뷰 ID 반환
     public int insertReview(ReviewVO vo) {
-        String sql = "INSERT INTO REVIEW(MEMBER_ID, PRODUCT_NAME, REVIEW_TITLE, RATING, REVIEW_CATEGORY_ID, CONTENT, IMAGE_URL, CREATED_AT, UPDATED_AT, IS_DELETED, CONFIRMED) "
-                   + "VALUES(?, ?, ?, ?, ?, ?, ?, NOW(), NULL, 'N', 'N')";
-
-        int result = 0;
+        int generatedId = 0;
+        String sql = "INSERT INTO REVIEW(MEMBER_ID, PRODUCT_NAME, REVIEW_TITLE, RATING, REVIEW_CATEGORY_ID, CONTENT, IMAGE_URL, CREATED_AT, UPDATED_AT, IS_DELETED, CONFIRMED) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NULL, 'N', 'N')";
 
         try {
             conn = ConnectionProvider.getConnection();
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, vo.getMemberId());
             pstmt.setString(2, vo.getProductName());
             pstmt.setString(3, vo.getTitle());
@@ -68,14 +65,19 @@ public class ReviewDAO {
             pstmt.setString(6, vo.getContent());
             pstmt.setString(7, vo.getImageUrl());
 
-            result = pstmt.executeUpdate();
+            pstmt.executeUpdate();
+
+            rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                generatedId = rs.getInt(1);
+            }
         } catch (Exception e) {
             System.out.println("예외발생: " + e.getMessage());
         } finally {
             ConnectionProvider.close(conn, pstmt);
         }
 
-        return result;
+        return generatedId;
     }
 
     // 후기 수정
