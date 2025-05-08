@@ -15,8 +15,7 @@ public class ReviewLikeDAO {
 	// 후기 좋아요 추가
 	public int insertLike(ReviewLikeVO vo) {
 		int result = 0;
-		String sql = "INSERT INTO REVIEW_LIKE(REVIEW_LIKE_ID, REVIEW_ID, MEMBER_ID) "
-				+ "VALUES (REVIEW_LIKE_SEQ.NEXTVAL, ?,?)";
+		String sql = "INSERT INTO REVIEW_LIKE(REVIEW_ID, MEMBER_ID) VALUES (?, ?)";
 		
 		try {
 			conn = ConnectionProvider.getConnection();
