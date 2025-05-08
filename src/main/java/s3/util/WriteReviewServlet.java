@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 import sobi.review.dao.ReviewDAO;
 import sobi.review.dao.ReviewImageDAO;
+import sobi.review.vo.ReviewImageVO;
 import sobi.review.vo.ReviewVO;
 
 import java.io.*;

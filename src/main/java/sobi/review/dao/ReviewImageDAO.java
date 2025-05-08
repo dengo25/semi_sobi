@@ -1,7 +1,7 @@
 package sobi.review.dao;
 
 import sobi.db.ConnectionProvider;
-import s3.util.ReviewImageVO;
+import sobi.review.vo.ReviewImageVO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
