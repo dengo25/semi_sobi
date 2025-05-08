@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%
  /* 할일
  - 인클루드 루트는 절대경로로 관리한다.
@@ -100,8 +100,8 @@ WEB-INF/views/login.jsp	직접 접근을 막고 싶을 때, 컨트롤러를 통�
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="head_common.jsp" %>
-<title>${title}</title>
+ <%@ include file="head_common.jsp" %>
+ <title>${title}</title>
 </head>
 <body>
 <%@ include file="header.jsp" %>
