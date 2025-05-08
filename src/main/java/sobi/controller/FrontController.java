@@ -3,6 +3,7 @@ package sobi.controller;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import sobi.action.common.SobiAction;
+
 
 /**
  * Servlet implementation class FrontController
@@ -38,16 +40,17 @@ public class FrontController extends HttpServlet {
 			while(iter.hasNext()) {
 				String key = (String)iter.next();
 				String clsName = prop.getProperty(key);
-				
+				/* 모든 프로퍼티의 키, 값이 나
 				System.out.println("key : " + key);
 				System.out.println("clsName : " + clsName);
-				
+				*/
 				Object obj = Class.forName(clsName).newInstance();	// 객체화 처리
 				map.put(key, (SobiAction)obj); // 객체화 해준 클래스 key, value 를 map 에 넣는다
 			}
-			
+			System.out.println("front action 완료!");
 		}catch(Exception e) {
-			System.out.println("int Exception : "+e.getMessage());
+			System.out.println("int action Exception : "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -58,28 +61,56 @@ public class FrontController extends HttpServlet {
 		super();
 	}
 	
-	private void process(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+	private void process(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String uri =request.getRequestURI(); // 현재 주소
-		String page = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf(".")); // .do 를 뺀 주소
-		// ex) /sobi_test/board/content.do → page = "content"
+		String cmd = uri.substring(uri.lastIndexOf("/") + 1); // 예: testAction.do
 		
-		String folder = uri.split("/")[uri.split("/").length -2];
-		// ex) "board"
+		// 액션 꺼내오기
+		SobiAction action = map.get(cmd);
+		if (action != null) {
+			System.out.println(">>> 액션 실행: " + cmd + " → " + action.getClass().getName());
+			String viewPage = action.process(request, response);  // 액션 실행
+			
+			if (viewPage != null) {
+				if (viewPage.endsWith(".do")) {
+					response.sendRedirect(viewPage);
+				} else if (viewPage.endsWith(".jsp")) {
+					request.setAttribute("contentPage", viewPage);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
+					dispatcher.forward(request, response);
+				} else {
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().print(viewPage);
+				}
+			}
+		}
 		
-		String contentPage = "/v1/views/" + folder + "/" + page + ".jsp"; // /WEB-INF/
-		String title = page.toUpperCase(); // title만 변경
+		else {
+			// 액션이 없을경우
+			String page = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf(".")); // .do 를 뺀 주소
+			// ex) /sobi_test/board/content.do → page = "content"
+			
+			String folder = uri.split("/")[uri.split("/").length -2];
+			// ex) "board"
+			
+			String contentPage = "/v1/views/" + folder + "/" + page + ".jsp"; // /WEB-INF/
+			String title = page.toUpperCase(); // title만 변경
+			
+			request.setAttribute("contentPage", contentPage);
+			request.setAttribute("title", title);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp"); // /WEB-INF
+			dispatcher.forward(request, response);
+			
+			System.out.println("uri: " + uri);
+			System.out.println("page: " + page);
+			System.out.println("folder: " + folder);
+			System.out.println("contentPage: " + contentPage);
+			System.out.println("-----------------");
+		}
 		
-		request.setAttribute("contentPage", contentPage);
-		request.setAttribute("title", title);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp"); // /WEB-INF
-		dispatcher.forward(request, response);
 		
-		System.out.println("uri: " + uri);
-		System.out.println("page: " + page);
-		System.out.println("folder: " + folder);
-		System.out.println("contentPage: " + contentPage);
-		System.out.println("-----------------");
 		
 	}
 	
@@ -90,15 +121,23 @@ public class FrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("-----------------");
 		System.out.println("doGet start!");
-		process(request,response);
-	}
+    try {
+      process(request,response);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("doPost start!");
-		process(request,response);
-	}
+    try {
+      process(request,response);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 	
 }
