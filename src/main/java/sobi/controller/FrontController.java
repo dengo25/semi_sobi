@@ -50,6 +50,7 @@ public class FrontController extends HttpServlet {
 			System.out.println("front action 완료!");
 		}catch(Exception e) {
 			System.out.println("int action Exception : "+e.getMessage());
+			e.printStackTrace();
 		}
 		
 		
@@ -96,6 +97,7 @@ public class FrontController extends HttpServlet {
 			System.out.println("메뉴 프로퍼티 완료!");
 		} catch (Exception e) {
 			System.out.println("int menu Exception : "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -106,28 +108,56 @@ public class FrontController extends HttpServlet {
         super();
     }
 
-    private void process(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException {
+    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String uri =request.getRequestURI(); // 현재 주소 
-		String page = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf(".")); // .do 를 뺀 주소
-		// ex) /sobi_test/board/content.do → page = "content"
+		String cmd = uri.substring(uri.lastIndexOf("/") + 1); // 예: testAction.do
+
+	    // 액션 꺼내오기
+	    SobiAction action = map.get(cmd);
+	    if (action != null) {
+	        System.out.println(">>> 액션 실행: " + cmd + " → " + action.getClass().getName());
+	        String viewPage = action.process(request, response);  // 액션 실행
+
+	        if (viewPage != null) {
+	            if (viewPage.endsWith(".do")) {
+	                response.sendRedirect(viewPage);
+	            } else if (viewPage.endsWith(".jsp")) {
+	                request.setAttribute("contentPage", viewPage);
+	                RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
+	                dispatcher.forward(request, response);
+	            } else {
+	                response.setContentType("application/json;charset=UTF-8");
+	                response.getWriter().print(viewPage);
+	            }
+	        }
+	    }
 		
-		String folder = uri.split("/")[uri.split("/").length -2];
-		// ex) "board"
+		else {
+			// 액션이 없을경우
+			String page = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf(".")); // .do 를 뺀 주소
+			// ex) /sobi_test/board/content.do → page = "content"
+			
+			String folder = uri.split("/")[uri.split("/").length -2];
+			// ex) "board"
+			
+			String contentPage = "/v1/views/" + folder + "/" + page + ".jsp"; // /WEB-INF/
+			String title = page.toUpperCase(); // title만 변경
+			
+			request.setAttribute("contentPage", contentPage);
+			request.setAttribute("title", title);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp"); // /WEB-INF
+			dispatcher.forward(request, response);
+			
+			System.out.println("uri: " + uri);
+			System.out.println("page: " + page);
+			System.out.println("folder: " + folder);
+			System.out.println("contentPage: " + contentPage);
+			System.out.println("-----------------");
+		}
 		
-		String contentPage = "/v1/views/" + folder + "/" + page + ".jsp"; // /WEB-INF/
-		String title = page.toUpperCase(); // title만 변경
 		
-		request.setAttribute("contentPage", contentPage);
-		request.setAttribute("title", title);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp"); // /WEB-INF
-		dispatcher.forward(request, response);
-		
-		System.out.println("uri: " + uri);
-		System.out.println("page: " + page);
-		System.out.println("folder: " + folder);
-		System.out.println("contentPage: " + contentPage);
-		System.out.println("-----------------");
 
 	}
     
