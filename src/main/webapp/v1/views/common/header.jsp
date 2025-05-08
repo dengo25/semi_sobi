@@ -32,7 +32,7 @@
 					<a href="javascript();"><span>로그아웃</span></a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath}/v1/views/mypage/test.do"><span>마이페이지</span></a>
+					<a href="${pageContext.request.contextPath}/v1/views/mypage/mypage.do"><span>마이페이지</span></a>
 				</li>
 			</ul>
 		</nav>
