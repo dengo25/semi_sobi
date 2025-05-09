@@ -74,7 +74,15 @@
     }
 
     .sns-naver { color: #1ec800; font-weight: bold; }
-    .sns-kakao { color: #3c1e1e; font-weight: bold; }
+    .sns-kakao {
+      background-color: #FEE500;
+      border: none;
+      color: #000000;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .sns-facebook { color: #1877f2; font-weight: bold; }
   </style>
 
@@ -105,8 +113,11 @@
     <div class="sns-btns">
       <button class="sns-naver">네이버 아이디로 로그인</button>
 
-      <!-- ✅ 카카오 로그인 버튼 -->
-      <button class="sns-kakao" onclick="loginWithKakao()">카카오 아이디로 로그인</button>
+      <button class="sns-kakao" onclick="loginWithKakao()">
+        <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png"
+             alt="kakao" style="height: 18px; vertical-align: middle; margin-right: 8px;">
+        <span style="color: rgba(0,0,0,0.85); font-weight: bold;">카카오 아이디로 로그인</span>
+      </button>
 
       <button class="sns-facebook">페이스북 아이디로 로그인</button>
     </div>
