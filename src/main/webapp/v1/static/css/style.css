@@ -510,4 +510,3 @@ table[class*="table"] td .required + [class*="ico-"]{margin-left:5px;}
 [class*="tab-classify"][class*="type-round"] ul > li.current > a:after{content:none;}
 /* 간격 */
 [class*="tab-classify"][class*="type-box"] + [class*="tab-classify"][class*="type-round"]{margin-top:-8px;}
-
