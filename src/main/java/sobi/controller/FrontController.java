@@ -21,7 +21,7 @@ import sobi.action.common.SobiAction;
 import sobi.vo.common.MenuVO;
 
 /**
- * Servlet implementation class FrontController
+ * Servlet implementation class FrontControllerx
  */
 @WebServlet("*.do")
 public class FrontController extends HttpServlet {
@@ -111,6 +111,7 @@ public class FrontController extends HttpServlet {
 	
 	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String uri =request.getRequestURI(); // 현재 주소
+		String contextPath = request.getContextPath();  // 예: /semi_sobi
 		String cmd = uri.substring(uri.lastIndexOf("/") + 1); // 예: testAction.do
 		
 		// v1 경로만 허용 체크!
@@ -125,18 +126,33 @@ public class FrontController extends HttpServlet {
 		SobiAction action = map.get(cmd);
 		if(action != null) {
 			System.out.println(">>> 액션 실행: " + cmd + " → " + action.getClass().getName());
-			String viewPage = action.process(request, response);  // 액션 실행
+			// String viewPage = action.process(request, response);  // 액션 실행
+			String viewPage  = null;
+			
+			try {
+				viewPage = action.process(request, response);  // 액션 실행
+			} catch (Exception e) {
+				System.out.println("action get Exception : "+e.getMessage());
+				e.printStackTrace();
+			}
 			
 			if(viewPage != null) {
-				if(viewPage.endsWith(".do")) {
+				if(viewPage.endsWith(".do")) { // 여기서 리다이렉 문제 발생 
+					// 절대경로 리다이렉 보장
+					if(!viewPage.startsWith(contextPath)) {
+						viewPage = contextPath + (viewPage.startsWith("/") ? "" : "/") + viewPage;
+					}
+					System.out.println("리다이렉 : " + viewPage);
 					response.sendRedirect(viewPage);
 				}else if (viewPage.endsWith(".jsp")) {
 					request.setAttribute("contentPage", viewPage);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
 					dispatcher.forward(request, response);
+					System.out.println("포워딩(jsp) : " + viewPage);
 				}else {
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().print(viewPage);
+					System.out.println("json 출 : " + viewPage);
 				}
 			}
 		}
