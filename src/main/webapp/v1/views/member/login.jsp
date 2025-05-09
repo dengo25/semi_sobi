@@ -102,7 +102,7 @@
       <button type="submit" class="login-btn">로그인</button>
 
       <div class="link-line">
-        <a href="#">아이디찾기</a> | <a href="#">비밀번호 찾기</a>
+        <a href="findMemberId.do">아이디찾기</a> | <a href="#">비밀번호 찾기</a>
       </div>
 
       <button type="button" class="login-btn" onclick="location.href='${pageContext.request.contextPath}/v1/views/member/createMember.do'">

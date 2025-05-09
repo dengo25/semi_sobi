@@ -21,7 +21,9 @@ public class LoginFilter extends HttpFilter implements Filter {
       "checkId.do",             // 아이디 중복 확인
       "kakao_login_callback.do",// 카카오 로그인 콜백
       "naver_login_callback.do", // 네이버 로그인 콜백 (구현예정)
-      "main.do", "faq.do", "notice.do", "reviewList.do","review_list.do"
+      "main.do", "faq.do", "notice.do", "reviewList.do","review_list.do", //상단 헤더 메뉴
+      "findMemberId.do", //아이디 찾기
+      "findMemberIdOK.do"
   };
   
   @Override
