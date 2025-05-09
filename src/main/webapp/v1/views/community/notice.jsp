@@ -1,81 +1,66 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- /content.jsp --%>
 <main>
 	<h2>공지사항</h2>
 	
 	<div class="search-area">
-		<form class="input-group">
-	        <input type="text" class="form-control">
-	        <button type="button" class="btn btn-deepgrey">검색</button>
+		<form class="input-group" action="notice.do" method="post">
+	        <input type="search" name="keyword" class="form-control">
+	        <button type="submit" class="btn btn-deepgrey">검색</button>
 	    </form>
 	</div>	
 	
+	<p>총 ${count}건</p>
 	<table class="table-basic">
-	    <caption>테이블 목록- ~으로 구성</caption>
+	    <caption>공지사항 테이블 목록 - no, 제목, 작성일, 조회수로 구성</caption>
 	    <colgroup>
 	        <col style="width:8%">
-	        <col style="width:37%">
-	        <col style="width:20%">
-	        <col style="width:15%">
-	        <col style="width:20%">
+	        <col style="width:52%">
+	        <col style="width:30%">
+	        <col style="width:10%">
 	    </colgroup>
         <thead>
             <tr>
                 <th scope="col">no</th>
                 <th scope="col">제목</th>
                 <th scope="col">작성일</th>
-                <th scope="col">작성자</th>
-                <th scope="col">기타</th>
+                <th scope="col">조회수</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="num">1</td>
-                <td><a href="javascript();"><span>후기의 제목입니다.</span></a></td>
-                <td>2025. 02. 13 15:25</td>
-                <td>작성자의 아이디</td>
-                <td>
-                    <button class="btn" type="button">삭제</button>
-                    <button class="btn" type="button">등록</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="num">1</td>
-                <td><a href="javascript();"><span>후기의 제목입니다.</span></a></td>
-                <td>2025. 02. 13 15:25</td>
-                <td>작성자의 아이디</td>
-                <td>
-                    <button class="btn" type="button">삭제</button>
-                    <button class="btn" type="button">등록</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="num">1</td>
-                <td><a href="javascript();"><span>후기의 제목입니다.</span></a></td>
-                <td>2025. 02. 13 15:25</td>
-                <td>작성자의 아이디</td>
-                <td>
-                    <button class="btn" type="button">삭제</button>
-                    <button class="btn" type="button">등록</button>
-                </td>
-            </tr>
+        	<c:forEach var="notice" items="${list}">
+        		<tr>
+	        		<td class="num">${notice.rowNo}</td>
+	                <td><a href="javascript();"><span>${notice.noticeTitle}</span></a></td>
+	                <td>${notice.noticeCreateDate}</td>
+	                <td>${notice.count}</td>
+                <tr>
+        	</c:forEach>
+     	    <c:if test="${empty list}">
+	            <tr class="table-is-empty">
+	            	<td colspan="4">검색된 결과가 없습니다.</td>
+	            </tr>
+            </c:if>
         </tbody>
     </table>
 
 
 	<div class="paging-area">
+		<%-- 
 	    <button type="button" class="btn btn-paging">처음</button>
-	    <button type="button" class="btn btn-paging">이전</button>
+	    <button type="button" class="btn btn-paging">이전</button> --%>
 	    <ul class="pagination">
-	        <li class="on"><a href="javascript:;" aria-current="page"><span>1</span></a></li>
-	        <li><a href="javascript:;"><span>2</span></a></li>
-	        <li><a href="javascript:;"><span>3</span></a></li>
-	        <li><a href="javascript:;"><span>4</span></a></li>
-	        <li><a href="javascript:;"><span>5</span></a></li>
+	        <c:forEach var="num" begin="1" end="${totalPaging}">
+		    	<li class="${ pageNum == num ? 'on' : '' }">
+		    		<a href="notice.do?pageNum=${num}" aria-current="${ pageNum == num ? 'page' : '' }"><span>${num}</span></a>
+		    	</li>
+	        </c:forEach>
 	    </ul>
-	    <button type="button" class="btn btn-paging">다음</i></button>
-	    <button type="button" class="btn btn-paging">마지막</button>
+	    <%--
+	    <button type="button" class="btn btn-paging">다음</button>
+	    <button type="button" class="btn btn-paging">마지막</button> --%>
 	</div>
 	
 	
