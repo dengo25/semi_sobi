@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <main>
+  <script>
+    let isChecked = false; // 중복 확인 여부
+  </script>
   <style>
     .join-wrap {
       max-width: 600px;
@@ -75,7 +78,7 @@
       <!-- 서버로 전송할 최종 주소 값 -->
       <input type="hidden" name="member_addr" id="member_addr_final">
 
-      <button type="submit">회원가입 완료</button>
+      <button type="submit">회원가입</button>
     </form>
   </div>
 
@@ -110,6 +113,10 @@
     }
 
     function prepareAddress() {
+      if (!isChecked) {
+        alert("아이디 중복확인을 해주세요.");
+        return false; // 폼 전송 막음
+      }
       const road = document.getElementById("sample4_roadAddress").value;
       const detail = document.getElementById("sample4_detailAddress").value;
       const fullAddr = (road + ' ' + detail).trim();
@@ -132,9 +139,11 @@
                 if (data.exists) {
                   msg.style.color = "red";
                   msg.textContent = "이미 존재하는 아이디입니다.";
+                  isChecked = false; //중복체크 실패시 회원가입 못함.
                 } else {
                   msg.style.color = "green";
                   msg.textContent = "사용 가능한 아이디입니다.";
+                  isChecked = true; //중복체크 확인
                 }
               })
               .catch(err => {
