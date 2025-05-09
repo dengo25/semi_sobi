@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import sobi.action.common.SobiAction;
 import sobi.dao.mypage.MessageDAO;
 import sobi.vo.mypage.MessageVO;
+import sobi.vo.member.MemberVO;
 
 public class InboxAction implements SobiAction {
 
@@ -20,11 +21,13 @@ public class InboxAction implements SobiAction {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        String memberId = (String) session.getAttribute("memberId");
+        MemberVO member = (MemberVO) session.getAttribute("member");
 
-        if (memberId == null) {
-            return "login.do"; 
+        if (member == null) {
+            return "redirect:login.do";
         }
+
+        String memberId = member.getMemberId();
 
         try {
             MessageDAO dao = new MessageDAO();
