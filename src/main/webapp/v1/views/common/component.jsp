@@ -62,7 +62,7 @@
         <tbody>
             <tr>
                 <td class="num">1</td>
-                <td><a href="javascript();">후기의 제목입니다.</a></td>
+                <td><a href="javascript();"><span>후기의 제목입니다.</span></a></td>
                 <td>2025. 02. 13 15:25</td>
                 <td>작성자의 아이디</td>
                 <td>
@@ -72,7 +72,7 @@
             </tr>
             <tr>
                 <td class="num">1</td>
-                <td><a href="javascript();">후기의 제목입니다.</a></td>
+                <td><a href="javascript();"><span>후기의 제목입니다.</span></a></td>
                 <td>2025. 02. 13 15:25</td>
                 <td>작성자의 아이디</td>
                 <td>
@@ -82,7 +82,7 @@
             </tr>
             <tr>
                 <td class="num">1</td>
-                <td><a href="javascript();">후기의 제목입니다.</a></td>
+                <td><a href="javascript();"><span>후기의 제목입니다.</span></a></td>
                 <td>2025. 02. 13 15:25</td>
                 <td>작성자의 아이디</td>
                 <td>
