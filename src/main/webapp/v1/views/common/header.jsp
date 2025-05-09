@@ -5,7 +5,7 @@
 	<div class="wrap">
 		<nav>
 			<h1>
-				<a href="${ctx}${main.link}">${main.name}</a>
+				<a href="${ctx}${main.link}"><img src="${ctx}/v1/static/images/logo-color.png" alt="${main.name} 페이지 이동"></a>
 			</h1>
 			<ul class="menu-list">
 				<c:forEach var="menu" items="${applicationScope.menuList}">
