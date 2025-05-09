@@ -3,6 +3,7 @@ package sobi.controller;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,7 +28,7 @@ public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HashMap<String, SobiAction> map = new HashMap<String, SobiAction>();
 	
-    public void init(ServletConfig config) throws ServletException{
+	public void init(ServletConfig config) throws ServletException{
 		String path = config.getServletContext().getRealPath("WEB-INF");
 		// System.out.println("path : "+path);
 		// path : /Users/wang_si/semi_sobi/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/semi_sobi/WEB-INF
@@ -44,7 +45,7 @@ public class FrontController extends HttpServlet {
 				System.out.println("key : " + key);
 				System.out.println("clsName : " + clsName);
 				*/
-				Object obj = Class.forName(clsName).newInstance();	// 객체화 처리 
+				Object obj = Class.forName(clsName).newInstance();	// 객체화 처리
 				map.put(key, (SobiAction)obj); // 객체화 해준 클래스 key, value 를 map 에 넣는다
 			}
 			System.out.println("front action 완료!");
@@ -55,7 +56,7 @@ public class FrontController extends HttpServlet {
 		
 		
 		try {
-			Reader menuReader = new FileReader(path + "/sobi.menu.properties");
+			Reader menuReader = new FileReader(path + "/sobi.menu.properties", StandardCharsets.UTF_8);
 			Properties menuProp = new Properties();
 			menuProp.load(menuReader);
 			System.out.println("메뉴 프로퍼티 로드 완료!");
@@ -64,7 +65,7 @@ public class FrontController extends HttpServlet {
 			for(int i = 2; i <= 5; i++) {
 				String name = menuProp.getProperty("menu."+i+".name");
 				String link = menuProp.getProperty("menu."+i+".link");
-
+				
 				if(name != null && link != null) {
 					menuList.add(new MenuVO(name,link));
 					System.out.println("기본 메뉴 : "+i+" / "+name+" / "+link);
@@ -79,7 +80,7 @@ public class FrontController extends HttpServlet {
 			otherMenu.put(7,"login");
 			otherMenu.put(8,"logout");
 			otherMenu.put(9,"mypage");
-			System.out.println(otherMenu); 
+			System.out.println(otherMenu);
 			
 			for(HashMap.Entry<Integer, String> entry : otherMenu.entrySet()) {
 				int menuNum = entry.getKey();
@@ -100,38 +101,45 @@ public class FrontController extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
 	/**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FrontController() {
-        super();
-    }
-
-    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		String uri =request.getRequestURI(); // 현재 주소 
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FrontController() {
+		super();
+	}
+	
+	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String uri =request.getRequestURI(); // 현재 주소
 		String cmd = uri.substring(uri.lastIndexOf("/") + 1); // 예: testAction.do
-
-	    // 액션 꺼내오기
-	    SobiAction action = map.get(cmd);
-	    if (action != null) {
-	        System.out.println(">>> 액션 실행: " + cmd + " → " + action.getClass().getName());
-	        String viewPage = action.process(request, response);  // 액션 실행
-
-	        if (viewPage != null) {
-	            if (viewPage.endsWith(".do")) {
-	                response.sendRedirect(viewPage);
-	            } else if (viewPage.endsWith(".jsp")) {
-	                request.setAttribute("contentPage", viewPage);
-	                RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
-	                dispatcher.forward(request, response);
-	            } else {
-	                response.setContentType("application/json;charset=UTF-8");
-	                response.getWriter().print(viewPage);
-	            }
-	        }
-	    }
 		
+		// v1 경로만 허용 체크!
+		if(!uri.startsWith(request.getContextPath() + "/v1/")) {
+			System.out.println("허용하지 않는 경로~ : "+uri);
+			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404 반환
+			// 나중에 빈화면 설명창으로 대체하기 
+		}
+		
+		
+		// 액션 꺼내오기
+		SobiAction action = map.get(cmd);
+		if(action != null) {
+			System.out.println(">>> 액션 실행: " + cmd + " → " + action.getClass().getName());
+			String viewPage = action.process(request, response);  // 액션 실행
+			
+			if(viewPage != null) {
+				if(viewPage.endsWith(".do")) {
+					response.sendRedirect(viewPage);
+				}else if (viewPage.endsWith(".jsp")) {
+					request.setAttribute("contentPage", viewPage);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
+					dispatcher.forward(request, response);
+				}else {
+					response.setContentType("application/json;charset=UTF-8");
+					response.getWriter().print(viewPage);
+				}
+			}
+		}
 		else {
 			// 액션이 없을경우
 			String page = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf(".")); // .do 를 뺀 주소
@@ -155,13 +163,9 @@ public class FrontController extends HttpServlet {
 			System.out.println("contentPage: " + contentPage);
 			System.out.println("-----------------");
 		}
-		
-		
-		
-
 	}
-    
-    
+	
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -170,13 +174,13 @@ public class FrontController extends HttpServlet {
 		System.out.println("doGet start!");
 		process(request,response);
 	}
-
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost start!");		
+		System.out.println("doPost start!");
 		process(request,response);
 	}
-
+	
 }

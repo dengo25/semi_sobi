@@ -11,9 +11,9 @@
 				<c:forEach var="menu" items="${applicationScope.menuList}">
 					<li>
 						<a href="${ctx}${menu.link}">${menu.name}</a>
-					</li>		
+					</li>
 				</c:forEach>
-			
+
 				<c:if test="${member.role == 'A'}">
 					<li>
 						<a href="${ctx}${admin.link}">${admin.name}</a>
@@ -25,10 +25,10 @@
 					<c:when test="${empty member}"> <%-- empty -> EL // memeber -> session  --%>
 						<li>
 							<a href="${ctx}${login.link}"><span>${login.name}</span></a>
-						</li>		
+						</li>
 					</c:when>
 					<c:otherwise>
-						<li>		
+						<li>
 							<a href="${ctx}${logout.link}"><span>${logout.name}</span></a>
 						</li>
 						<li>
