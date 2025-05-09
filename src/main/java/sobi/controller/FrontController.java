@@ -113,26 +113,33 @@ public class FrontController extends HttpServlet {
 		String uri =request.getRequestURI(); // 현재 주소
 		String cmd = uri.substring(uri.lastIndexOf("/") + 1); // 예: testAction.do
 		
+		// v1 경로만 허용 체크!
+		if(!uri.startsWith(request.getContextPath() + "/v1/")) {
+			System.out.println("허용하지 않는 경로~ : "+uri);
+			response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404 반환
+			// 나중에 빈화면 설명창으로 대체하기 
+		}
+		
+		
 		// 액션 꺼내오기
 		SobiAction action = map.get(cmd);
-		if (action != null) {
+		if(action != null) {
 			System.out.println(">>> 액션 실행: " + cmd + " → " + action.getClass().getName());
 			String viewPage = action.process(request, response);  // 액션 실행
 			
-			if (viewPage != null) {
-				if (viewPage.endsWith(".do")) {
+			if(viewPage != null) {
+				if(viewPage.endsWith(".do")) {
 					response.sendRedirect(viewPage);
-				} else if (viewPage.endsWith(".jsp")) {
+				}else if (viewPage.endsWith(".jsp")) {
 					request.setAttribute("contentPage", viewPage);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/v1/views/common/layout.jsp");
 					dispatcher.forward(request, response);
-				} else {
+				}else {
 					response.setContentType("application/json;charset=UTF-8");
 					response.getWriter().print(viewPage);
 				}
 			}
 		}
-		
 		else {
 			// 액션이 없을경우
 			String page = uri.substring(uri.lastIndexOf("/") + 1, uri.lastIndexOf(".")); // .do 를 뺀 주소
@@ -156,10 +163,6 @@ public class FrontController extends HttpServlet {
 			System.out.println("contentPage: " + contentPage);
 			System.out.println("-----------------");
 		}
-		
-		
-		
-		
 	}
 	
 	
