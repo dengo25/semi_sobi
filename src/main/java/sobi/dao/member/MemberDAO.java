@@ -33,7 +33,7 @@ public class MemberDAO {
   public MemberVO findByName(String name) {
     MemberVO u = new MemberVO();
     
-    String sql = "select * from MEMBER where member_id = ";
+    String sql = "select * from MEMBER where member_id = ?";
     try {
       Connection conn = ConnectionProvider.getConnection();
       PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -79,6 +79,7 @@ public class MemberDAO {
         u.setMemberEmail(rs.getString("member_email"));
         u.setMemberReg(rs.getTimestamp("member_reg"));
         u.setIsActive(rs.getString("is_active"));
+        u.setRole(rs.getString("role"));
         
       }
       ConnectionProvider.close(conn, pstmt, rs);

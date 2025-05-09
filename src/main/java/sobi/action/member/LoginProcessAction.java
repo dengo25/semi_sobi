@@ -25,7 +25,7 @@ public class LoginProcessAction implements SobiAction {
       System.out.println("[LoginProcessAction] 로그인 사용자 ROLE: " + memberVO.getRole());
       
       HttpSession session = request.getSession();
-      session.setAttribute("loginUser", memberVO);
+      session.setAttribute("loginMember", memberVO);
       return "redirect:/v1/views/main/main.do";
 
     } else {
