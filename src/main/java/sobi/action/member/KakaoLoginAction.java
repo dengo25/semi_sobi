@@ -120,7 +120,7 @@ public class KakaoLoginAction implements SobiAction {
 // 4. 로그인 처리 (세션에 MemberVO 저장)
       MemberVO loginMember = memberDAO.findByName(memberId);
       HttpSession session = request.getSession();
-      session.setAttribute("loginMember", loginMember);
+      session.setAttribute("member", loginMember);
 
 // 5. 메인 페이지로 이동
       response.sendRedirect(request.getContextPath() + "/v1/views/main/main.do");
