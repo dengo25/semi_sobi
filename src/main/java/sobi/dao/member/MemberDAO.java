@@ -10,6 +10,23 @@ import java.sql.SQLException;
 
 public class MemberDAO {
   
+  public int updateMemberPassword(String memberId, String memberPassword) {
+    int cnt = 0;
+    String sql = "update MEMBER set MEMBER_PASSWORD = ? WHERE MEMBER_ID =?";
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, memberPassword);
+      pstmt.setString(2, memberId);
+      cnt = pstmt.executeUpdate();
+      ConnectionProvider.close(conn, pstmt);
+    } catch (Exception e) {
+      System.out.println("업데이트 예외 발생" + e.getMessage());
+    }
+    return cnt;
+  }
+  
+  
   public MemberVO findMemberByIdAndEmail(String memberId, String memberEmail) {
     MemberVO member = null;
     String sql = "select * from MEMBER where MEMBER_ID = ? and MEMBER_EMAIL = ?";

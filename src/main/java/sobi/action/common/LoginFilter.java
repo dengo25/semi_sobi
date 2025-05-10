@@ -26,7 +26,8 @@ public class LoginFilter extends HttpFilter implements Filter {
       "findMemberIdOK.do",
       "findMemberPassword.do",//비밀번호 찾기
       "findMemberPasswordOK.do",
-      "memberChangePw.do" //비밀번호 변경 페이지
+      "memberChangePw.do", //비밀번호 변경 페이지
+      "memberChangePwOK.do"
       
   };
   

@@ -52,7 +52,7 @@
     <div class="login-wrap">
         <h1>비밀번호 변경하기</h1>
 
-        <form action="changePasswordOK.do" method="post">
+        <form action="memberChangePwOK.do" method="post">
             <input type="text" name="authCode" placeholder="인증번호를 입력하세요" required />
             <input type="password" name="newPassword" placeholder="새 비밀번호를 입력하세요" required />
             <input type="password" name="confirmPassword" placeholder="새 비밀번호를 한 번 더 입력하세요" required />

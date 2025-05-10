@@ -57,7 +57,7 @@ public class FindMemberPasswordActionOK implements SobiAction {
       
       // 인증코드와 아이디를 세션에 저장
       session.setAttribute("authenticationCode", authCode);
-      session.setAttribute("m_id", memberId);
+      session.setAttribute("memberId", memberId);
       
       // 비밀번호 변경 화면으로 리다이렉트
       return "redirect:memberChangePw.do";
