@@ -2,7 +2,7 @@ package sobi.action.member;
 
 import sobi.action.common.SobiAction;
 import sobi.dao.member.MemberDAO;
-import sobi.util.NaverMailSend;
+import sobi.util.email.NaverMailSend;
 import sobi.vo.member.MemberVO;
 
 import javax.servlet.ServletException;

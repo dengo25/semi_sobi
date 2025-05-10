@@ -1,4 +1,4 @@
-package sobi.util;
+package sobi.util.email;
 
 import sobi.db.ConnectionProvider;
 
