@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="sobi.db.ConnectionProvider" %>
 <main>
@@ -122,6 +123,13 @@
       <button class="sns-facebook">페이스북 아이디로 로그인</button>
     </div>
   </div>
+
+  <c:if test="${not empty error}">
+    <script>
+      alert('${error}');
+    </script>
+  </c:if>
+
 </main>
 
 <!-- ✅ JS SDK + 로그인 호출 -->
@@ -140,3 +148,4 @@
     });
   }
 </script>
+
