@@ -114,8 +114,9 @@ public class KakaoLoginAction implements SobiAction {
         memberId = socialDAO.registerNewSocialMember("kakao", kakaoId, email,nickName);
       } else {
         // 기존 회원 → 소셜 연동만 확인해서 추가
-        socialDAO.insertSocial(memberId, "kakao", kakaoId);
-      }
+        if (socialDAO.findMemberIdBySocial("kakao", kakaoId) == null) {
+          socialDAO.insertSocial(memberId, "kakao", kakaoId);
+        }      }
 
 // 4. 로그인 처리 (세션에 MemberVO 저장)
       MemberVO loginMember = memberDAO.findByName(memberId);
