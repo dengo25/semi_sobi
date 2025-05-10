@@ -19,6 +19,7 @@
           <th>받는 사람</th>
           <th>제목</th>
           <th>보낸 날짜</th>
+          <th>읽음 여부</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +32,16 @@
               </a>
             </td>
             <td><fmt:formatDate value="${msg.messageSendDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+            <td>
+              <c:choose>
+                <c:when test="${msg.messageIsRead eq 'Y'}">
+                  <span style="color: gray;">읽음</span>
+                </c:when>
+                <c:otherwise>
+                  <span style="color: blue; font-weight: bold;">안읽음</span>
+                </c:otherwise>
+              </c:choose>
+            </td>
           </tr>
         </c:forEach>
       </tbody>

@@ -50,39 +50,42 @@ public class MessageDAO {
 
     // 보낸 쪽지목록
 	public List<MessageVO> getSentMessages(String memberId) throws SQLException {
-        List<MessageVO> list = new ArrayList<>();
+	    List<MessageVO> list = new ArrayList<>();
 
-        String sql =
-            "SELECT M.MESSAGE_ID, M.RECEIVER_ID, M.MESSAGE_TITLE, M.MESSAGE_SEND_DATE, " +
-            "       U.MEMBER_NAME AS RECEIVER_NAME " +
-            "FROM MESSAGE M " +
-            "JOIN MEMBER U ON M.RECEIVER_ID = U.MEMBER_ID " +
-            "WHERE M.SENDER_ID = ? AND M.DELETED_BY_SENDER != 'Y' " +
-            "ORDER BY M.MESSAGE_SEND_DATE DESC";
+	    String sql =
+	        "SELECT M.MESSAGE_ID, M.RECEIVER_ID, M.MESSAGE_TITLE, M.MESSAGE_SEND_DATE, " +
+	        "       M.MESSAGE_IS_READ, " + // 읽음 여부 추가
+	        "       U.MEMBER_NAME AS RECEIVER_NAME " +
+	        "FROM MESSAGE M " +
+	        "JOIN MEMBER U ON M.RECEIVER_ID = U.MEMBER_ID " +
+	        "WHERE M.SENDER_ID = ? AND M.DELETED_BY_SENDER != 'Y' " +
+	        "ORDER BY M.MESSAGE_SEND_DATE DESC";
 
-        try (Connection conn = ConnectionProvider.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, memberId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    MessageVO vo = new MessageVO();
-                    vo.setMessageId(rs.getInt("MESSAGE_ID"));
+	    try (Connection conn = ConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, memberId);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                MessageVO vo = new MessageVO();
+	                vo.setMessageId(rs.getInt("MESSAGE_ID"));
 
-                    
-                    String receiverId = rs.getString("RECEIVER_ID");
-                    String receiverName = rs.getString("RECEIVER_NAME");
-                    vo.setReceiverId(receiverName + " (" + receiverId + ")");
+	                String receiverId = rs.getString("RECEIVER_ID");
+	                String receiverName = rs.getString("RECEIVER_NAME");
+	                vo.setReceiverId(receiverName + " (" + receiverId + ")");
 
-                    vo.setMessageTitle(rs.getString("MESSAGE_TITLE"));
-                    vo.setMessageSendDate(rs.getTimestamp("MESSAGE_SEND_DATE"));
+	                vo.setMessageTitle(rs.getString("MESSAGE_TITLE"));
+	                vo.setMessageSendDate(rs.getTimestamp("MESSAGE_SEND_DATE"));
 
-                    list.add(vo);
-                }
-            }
-        }
+	                // 읽음 여부
+	                vo.setMessageIsRead(rs.getString("MESSAGE_IS_READ"));
 
-        return list;
-    }
+	                list.add(vo);
+	            }
+	        }
+	    }
+
+	    return list;
+	}
 
 	public MessageVO getMessageById(int messageId) throws SQLException {
         MessageVO message = null;
@@ -117,4 +120,14 @@ public class MessageDAO {
 
         return message;
     }
+	//쪽지 읽음
+	public void updateMessageRead(int messageId) throws SQLException {
+	    String sql = "UPDATE MESSAGE SET MESSAGE_IS_READ = 'Y' WHERE MESSAGE_ID = ?";
+	    
+	    try (Connection conn = ConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setInt(1, messageId);
+	        pstmt.executeUpdate();
+	    }
+	}
 }

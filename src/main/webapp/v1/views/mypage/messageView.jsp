@@ -17,6 +17,9 @@
             int messageId = Integer.parseInt(idParam);
             MessageDAO dao = new MessageDAO();
             message = dao.getMessageById(messageId);
+            if (message != null && loginId != null && loginId.equals(message.getReceiverId())) {
+                dao.updateMessageRead(messageId);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

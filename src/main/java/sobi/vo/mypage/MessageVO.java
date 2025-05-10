@@ -1,4 +1,3 @@
-
 package sobi.vo.mypage;
 
 import java.sql.Timestamp;
@@ -13,6 +12,8 @@ public class MessageVO {
     private String messageIsRead;
     private String deletedBySender;
     private String deletedByReceiver;
+
+    // Getter/Setter
 
     public int getMessageId() {
         return messageId;
