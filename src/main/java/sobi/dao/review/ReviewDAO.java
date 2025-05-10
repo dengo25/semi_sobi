@@ -15,7 +15,7 @@ public class ReviewDAO {
     // 후기 전체 조회
     public List<ReviewVO> getAllReviews() {
         List<ReviewVO> reviewList = new ArrayList<>();
-        String sql = "SELECT * FROM REVIEW ORDER BY REVIEW_ID DESC";
+        String sql = "SELECT * FROM REVIEW WHERE IS_DELETED = 'N' ORDER BY REVIEW_ID DESC";
 
         try {
             conn = ConnectionProvider.getConnection();
@@ -23,20 +23,7 @@ public class ReviewDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                ReviewVO vo = new ReviewVO();
-                vo.setReviewId(rs.getInt("review_id"));
-                vo.setMemberId(rs.getString("member_id"));
-                vo.setProductName(rs.getString("product_name"));
-                vo.setTitle(rs.getString("review_title"));
-                vo.setRating(rs.getInt("rating"));
-                vo.setCategoryId(rs.getInt("review_category_id"));
-                vo.setContent(rs.getString("content"));
-                vo.setImageUrl(rs.getString("image_url"));
-                vo.setCreatedAt(rs.getTimestamp("created_at"));
-                vo.setUpdatedAt(rs.getTimestamp("updated_at"));
-                vo.setNoticeDeleteDate(rs.getTimestamp("notice_delete_date"));
-                vo.setIsDeleted(rs.getString("is_deleted"));
-                vo.setConfirmed(rs.getString("confirmed"));
+                ReviewVO vo = extractReviewVO(rs);
                 reviewList.add(vo);
             }
         } catch (Exception e) {
@@ -48,7 +35,7 @@ public class ReviewDAO {
         return reviewList;
     }
 
-    // 후기 등록 후 생성된 리뷰 ID 반환
+    // 후기 등록
     public int insertReview(ReviewVO vo) {
         int generatedId = 0;
         String sql = "INSERT INTO REVIEW(MEMBER_ID, PRODUCT_NAME, REVIEW_TITLE, RATING, REVIEW_CATEGORY_ID, CONTENT, IMAGE_URL, CREATED_AT, UPDATED_AT, IS_DELETED, CONFIRMED) " +
@@ -66,7 +53,6 @@ public class ReviewDAO {
             pstmt.setString(7, vo.getImageUrl());
 
             pstmt.executeUpdate();
-
             rs = pstmt.getGeneratedKeys();
             if (rs.next()) {
                 generatedId = rs.getInt(1);
@@ -123,5 +109,151 @@ public class ReviewDAO {
         }
 
         return result;
+    }
+
+    // 카테고리별 리뷰 조회
+    public List<ReviewVO> getReviewByCategory(int categoryId) {
+        List<ReviewVO> list = new ArrayList<>();
+        String sql = "SELECT * FROM REVIEW WHERE REVIEW_CATEGORY_ID = ? AND IS_DELETED = 'N' ORDER BY REVIEW_ID DESC";
+
+        try {
+            conn = ConnectionProvider.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, categoryId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ReviewVO vo = extractReviewVO(rs);
+                list.add(vo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionProvider.close(conn, pstmt);
+        }
+        return list;
+    }
+
+    // 좋아요 순으로 리뷰 조회
+    public List<ReviewVO> getReviewOrderByLikes() {
+        List<ReviewVO> list = new ArrayList<>();
+        String sql = "SELECT R.*, COUNT(L.REVIEW_ID) AS LIKE_COUNT " +
+                     "FROM REVIEW R LEFT JOIN REVIEW_LIKE L ON R.REVIEW_ID = L.REVIEW_ID " +
+                     "WHERE R.IS_DELETED = 'N' " +
+                     "GROUP BY R.REVIEW_ID " +
+                     "ORDER BY LIKE_COUNT DESC";
+
+        try {
+            conn = ConnectionProvider.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ReviewVO vo = extractReviewVO(rs);
+                vo.setLikeCount(rs.getInt("LIKE_COUNT"));
+                list.add(vo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionProvider.close(conn, pstmt);
+        }
+
+        return list;
+    }
+
+    // 키워드 검색 (제목, 작성자 ID, 내용)
+    public List<ReviewVO> searchReview(String keyword) {
+        List<ReviewVO> list = new ArrayList<>();
+        String sql = "SELECT * FROM REVIEW WHERE " +
+                     "(REVIEW_TITLE LIKE ? OR MEMBER_ID LIKE ? OR CONTENT LIKE ?) " +
+                     "AND IS_DELETED = 'N' ORDER BY REVIEW_ID DESC";
+
+        try {
+            conn = ConnectionProvider.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            String like = "%" + keyword + "%";
+            pstmt.setString(1, like);
+            pstmt.setString(2, like);
+            pstmt.setString(3, like);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                ReviewVO vo = extractReviewVO(rs);
+                list.add(vo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionProvider.close(conn, pstmt);
+        }
+
+        return list;
+    }
+    
+    // 리뷰번호로 후기를 불러오는 메소드
+    public ReviewVO getReviewById(int reviewId) {
+        ReviewVO vo = null;
+        String sql = "SELECT * FROM REVIEW WHERE REVIEW_ID = ? AND IS_DELETED = 'N'";
+
+        try {
+            conn = ConnectionProvider.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, reviewId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                vo = extractReviewVO(rs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionProvider.close(conn, pstmt);
+        }
+
+        return vo;
+    }
+    
+    // 운영자가 블라인드 처리할 수 있는 메서드
+    public int setReviewBlindStatus(int reviewId, boolean blind) {
+        int result = 0;
+        String sql;
+
+        if (blind) {
+            sql = "UPDATE REVIEW SET IS_DELETED = 'Y', NOTICE_DELETE_DATE = NOW() WHERE REVIEW_ID = ?";
+        } else {
+            sql = "UPDATE REVIEW SET IS_DELETED = 'N', NOTICE_DELETE_DATE = NULL WHERE REVIEW_ID = ?";
+        }
+
+        try {
+            conn = ConnectionProvider.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, reviewId);
+            result = pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionProvider.close(conn, pstmt);
+        }
+
+        return result;
+    }
+
+    // 공통 ReviewVO 추출 메서드
+    private ReviewVO extractReviewVO(ResultSet rs) throws SQLException {
+        ReviewVO vo = new ReviewVO();
+        vo.setReviewId(rs.getInt("REVIEW_ID"));
+        vo.setMemberId(rs.getString("MEMBER_ID"));
+        vo.setProductName(rs.getString("PRODUCT_NAME"));
+        vo.setTitle(rs.getString("REVIEW_TITLE"));
+        vo.setRating(rs.getInt("RATING"));
+        vo.setCategoryId(rs.getInt("REVIEW_CATEGORY_ID"));
+        vo.setContent(rs.getString("CONTENT"));
+        vo.setImageUrl(rs.getString("IMAGE_URL"));
+        vo.setCreatedAt(rs.getTimestamp("CREATED_AT"));
+        vo.setUpdatedAt(rs.getTimestamp("UPDATED_AT"));
+        vo.setNoticeDeleteDate(rs.getTimestamp("NOTICE_DELETE_DATE"));
+        vo.setIsDeleted(rs.getString("IS_DELETED"));
+        vo.setConfirmed(rs.getString("CONFIRMED"));
+        return vo;
     }
 }
