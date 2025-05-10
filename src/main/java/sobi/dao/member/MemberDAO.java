@@ -10,13 +10,33 @@ import java.sql.SQLException;
 
 public class MemberDAO {
   
+  public String  findMemberId(String memberName, String memberEmail) {
+    String sql = "select MEMBER_ID from MEMBER where MEMBER_NAME = ? and MEMBER_EMAIL = ?";
+    String memberId = null;
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, memberName);
+      pstmt.setString(2, memberEmail);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        memberId = rs.getString("MEMBER_ID");
+      }
+      ConnectionProvider.close(conn, pstmt, rs);
+    } catch (Exception e) {
+      System.out.println("예외발생 + "+e.getMessage());
+    }
+    return memberId;
+  }
+
+  
   public boolean isIdExist(String id) { //아이디 중복확인
     boolean result = false;
     String sql = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID = ?";
     
-    try (Connection conn = ConnectionProvider.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1, id);
       ResultSet rs = pstmt.executeQuery();
       if (rs.next()) {
