@@ -98,6 +98,12 @@
             `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
         if (popup) popup.focus();
     }
+    //창닫으면 즉시 새로고침
+    window.onunload = function () {
+        if (window.opener && !window.opener.closed) {
+            window.opener.location.reload();
+        }
+    };
 </script>
 
 </body>
