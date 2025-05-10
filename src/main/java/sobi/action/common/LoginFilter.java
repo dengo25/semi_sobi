@@ -23,7 +23,11 @@ public class LoginFilter extends HttpFilter implements Filter {
       "naver_login_callback.do", // 네이버 로그인 콜백 (구현예정)
       "main.do", "faq.do", "notice.do", "reviewList.do","review_list.do", //상단 헤더 메뉴
       "findMemberId.do", //아이디 찾기
-      "findMemberIdOK.do"
+      "findMemberIdOK.do",
+      "findMemberPassword.do",//비밀번호 찾기
+      "findMemberPasswordOK.do",
+      "memberChangePw.do" //비밀번호 변경 페이지
+      
   };
   
   @Override
@@ -49,6 +53,7 @@ public class LoginFilter extends HttpFilter implements Filter {
     Object loginUser = (session != null) ? session.getAttribute("member") : null;
     
     if (loginUser == null) {
+      System.out.println("[LoginFilter] 인증되지 않은 요청 차단됨 ");
       response.sendRedirect("login.do");
     } else {
       chain.doFilter(request, response);

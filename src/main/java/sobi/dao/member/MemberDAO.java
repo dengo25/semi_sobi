@@ -10,6 +10,29 @@ import java.sql.SQLException;
 
 public class MemberDAO {
   
+  public MemberVO findMemberByIdAndEmail(String memberId, String memberEmail) {
+    MemberVO member = null;
+    String sql = "select * from MEMBER where MEMBER_ID = ? and MEMBER_EMAIL = ?";
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, memberId);
+      pstmt.setString(2, memberEmail);
+      
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        member = new MemberVO();
+        member.setMemberId(rs.getString("member_id"));
+        member.setMemberEmail(rs.getString("member_email"));
+        
+      }
+      ConnectionProvider.close(conn, pstmt, rs);
+    } catch (Exception e) {
+      System.out.println("예외발생 " + e.getMessage());
+    }
+    return member;
+  }
+  
   public String  findMemberId(String memberName, String memberEmail) {
     String sql = "select MEMBER_ID from MEMBER where MEMBER_NAME = ? and MEMBER_EMAIL = ?";
     String memberId = null;
