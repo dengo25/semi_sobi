@@ -1,35 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%
-    // JSP에서 전달된 파라미터 받기
-    String receiverId = request.getParameter("receiverId");
-%>
-
+<html>
+<head>
+  <title>쪽지 쓰기</title>
+</head>
+<body>
 <main>
-    <h2> 쪽지 쓰기</h2>
-
-    <form action="sendMessage.do" method="post">
-        <table cellpadding="8" style="width: 100%; border-collapse: collapse;">
-            <tr>
-                <th align="left" style="width: 120px;">받는 사람 ID</th>
-                 <button type="button" onclick="toggleRecentList()">+</button>
-                <td>
-                    <input type="text" name="receiverId" value="<%= receiverId != null ? receiverId : "" %>" required style="width: 300px;">
-                </td>
-            </tr>
-            <tr>
-                <th align="left">제목</th>
-                <td><input type="text" name="messageTitle" required style="width: 500px;"></td>
-            </tr>
-            <tr>
-                <th align="left">내용</th>
-                <td><textarea name="messageContent" rows="8" required style="width: 500px;"></textarea></td>
-            </tr>
-        </table>
-
-        <div style="margin-top: 20px;">
-            <button type="submit">보내기</button>
-            <button type="reset">다시 쓰기</button>
-        </div>
-    </form>
+  <h2>쪽지 쓰기</h2>
+  <form action="sendMessage.do" method="post">
+    <label>받는 사람 ID: <input type="text" name="receiverId" value="${param.receiverId}" /></label><br/><br/>
+    <label>제목: <input type="text" name="messageTitle" /></label><br/><br/>
+    <label>내용:<br/>
+      <textarea name="messageContent" rows="10" cols="50"></textarea>
+    </label><br/><br/>
+    <input type="submit" value="보내기" />
+  </form>
 </main>
+</body>
+</html>

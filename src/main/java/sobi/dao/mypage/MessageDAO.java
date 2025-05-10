@@ -83,4 +83,38 @@ public class MessageDAO {
 
         return list;
     }
+
+	public MessageVO getMessageById(int messageId) throws SQLException {
+        MessageVO message = null;
+
+        String sql = "SELECT * FROM MESSAGE WHERE MESSAGE_ID = ?";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConnectionProvider.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, messageId);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                message = new MessageVO();
+                message.setMessageId(rs.getInt("MESSAGE_ID"));
+                message.setSenderId(rs.getString("SENDER_ID"));
+                message.setReceiverId(rs.getString("RECEIVER_ID"));
+                message.setMessageTitle(rs.getString("MESSAGE_TITLE"));
+                message.setMessageContent(rs.getString("MESSAGE_CONTENT"));
+                message.setMessageSendDate(rs.getTimestamp("MESSAGE_SEND_DATE"));
+                message.setMessageIsRead(rs.getString("MESSAGE_IS_READ"));
+                message.setDeletedBySender(rs.getString("DELETED_BY_SENDER"));
+                message.setDeletedByReceiver(rs.getString("DELETED_BY_RECEIVER"));
+            }
+        } finally {
+            ConnectionProvider.close(conn, pstmt, rs);
+        }
+
+        return message;
+    }
 }
