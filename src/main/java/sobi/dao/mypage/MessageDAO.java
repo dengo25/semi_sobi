@@ -130,4 +130,38 @@ public class MessageDAO {
 	        pstmt.executeUpdate();
 	    }
 	}
+	//받은쪽지 삭제 
+	 public void deleteReceivedMessages(List<Integer> messageIds, String receiverId) throws SQLException {
+	        String sql = "UPDATE MESSAGE SET DELETED_BY_RECEIVER = 'Y' "
+	                   + "WHERE MESSAGE_ID = ? AND RECEIVER_ID = ?";
+
+	        try (Connection conn = ConnectionProvider.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	            for (int messageId : messageIds) {
+	                pstmt.setInt(1, messageId);
+	                pstmt.setString(2, receiverId);
+	                pstmt.addBatch(); // 일괄처리
+	            }
+
+	            pstmt.executeBatch(); // 한번에실행
+	        }
+	    }
+	//보낸쪽지 삭제(논리)
+	  public void deleteSentMessages(List<Integer> messageIds, String senderId) throws SQLException {
+	        String sql = "UPDATE MESSAGE SET DELETED_BY_SENDER = 'Y' "
+	                   + "WHERE MESSAGE_ID = ? AND SENDER_ID = ?";
+
+	        try (Connection conn = ConnectionProvider.getConnection();
+	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	            for (int messageId : messageIds) {
+	                pstmt.setInt(1, messageId);
+	                pstmt.setString(2, senderId);
+	                pstmt.addBatch();
+	            }
+
+	            pstmt.executeBatch();
+	        }
+	    }
 }
