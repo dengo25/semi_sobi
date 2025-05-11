@@ -41,6 +41,6 @@ public class SentDeleteAction implements SobiAction {
             }
         }
 
-        return "redirect:/v1/views/mypage/sent.jsp"; 
+        return "redirect:/sent.do"; 
     }
 }

@@ -41,6 +41,6 @@ public class InboxDeleteAction implements SobiAction {
             }
         }
 
-        return "redirect:/v1/views/mypage/inbox.jsp"; // 
+        return "redirect:/inbox.do"; // 
     }
 }
