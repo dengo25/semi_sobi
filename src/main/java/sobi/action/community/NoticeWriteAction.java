@@ -18,8 +18,12 @@ public class NoticeWriteAction implements SobiAction {
 		HttpSession session = request.getSession();
 
 		MemberVO memberInfo = (MemberVO) session.getAttribute("member");
-		String memberId = memberInfo.getMemberId();
+		if (memberInfo == null || !"A".equals(memberInfo.getRole())) {
+		    request.setAttribute("errorMsg", "관리자만 접근 가능합니다.");
+		    return "/v1/views/community/notice.jsp";
+		}
 		
+		String memberId = memberInfo.getMemberId();
 		request.setAttribute("memberId",memberId);
 		
 		System.out.println("session : "+ memberId);

@@ -14,14 +14,15 @@ public class NoticeVO {
 	private	String isDeleted;
 	private	String isVisible;
 	private	int noticeImageNumber;
+	private NoticeImageVO noticeImageVO;
 	
 	public NoticeVO() {
 		super();
 	}
 
-	public NoticeVO(int rowNo, int noticeNo, String noticeTitle, String noticeContent, int count,
-			Date noticeCreateDate, Date noticeEditDate, Date notieceDeleteDate, String isDeleted, String isVisible,
-			int noticeImageNumber) {
+	public NoticeVO(int rowNo, int noticeNo, String noticeTitle, String noticeContent, int count, Date noticeCreateDate,
+			Date noticeEditDate, Date notieceDeleteDate, String isDeleted, String isVisible, int noticeImageNumber,
+			NoticeImageVO noticeImageVO) {
 		super();
 		this.rowNo = rowNo;
 		this.noticeNo = noticeNo;
@@ -34,6 +35,7 @@ public class NoticeVO {
 		this.isDeleted = isDeleted;
 		this.isVisible = isVisible;
 		this.noticeImageNumber = noticeImageNumber;
+		this.noticeImageVO = noticeImageVO;
 	}
 
 	public int getRowNo() {
@@ -44,11 +46,11 @@ public class NoticeVO {
 		this.rowNo = rowNo;
 	}
 
-	public int getnoticeNo() {
+	public int getNoticeNo() {
 		return noticeNo;
 	}
 
-	public void setnoticeNo(int noticeNo) {
+	public void setNoticeNo(int noticeNo) {
 		this.noticeNo = noticeNo;
 	}
 
@@ -122,5 +124,13 @@ public class NoticeVO {
 
 	public void setNoticeImageNumber(int noticeImageNumber) {
 		this.noticeImageNumber = noticeImageNumber;
+	}
+
+	public NoticeImageVO getNoticeImageVO() {
+		return noticeImageVO;
+	}
+
+	public void setNoticeImageVO(NoticeImageVO noticeImageVO) {
+		this.noticeImageVO = noticeImageVO;
 	}
 }

@@ -3,6 +3,7 @@ package sobi.dao.community;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -37,7 +38,7 @@ public class NoticeDAO {
 		int offset = start - 1;			// mysql 용 변환 
 		int count = end - start + 1;	// mysql 용 변환 
 		
-		String sql = "SELECT ROW_NUMBER() OVER (ORDER BY NOTICE_NO DESC) AS ROWNO,"
+		String sql = "SELECT NOTICE_NO, ROW_NUMBER() OVER (ORDER BY NOTICE_NO DESC) AS ROWNO,"
 		           + " NOTICE_TITLE, NOTICE_CONTENT, COUNT, NOTICE_CREATE_DATE"
 		           + " FROM NOTICE"
 		           + " WHERE IS_DELETED = 'N'"
@@ -55,11 +56,12 @@ public class NoticeDAO {
 
 			while(rs.next()) {
 				NoticeVO vo = new NoticeVO();
-				vo.setRowNo(rs.getInt(1));
-				vo.setNoticeTitle(rs.getString(2));
-				vo.setNoticeContent(rs.getString(3));
-				vo.setCount(rs.getInt(4));
-				vo.setNoticeCreateDate(rs.getDate(5));
+				vo.setNoticeNo(rs.getInt(1));
+				vo.setRowNo(rs.getInt(2));
+				vo.setNoticeTitle(rs.getString(3));
+				vo.setNoticeContent(rs.getString(4));
+				vo.setCount(rs.getInt(5));
+				vo.setNoticeCreateDate(rs.getDate(6));
 				
 				list.add(vo);
 			}
@@ -95,12 +97,75 @@ public class NoticeDAO {
 	
 	
 	// 선택된 게시글의 상세 내용을 반환한다.
-	public int getDetail() {
-		int re = -1;
-		
-		
-		return re;
+	public NoticeVO getDetail(int no) {
+		NoticeVO nvo = new NoticeVO();
+		String 	sql = "SELECT * FROM NOTICE "
+				+ " WHERE NOTICE_NO = ? ";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			pstm.setInt(1,no);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next()) {
+				nvo = new NoticeVO();
+				nvo.setNoticeNo(rs.getInt("NOTICE_NO"));
+				nvo.setNoticeTitle(rs.getString("NOTICE_TITLE"));
+				nvo.setNoticeContent(rs.getString("NOTICE_CONTENT"));
+				nvo.setNoticeCreateDate(rs.getDate("NOTICE_CREATE_DATE"));
+				nvo.setNoticeImageNumber(rs.getInt("NOTICE_IMAGE_NUMBER"));
+			}
+			ConnectionProvider.close(conn, pstm, rs);
+		} catch (Exception e) {
+			System.out.println("getDetail Exception : "+e.getMessage());
+			e.printStackTrace();
+		}
+		return nvo;
 	}
+	
+	
+	// 글을 선택시 조회수가 증가하게 한다
+	public void increaseCount(int no) {
+		String sql="UPDATE NOTICE SET COUNT = COUNT + 1 WHERE NOTICE_NO = ?";
+		
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, no);
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("increaseCount Exception : "+e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	// 선택한 게시글의 이미지 목록만 따로 가져오기
+	public ArrayList<NoticeImageVO> getImgByNoticeNo (int no){
+		ArrayList<NoticeImageVO> list = new ArrayList<>();
+		String sql = "SELECT * FROM NOTICE_IMAGE "
+				+ "WHERE NOTICE_NO = ? ORDER BY IMAGE_NUMBER ASC";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, no);
+			ResultSet rs = pstm.executeQuery();
+			while (rs.next()) {
+				NoticeImageVO nivo = new NoticeImageVO();
+				nivo.setNoticeNo(rs.getInt(1));
+				nivo.setImageNumber(rs.getInt(2));
+				nivo.setFileUrl(rs.getString(3));
+				nivo.setUploadTime(rs.getDate(4));
+				nivo.setOriginalFileName(rs.getString(5));
+				nivo.setFileType(rs.getString(6));
+				list.add(nivo);
+			}
+		} catch (Exception e) {
+			System.out.println("getImgByNoticeNo Exception : "+e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
 	
 	
 	// 	새로운 게시글 등록시 작성 내용을 등록 한다.
@@ -137,34 +202,8 @@ public class NoticeDAO {
 	}
 	
 	
-	// 선택한 게시글 수정할 내용을 반환 한다.
-	public int editDetail(NoticeVO nvo) {
-		int re = -1;
-		
-		
-		return re;
-	}
-	
-	
-	// 선택한 게시글을 삭제한다.
-	public int setDelete(int no) {
-		int re = -1;
-		
-		
-		return re;
-	}
-	
-	
-	// 공지사항중 최근 글 2건을 반환한다.
-	public ArrayList<NoticeVO> getNewNotice() {
-		ArrayList<NoticeVO> list = null;
-		
-		return list;
-	}
-	
-	
 	// NOTICE_IMAGE 테이블에 한 건의 이미지 메타정보를 삽입
-    public int insertImage(NoticeImageVO vo) {
+    public int insertImage(NoticeImageVO nivo) {
         int re = -1;
         String sql = "INSERT INTO NOTICE_IMAGE "
         		   + " (NOTICE_NO, FILE_URL, UPLOAD_TIME, ORIGINAL_FILE_NAME, FILE_TYPE)"
@@ -173,10 +212,10 @@ public class NoticeDAO {
     		Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(sql);
     			
-            psmt.setInt(1, vo.getNoticeNo());
-            psmt.setString(2, vo.getFileUrl());
-            psmt.setString(3, vo.getOriginalFileName());
-            psmt.setString(4, vo.getFileType());
+            psmt.setInt(1, nivo.getNoticeNo());
+            psmt.setString(2, nivo.getFileUrl());
+            psmt.setString(3, nivo.getOriginalFileName());
+            psmt.setString(4, nivo.getFileType());
             re = psmt.executeUpdate();
             
             ConnectionProvider.close(conn, psmt);
@@ -187,4 +226,116 @@ public class NoticeDAO {
         return re;
     }
 	
+	
+	// 선택한 게시글 수정할 내용을 반환 한다.
+	public int editDetail(NoticeVO nvo) {
+		int re = -1;
+		String sql = "UPDATE NOTICE n SET "
+				+ " NOTICE_TITLE = ?, NOTICE_CONTENT = ?, NOTICE_EDIT_DATE = SYSDATE(), NOTICE_IMAGE_NUMBER = ?"
+				+ " WHERE NOTICE_NO = ?";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			psmt.setString(1, nvo.getNoticeTitle());
+			psmt.setString(2, nvo.getNoticeContent());
+			psmt.setInt(3, nvo.getNoticeImageNumber());
+			psmt.setInt(4,nvo.getNoticeNo());
+			re = psmt.executeUpdate();
+
+			ConnectionProvider.close(conn, psmt);
+		} catch (Exception e) {
+			System.out.println("editDetail Exception : "+e.getMessage());
+			e.printStackTrace();
+		}
+		return re;
+	}
+	
+	
+	// 선택한 게시글을 수정시 이미지를 선택적으로 삭제 할경우 결과를 반환한다.
+	public int deleteImg(ArrayList<String> fileUrls) {
+	    if (fileUrls == null || fileUrls.isEmpty()) return 0;
+
+	    int re = 0;
+	    String sql = "DELETE FROM NOTICE_IMAGE WHERE FILE_URL IN (";
+	    for (int i = 0; i < fileUrls.size(); i++) {
+	        sql += "?";
+	        if (i < fileUrls.size() - 1) {
+	            sql += ", ";
+	        }
+	    }
+	    sql += ")";
+
+	    try {
+	        Connection conn = ConnectionProvider.getConnection();
+	        PreparedStatement psmt = conn.prepareStatement(sql);
+	        for (int i = 0; i < fileUrls.size(); i++) {
+	            psmt.setString(i + 1, fileUrls.get(i));
+	        }
+	        re = psmt.executeUpdate();
+	        ConnectionProvider.close(conn, psmt);
+	    } catch (Exception e) {
+	        System.out.println("deleteImg Exception: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+	    return re;
+	}
+
+	
+	// 선택한 게시글을 삭제한다.
+	public int setDelete(int no) {
+		int re = -1;
+		String sql = "UPDATE NOTICE SET IS_DELETED = 'Y', IS_VISIBLE = 'N', NOTICE_DELETE_DATE = SYSDATE() WHERE NOTICE_NO = ?";
+		
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, no);
+			re = pstm.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("setDelete Exception: " + e.getMessage());
+	        e.printStackTrace();
+		}
+		return re;
+	}
+	
+	
+	// 공지사항 중 최근 글 2건을 반환한다.(썸네일 포함)
+	public ArrayList<NoticeVO> getNewNotice() {
+		ArrayList<NoticeVO> list = new ArrayList<>();
+		String sql = "SELECT n.NOTICE_TITLE, n.NOTICE_CONTENT, n.NOTICE_IMAGE_NUMBER, ni.FILE_URL "
+				+ " FROM NOTICE n LEFT JOIN ( "
+				+ "	SELECT NOTICE_NO, FILE_URL "
+				+ "	FROM NOTICE_IMAGE ni "
+				+ "	WHERE IMAGE_NUMBER IN ( "
+				+ "		SELECT MIN(IMAGE_NUMBER) "
+				+ "		FROM NOTICE_IMAGE "
+				+ "		GROUP BY NOTICE_NO "
+				+ "	) "
+				+ " )ni ON n.NOTICE_NO = ni.NOTICE_NO "
+				+ " WHERE n.IS_VISIBLE = 'Y' "
+				+ " ORDER BY  n.NOTICE_CREATE_DATE DESC "
+				+ " LIMIT 2 ";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next()){
+				NoticeVO nvo = new NoticeVO();
+				nvo.setNoticeTitle(rs.getString(1));
+				nvo.setNoticeContent(rs.getString(2));
+				nvo.setNoticeImageNumber(rs.getInt(3));
+			
+				NoticeImageVO nivo = new NoticeImageVO();
+				nivo.setFileUrl(rs.getString(4));
+				
+				nvo.setNoticeImageVO(nivo);
+				list.add(nvo);
+			}
+		} catch (Exception e) {
+			System.out.println("getNewNotice Exception : "+e.getMessage());
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

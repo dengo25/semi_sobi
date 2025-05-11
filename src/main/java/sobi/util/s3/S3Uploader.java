@@ -62,4 +62,32 @@ public class S3Uploader {
       return "https://" + BUCKET_NAME + ".s3." + REGION + ".amazonaws.com/" + fileName;
     }
   }
+  
+  
+  /**
+   * S3에서 특정 파일 URL에 해당하는 객체 삭제
+   */
+  public static void delete(String fileUrl) {
+      try {
+          String key = extractKeyFromUrl(fileUrl);
+          s3Client.deleteObject(BUCKET_NAME, key);
+          System.out.println("S3 이미지 삭제 완료: " + key);
+      } catch (Exception e) {
+          System.out.println("S3Uploader.delete 실패: " + e.getMessage());
+          e.printStackTrace();
+      }
+  }
+  
+  
+  /**
+   * S3 퍼블릭 URL에서 key 경로만 추출
+   * 예: https://kosta-blog.s3.ap-northeast-2.amazonaws.com/notice/abc.png → notice/abc.png
+   */
+  private static String extractKeyFromUrl(String url) {
+      String baseUrl = "https://" + BUCKET_NAME + ".s3." + REGION + ".amazonaws.com/";
+      if (!url.startsWith(baseUrl)) {
+          throw new IllegalArgumentException("S3 URL 형식이 올바르지 않습니다: " + url);
+      }
+      return url.substring(baseUrl.length());
+  }
 }

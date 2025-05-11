@@ -32,7 +32,7 @@
         	<c:forEach var="notice" items="${list}">
         		<tr>
 	        		<td class="num">${notice.rowNo}</td>
-	                <td><a href="javascript();"><span>${notice.noticeTitle}</span></a></td>
+	                <td><a href="noticeDetail.do?noticeNo=${notice.noticeNo}"><span>${notice.noticeTitle}</span></a></td>
 	                <td>${notice.noticeCreateDate}</td>
 	                <td>${notice.count}</td>
                 <tr>
@@ -61,9 +61,11 @@
 	    <button type="button" class="btn btn-paging">다음</button>
 	    <button type="button" class="btn btn-paging">마지막</button> --%>
 	</div>
-	<div class="">
-		<a href="noticeWrite.do">작성</a>
-	</div>
 	
+	<c:if test="${member.role == 'A'}">
+		<div class="btn-area-right">
+			<a href="noticeWrite.do" class="btn btn-primary">새글등록</a>
+	    </div>
+    </c:if>
 	
 </main>
