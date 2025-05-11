@@ -61,4 +61,19 @@ public class MemberDAO {
 	    return u;
 	}
 
+	public int deactivateMember(String memberId) {
+	    String sql = "UPDATE MEMBER SET IS_ACTIVE = 'N' WHERE MEMBER_ID = ?";
+
+	    try (Connection conn = ConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	        pstmt.setString(1, memberId);
+	        return pstmt.executeUpdate();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return 0;
+	    }
+	}
+
 }
