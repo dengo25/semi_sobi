@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class MemberSocialDAO {
   
-  /** 1. 소셜 ID로 MEMBER_ID 조회 */
+  // 1. 소셜 ID로 MEMBER_ID 조회
   public String findMemberIdBySocial(String socialType, String socialId) {
     String sql = "SELECT MEMBER_ID FROM MEMBER_SOCIAL WHERE SOCIAL_TYPE = ? AND SOCIAL_ID = ?";
     try (Connection conn = ConnectionProvider.getConnection();
@@ -24,7 +24,7 @@ public class MemberSocialDAO {
     return null;
   }
   
-  /** 2. 이메일로 MEMBER_ID 조회 */
+  // 2. 이메일로 MEMBER_ID 조회
   public String findMemberIdByEmail(String email) {
     String sql = "SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_EMAIL = ?";
     try (Connection conn = ConnectionProvider.getConnection();
@@ -38,7 +38,7 @@ public class MemberSocialDAO {
     return null;
   }
   
-  /** 3. 소셜 로그인 처리 공통 메서드 (KAKAO / NAVER 등) */
+  // 3. 소셜 로그인 처리 공통 메서드
   public String handleSocialLogin(String socialType, String socialId, String email) {
     String memberId = findMemberIdBySocial(socialType, socialId);
     if (memberId != null) {
@@ -56,7 +56,7 @@ public class MemberSocialDAO {
     return null;
   }
   
-  /** 4. 소셜 테이블에 연결 정보 INSERT (VO 기반으로 통일) */
+  //소셜 테이블에 연결 정보 INSERT 기존에 회원은 있으나 소셜 연동이 안되었을 때
   public void insertSocialVO(MemberSocialVO vo, String socialType) {
     String sql = "INSERT INTO MEMBER_SOCIAL (MEMBER_ID, SOCIAL_TYPE, SOCIAL_ID, LINKED_AT) VALUES (?, ?, ?, ?)";
     try (Connection conn = ConnectionProvider.getConnection();
@@ -71,7 +71,7 @@ public class MemberSocialDAO {
     }
   }
   
-  /** 5. 신규 소셜 회원 등록 (MEMBER + MEMBER_SOCIAL) */
+  // 5. 신규 소셜 회원 등록 (MEMBER + MEMBER_SOCIAL) 여기서 맨처음 로그인하면 두 테이블에 인서트
   public MemberVO registerNewSocialMember(String socialType, String socialId, String email, String name, String birthday) {
     String memberId = socialType.toLowerCase() + "_" + socialId;
     
