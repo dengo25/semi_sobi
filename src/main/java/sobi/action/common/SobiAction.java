@@ -1,9 +1,12 @@
 package sobi.action.common;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface SobiAction {
-  String pro(HttpServletRequest request, HttpServletResponse response) throws Exception;
+  String process(HttpServletRequest request, HttpServletResponse response) throws Exception;
   
 }
