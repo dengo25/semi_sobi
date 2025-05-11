@@ -164,4 +164,30 @@ public class MessageDAO {
 	            pstmt.executeBatch();
 	        }
 	    }
+
+	// 쪽지 쓰기
+	  public boolean insertMessage(MessageVO message) {
+	      String sql = "INSERT INTO MESSAGE (SENDER_ID, RECEIVER_ID, MESSAGE_TITLE, MESSAGE_CONTENT, MESSAGE_SEND_DATE, MESSAGE_IS_READ, DELETED_BY_SENDER, DELETED_BY_RECEIVER) "
+	                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+	      try (Connection conn = ConnectionProvider.getConnection();
+	           PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+	          pstmt.setString(1, message.getSenderId());
+	          pstmt.setString(2, message.getReceiverId());
+	          pstmt.setString(3, message.getMessageTitle());
+	          pstmt.setString(4, message.getMessageContent());
+	          pstmt.setTimestamp(5, message.getMessageSendDate());
+	          pstmt.setString(6, message.getMessageIsRead());
+	          pstmt.setString(7, message.getDeletedBySender());
+	          pstmt.setString(8, message.getDeletedByReceiver());
+
+	          int result = pstmt.executeUpdate();
+	          return result == 1;
+
+	      } catch (Exception e) {
+	          e.printStackTrace();
+	      }
+	      return false;
+	  }
 }
