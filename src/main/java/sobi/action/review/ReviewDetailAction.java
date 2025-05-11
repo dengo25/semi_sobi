@@ -3,8 +3,6 @@ package sobi.action.review;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sobi.action.review.Action;
-import sobi.action.review.ActionForward;
 import sobi.dao.review.ReviewDAO;
 import sobi.vo.review.ReviewVO;
 

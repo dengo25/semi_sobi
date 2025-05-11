@@ -4,8 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import sobi.action.review.Action;
-import sobi.action.review.ActionForward;
 import sobi.dao.review.CategoryDAO;
 import sobi.vo.review.CategoryVO;
 
