@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class NoticeVO {
 	private	int rowNo;
-	private	int notieceNo;
+	private	int noticeNo;
 	private	String noticeTitle;
 	private	String noticeContent;	
 	private	int count;
@@ -19,12 +19,12 @@ public class NoticeVO {
 		super();
 	}
 
-	public NoticeVO(int rowNo, int notieceNo, String noticeTitle, String noticeContent, int count,
+	public NoticeVO(int rowNo, int noticeNo, String noticeTitle, String noticeContent, int count,
 			Date noticeCreateDate, Date noticeEditDate, Date notieceDeleteDate, String isDeleted, String isVisible,
 			int noticeImageNumber) {
 		super();
 		this.rowNo = rowNo;
-		this.notieceNo = notieceNo;
+		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
 		this.count = count;
@@ -44,12 +44,12 @@ public class NoticeVO {
 		this.rowNo = rowNo;
 	}
 
-	public int getNotieceNo() {
-		return notieceNo;
+	public int getnoticeNo() {
+		return noticeNo;
 	}
 
-	public void setNotieceNo(int notieceNo) {
-		this.notieceNo = notieceNo;
+	public void setnoticeNo(int noticeNo) {
+		this.noticeNo = noticeNo;
 	}
 
 	public String getNoticeTitle() {

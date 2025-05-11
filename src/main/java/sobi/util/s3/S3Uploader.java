@@ -1,4 +1,4 @@
-package sobi.s3.util;
+package sobi.util.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -32,9 +32,9 @@ public class S3Uploader {
    * @return 업로드된 S3 파일의 URL
    * @throws Exception 예외 발생 시 상위에서 처리
    */
-  public static String upload(File file) throws Exception {
+  public static String upload(File file, String folder) throws Exception {
     // 파일명을 UUID로 고유하게 생성하여 중복 방지
-    String fileName = "review/" + UUID.randomUUID() + "_" + file.getName();  // "review/" 폴더에 저장
+    String fileName = folder + "/" + UUID.randomUUID() + "_" + file.getName();  // "폴더명 /" 폴더에 저장
     
     // try-with-resources로 파일 스트림 자동 종료 처리
     try (InputStream inputStream = new FileInputStream(file)) {

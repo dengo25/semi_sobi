@@ -1,4 +1,4 @@
-package sobi.s3.util;
+package sobi.util.s3;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -46,7 +46,10 @@ public class UploadImageServlet extends HttpServlet {
       }
       
       // 파일 이름을 UUID로 변환하여 중복을 방지한 뒤, 원래의 파일 이름을 붙임
-      String fileName = UUID.randomUUID() + "_" + filePart.getSubmittedFileName();
+      // 한글/공백 제거 + UUID만 남기기
+      // String fileName = UUID.randomUUID() + "_" + filePart.getSubmittedFileName();
+      String extension = filePart.getSubmittedFileName().substring(filePart.getSubmittedFileName().lastIndexOf('.'));
+      String fileName = UUID.randomUUID().toString() + extension;
       
       // filePart.write()를 사용하여 톰캣 서버의 uploads/tmp 폴더에 실제 파일을 저장
       filePart.write(uploadPath + File.separator + fileName);
@@ -55,6 +58,10 @@ public class UploadImageServlet extends HttpServlet {
       // 예: /uploads/tmp/파일이름
       String imageUrl = req.getContextPath() + "/uploads/tmp/" + fileName;
       resp.getWriter().write(imageUrl);  // 클라이언트에 이미지 URL을 반환
+      
+      // System.out.println("UploadImageServlet 호출됨!");
+      // System.out.println("업로드 경로: " + uploadPath);
+      // System.out.println("파일 이름: " + filePart.getSubmittedFileName());
       
     } catch (Exception e) {
       // 예외가 발생하면 콘솔에 출력하고, 서버 오류 응답을 반환

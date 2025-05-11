@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- /content.jsp --%>
 <main>
 	<h2>공지사항</h2>
 	
@@ -62,7 +61,9 @@
 	    <button type="button" class="btn btn-paging">다음</button>
 	    <button type="button" class="btn btn-paging">마지막</button> --%>
 	</div>
-	
+	<div class="">
+		<a href="noticeWrite.do">작성</a>
+	</div>
 	
 	
 </main>

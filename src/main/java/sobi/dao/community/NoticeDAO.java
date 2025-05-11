@@ -3,19 +3,18 @@ package sobi.dao.community;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import sobi.db.ConnectionProvider;
+import sobi.vo.community.NoticeImageVO;
 import sobi.vo.community.NoticeVO;
 
 public class NoticeDAO {
 	public static int pageSize = 10; 		// 한페이지에 보여줄 글 수 
-	public static int totalRecord = 1; 	// 총 레코드   
+	public static int totalRecord = 1; 		// 총 레코드   
 	public static int totalPage = 0;		// 총 페이지 
-	public static int pageNum = 0;		// 현재 페이지 
+	public static int pageNum = 0;			// 현재 페이지 
 	public static int start = 0;
 	public static int end = 0;
 	
@@ -105,10 +104,35 @@ public class NoticeDAO {
 	
 	
 	// 	새로운 게시글 등록시 작성 내용을 등록 한다.
-	public int setDetail(NoticeVO nvo) {
+	public int setDetail(NoticeVO nvo,String memberId) {
 		int re = -1;
-		
-		
+		String sql = "INSERT INTO NOTICE ("
+				+ " MEMBER_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE_NUMBER,"
+				+ " NOTICE_CREATE_DATE, IS_DELETED, IS_VISIBLE )"
+				+ " VALUES(?, ?, ?, ?, SYSDATE(),'N','Y')"; 
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			
+			psmt.setString(1,memberId);
+			psmt.setString(2,nvo.getNoticeTitle());
+			psmt.setString(3,nvo.getNoticeContent());
+			psmt.setInt(4,nvo.getNoticeImageNumber());
+			// re = psmt.executeUpdate();
+			int rows  = psmt.executeUpdate();
+			if(rows > 0) {
+				// pk 조회 
+				ResultSet rs = psmt.getGeneratedKeys();
+				if(rs.next()) {
+					re = rs.getInt(1); // 생성된 noticeNo 
+				}
+				rs.close();
+			}
+			ConnectionProvider.close(conn, psmt);
+		} catch (Exception e) {
+			System.out.println("setDetail Exception : "+e.getMessage());
+			e.printStackTrace();
+		}
 		return re;
 	}
 	
@@ -138,5 +162,29 @@ public class NoticeDAO {
 		return list;
 	}
 	
+	
+	// NOTICE_IMAGE 테이블에 한 건의 이미지 메타정보를 삽입
+    public int insertImage(NoticeImageVO vo) {
+        int re = -1;
+        String sql = "INSERT INTO NOTICE_IMAGE "
+        		   + " (NOTICE_NO, FILE_URL, UPLOAD_TIME, ORIGINAL_FILE_NAME, FILE_TYPE)"
+                   + " VALUES (?, ?, SYSDATE(), ?, ?)";
+        try {
+    		Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);
+    			
+            psmt.setInt(1, vo.getNoticeNo());
+            psmt.setString(2, vo.getFileUrl());
+            psmt.setString(3, vo.getOriginalFileName());
+            psmt.setString(4, vo.getFileType());
+            re = psmt.executeUpdate();
+            
+            ConnectionProvider.close(conn, psmt);
+        } catch (Exception e) {
+        	System.out.println("insertImage Exception : "+e.getMessage());
+			e.printStackTrace();
+        }
+        return re;
+    }
 	
 }

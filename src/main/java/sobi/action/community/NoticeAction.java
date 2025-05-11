@@ -14,10 +14,8 @@ import sobi.dao.community.NoticeDAO;
 public class NoticeAction implements SobiAction {
 
 	@Override
-	public String process(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession();
 		
 		String keyword = "";
 		String sort = "";
@@ -32,21 +30,17 @@ public class NoticeAction implements SobiAction {
 			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		}
 		
-		
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		map.put("keyword", keyword);
 		map.put("sort", sort);
 		map.put("pageNum", pageNum);
-		
 		
 		NoticeDAO dao = new NoticeDAO();
 		request.setAttribute("list", dao.getAll(map));
 		request.setAttribute("count", dao.getCount(keyword));
 		request.setAttribute("totalPaging", dao.totalPage);
 		request.setAttribute("pageNum", pageNum);
-		
-		
-		System.out.println("session : "+session);
+			
 		System.out.println("keyword : "+keyword);
 		System.out.println("pageNum : "+pageNum);
 		System.out.println("totalPaging : "+dao.totalPage);

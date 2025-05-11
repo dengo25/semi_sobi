@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	등록 완료!
+	
+	<br>writeInfo : ${writeInfo}
 </body>
 </html>
