@@ -106,6 +106,7 @@ WEB-INF/views/login.jsp	직접 접근을 막고 싶을 때, 컨트롤러를 통�
 <body>
 <%@ include file="header.jsp" %>
 
+
 <jsp:include page="${contentPage}" />
 <%-- 
 http://localhost:내 포트번호/sobi_test/v1/views/common/content.do
