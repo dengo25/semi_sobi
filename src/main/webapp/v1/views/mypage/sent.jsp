@@ -10,7 +10,7 @@
 	</c:if>
 
 	<form method="post" action="deleteSent.do" onsubmit="return confirmDelete();">
-		<input type="hidden" name="box" value="sent">
+		
 
 		
 		<div style="margin: 20px 0 10px 0; display: flex; gap: 10px;">

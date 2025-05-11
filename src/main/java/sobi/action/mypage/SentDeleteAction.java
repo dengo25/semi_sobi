@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import sobi.action.common.SobiAction;
 import sobi.dao.mypage.MessageDAO;
@@ -20,10 +22,12 @@ public class SentDeleteAction implements SobiAction {
 
         HttpSession session = request.getSession();
         MemberVO member = (MemberVO) session.getAttribute("member");
-        if (member == null) return "redirect:login.do";
+
+        if (member == null) {
+            return "redirect:/v1/views/member/login.jsp";
+        }
 
         String[] messageIdParams = request.getParameterValues("messageId");
-        String box = request.getParameter("box"); 
 
         if (messageIdParams != null) {
             List<Integer> messageIds = Arrays.stream(messageIdParams)
@@ -37,6 +41,6 @@ public class SentDeleteAction implements SobiAction {
             }
         }
 
-        return "mypage.do?tab=" + (box != null ? box : "sent"); 
+        return "redirect:/v1/views/mypage/sent.jsp"; 
     }
 }

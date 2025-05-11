@@ -10,9 +10,9 @@
 	</c:if>
 
 	<form method="post" action="deleteInbox.do" onsubmit="return confirmDelete();">
-		<input type="hidden" name="box" value="inbox">
+		
 
-		<!-- ✅ 버튼 영역: 목록 위로 이동, 왼쪽 정렬, 크기 통일 -->
+		
 		<div style="margin: 20px 0 10px 0; display: flex; gap: 10px;">
 			<input type="submit" value="🗑 선택 삭제"
 			       style="all: unset; padding: 8px 16px; font-size: 14px; height: 38px; line-height: 1.5; border: 1px solid #ccc; background-color: white; cursor: pointer;">
