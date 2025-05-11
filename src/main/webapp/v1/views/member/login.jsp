@@ -64,29 +64,44 @@
       color: #777;
     }
 
-    .login-wrap .sns-btns button {
+    .sns-btns a,
+    .sns-btns button {
       width: 100%;
-      padding: 16px;
+      height: 50px;
       margin: 8px 0;
       font-size: 17px;
       border: 1px solid #ccc;
-      border-radius: 10px;
+      border-radius: 12px;
       background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-sizing: border-box;
     }
 
-    .sns-naver { color: #1ec800; font-weight: bold; }
+    .sns-btns img {
+      height: 24px;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .sns-naver img {
+      height: 24px;
+    }
+
     .sns-kakao {
       background-color: #FEE500;
       border: none;
       color: #000000;
       font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    .sns-facebook { color: #1877f2; font-weight: bold; }
-  </style>
 
+    .sns-facebook {
+      color: #1877f2;
+      font-weight: bold;
+    }
+  </style>
 
   <div class="login-wrap">
     <h1>sobi</h1>
@@ -112,15 +127,20 @@
     </form>
 
     <div class="sns-btns">
-      <button class="sns-naver">네이버 아이디로 로그인</button>
+      <!-- 네이버 로그인 -->
+      <a href="${pageContext.request.contextPath}/naverLogin.do" class="sns-naver">
+        <img src="${pageContext.request.contextPath}/v1/static/images/logo-naver.png" alt="네이버 로그인" />
+      </a>
 
-      <button class="sns-kakao" onclick="loginWithKakao()">
-        <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png"
-             alt="kakao" style="height: 18px; vertical-align: middle; margin-right: 8px;">
-        <span style="color: rgba(0,0,0,0.85); font-weight: bold;">카카오 아이디로 로그인</span>
+      <!-- 카카오 로그인 -->
+      <button type="button" class="sns-kakao" onclick="loginWithKakao()">
+        <img src="${pageContext.request.contextPath}/v1/static/images/logo-kakao.png"
+             alt="카카오 로그인"
+             style="width: 100%; height: 100%; object-fit: contain;" />
       </button>
 
-      <button class="sns-facebook">페이스북 아이디로 로그인</button>
+      <!-- 페이스북  -->
+      <button class="sns-facebook" disabled>페이스북 아이디로 로그인</button>
     </div>
   </div>
 
@@ -129,10 +149,9 @@
       alert('${error}');
     </script>
   </c:if>
-
 </main>
 
-<!-- ✅ JS SDK + 로그인 호출 -->
+<!-- 카카오 로그인 호출부분 -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.5/kakao.min.js"
         integrity="sha384-dok87au0gKqJdxs7msEdBPNnKSRT+/mhTVzq+qOhcL464zXwvcrpjeWvyj1kCdq6"
         crossorigin="anonymous"></script>

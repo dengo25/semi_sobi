@@ -72,7 +72,7 @@
       <input type="text" id="sample4_jibunAddress" style="display:none;" placeholder="지번주소" readonly>
       <span id="guide" style="color:#999; display:none"></span><br>
 
-      <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+      <input type="text" id="sample4_detailAddress" placeholder="상세주소" required>
       <input type="text" id="sample4_extraAddress" style="display:none;" placeholder="참고항목" readonly>
 
       <!-- 서버로 전송할 최종 주소 값 -->
