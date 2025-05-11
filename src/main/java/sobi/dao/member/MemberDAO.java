@@ -120,14 +120,14 @@ public class MemberDAO {
   
   
   
-  public MemberVO findById(int no) {
+  public MemberVO findById(String memberId) {
     MemberVO u = new MemberVO();
     
     String sql = "select * from MEMBER where member_id = ?";
     try {
       Connection conn = ConnectionProvider.getConnection();
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      pstmt.setInt(1, no);
+      pstmt.setString(1, memberId);
       ResultSet rs = pstmt.executeQuery();
       if (rs.next()) {
         u.setMemberId(rs.getString("member_id"));

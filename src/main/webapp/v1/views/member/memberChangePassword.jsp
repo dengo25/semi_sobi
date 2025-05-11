@@ -33,12 +33,12 @@
 
         .login-wrap .login-btn {
             width: 100%;
-            background-color: #ac9876; /* ✔ 베이지톤 */
+            background-color: #ac9876;
             color: #fff;
             padding: 16px;
             font-size: 18px;
             border: none;
-            border-radius: 30px; /* ✔ 둥근 버튼 */
+            border-radius: 30px;
             font-weight: bold;
             margin-top: 12px;
         }
