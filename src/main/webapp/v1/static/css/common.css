@@ -105,6 +105,7 @@ table td .title-elps{display:inline-block; vertical-align: middle; max-width:94%
 .btn + .btn,.btn ~ .btn{margin:0 0 0 3px;}
 [class*="btn-area"]{position:relative;clear:both;text-align:center;}
 [class*="btn-area"]:after{content:'';display:block;clear:both;}
+[class*="btn-area"].type-popup{margin-top:30px;}
 .btn-area-right{text-align:right;}
 .btn-area-left{text-align:left;}
 .btn-area-justify{text-align:left;}

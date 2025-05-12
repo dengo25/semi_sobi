@@ -8,12 +8,10 @@ main,
 .wrap{max-width:1260px;margin:0 auto;}
 
 header nav{display:flex;height:70px;align-items:center;}
-header nav ul{display:flex;flex:1 0 auto;}
+header nav ul{display:flex;flex:1 0 auto;margin-left:150px;}
 header nav ul li{flex:1 0 auto;text-align:center;align-content:center;}
 header h1{height:70px;overflow:hidden;}
 header h1 img{width:80px;}
-.menu-list{}
-.menu-list li{}
 .menu-list li a{padding:3px 10px;font-size:18px;font-weight:600;background:transparent;border-radius:15px;}
 .menu-list li a:hover{background-color:#e8e8e8;}
 
@@ -24,11 +22,11 @@ header h1 img{width:80px;}
 .util-box li a span{border-bottom:1px solid transparent;}
 .util-box li a:hover span{border-color:#333;}
 
-footer{margin-top:40px;border-top:1px solid #e8e8e8;}
+footer{margin-top:40px;;padding-top:20px;border-top:1px solid #e8e8e8;}
 footer nav{display:flex;align-items:center;}
 footer .footer-list{display:flex;flex:1 0 auto;}
 footer .footer-list li{flex:0 1 auto;text-align:center;align-content:center;padding:5px 10px;}
-
+.copyright{margin-top:10px;padding-bottom:70px;padding-left:10px;}
 
 /* Title, Text ===============================================*/
 h2{overflow:hidden;color:#4c4c4c;font-size:28px;font-weight:bold;line-height:52px;margin-top:40px;padding-bottom:20px;}
@@ -245,6 +243,9 @@ _:-ms-fullscreen, :root .checkMark{border:transparent;}
 .input-check.type-img-btn input ~ em{display:block;margin-top:24px;color:#4c4c4c;font-size:14px;line-height:20px;}
 .input-check.type-img-btn input:checked ~ .checkMark{border-color:transparent;background:rgba(76,76,76,.6) url('../images/icons/ico-check-80.svg') no-repeat center;}
 .input-check.type-img-btn:hover input ~ .checkMark{border-color:transparent;}
+
+.input-check.type-only{width:0;margin:0 auto 20px;}
+
 
 /* custom : radio ---------------------------------------- */
 .input-radio{display:block;position:relative;padding:0 0 0px 21px;color:#4c4c4c;font-size:14px;line-height:20px;cursor:pointer;word-wrap:break-word;word-break:keep-all;

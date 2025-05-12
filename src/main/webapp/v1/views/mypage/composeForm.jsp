@@ -3,19 +3,49 @@
 
 <html>
 <head>
-  <title>쪽지 쓰기</title>
+  	<%@ include file="../common/head_common.jsp" %>
+  	<title>쪽지 쓰기</title>
 </head>
 <body>
-<main>
+
   <h2>쪽지 쓰기</h2>
   <form action="sendMessage.do" method="post">
-    <label>받는 사람 ID: <input type="text" name="receiverId" value="${param.receiverId}" /></label><br/><br/>
-    <label>제목: <input type="text" name="messageTitle" /></label><br/><br/>
-    <label>내용:<br/>
-      <textarea name="messageContent" rows="10" cols="50"></textarea>
-    </label><br/><br/>
-    <input type="submit" value="보내기" />
+  	<table class="table-basic type-popup">
+		<caption>쪽지쓰기 테이블 - 받는사람아이디,제목,내용으로 구성</caption>
+		<colgroup>
+			<col style="width: 20%">
+			<col style="width: 80%">
+		</colgroup>
+		<tbody>
+			<tr>
+				<th>받는 사람 ID</th>
+				<td>
+					<div class="input-group">
+						<input type="text" name="receiverId" class="form-control" value="${param.receiverId}" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td>
+					<div class="input-group">
+						<input type="text" name="messageTitle" class="form-control"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>
+					<div class="input-group">
+						<textarea name="messageContent" rows="10" cols="50" class="form-control"></textarea>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+    <div class="btn-area type-popup">
+		<button type="submit" class="btn btn-primary">보내기</button>
+	</div>
   </form>
-</main>
 </body>
 </html>

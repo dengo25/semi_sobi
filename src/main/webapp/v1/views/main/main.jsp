@@ -46,7 +46,7 @@
 		<div class="cont-item thm">
 			<h3>SOBI 공지사항</h3>
 			<c:forEach var="notice" items="${noticeList}">
-				<div class="thum-item gallery-list reverse">
+				<div class="thum-item gallery-list">
 					<figure class="img">
 						<a href="javascript:void(0);"> <img class=""
 							src="${notice.noticeImageVO.fileUrl}">
