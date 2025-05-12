@@ -22,7 +22,12 @@
 /*========================================================
  Reset
 ========================================================*/
-html{-webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; /*-ms-touch-action:none;*/ }
+html{
+    -webkit-text-size-adjust:none; /* Chrome, Safari, newer version of Opera*/
+    -moz-text-size-adjust:none; /* Firefox */
+    -ms-text-size-adjust:none; /* ie */
+    -o-text-size-adjust:none; /* old version of opera */
+}
 html,body{height:100%; color:#333; font-size:14px; font-weight:400; /*line-height:1.4; */font-family:'Roboto','Noto Sans KR', 'Apple SD Gothic Neo',-apple-system,system-ui,BlinkMacSystemFont,Roboto,NotoSans,'Malgun Gothic','맑은 고딕',sans-serif;word-break: break-all;}
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {margin:0; padding:0; border:0; vertical-align:baseline; -webkit-font-smoothing:antialiased; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
 /* HTML5 display-role reset for older browsers */
@@ -47,6 +52,13 @@ img{max-width: 100%; vertical-align: top;}
 img:not([src]){visibility: hidden;}
 select::-ms-expand{display:none;}
 legend.block{display:block; position:static; left:0; width:auto; height:auto; overflow:visible; text-indent:0;}
+
+select{
+    -webkit-appearance:none; /* for chrome */
+    -moz-appearance:none; /*for firefox*/
+    appearance:none;
+    }
+select::-ms-expand{display:none;}
 
 /* skip navigation */
 .skip-navi a{ position:absolute;top:-999em;}

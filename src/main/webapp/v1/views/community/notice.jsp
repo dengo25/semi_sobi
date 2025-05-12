@@ -6,7 +6,7 @@
 	
 	<div class="search-area">
 		<form class="input-group" action="notice.do" method="post">
-	        <input type="search" name="keyword" class="form-control">
+	        <input type="search" name="keyword" placeholder="제목을 입력하세요" class="form-control">
 	        <button type="submit" class="btn btn-deepgrey">검색</button>
 	    </form>
 	</div>	
