@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <main>
+<div class="mypage-wrapper" style="display: flex; padding: 20px;">
+    
+    <!-- 좌측 서브 메뉴 -->
+    <jsp:include page="mypage_submenu.jsp" />
+     <section class="mypage-content" style="flex-grow: 1; margin-left: 40px;">
 	<h2>📥 받은 쪽지함</h2>
 
 	<c:if test="${empty messageList}">
@@ -55,8 +60,28 @@
 				</tbody>
 			</table>
 		</c:if>
-	</form>
+		<c:if test="${not empty paging}">
+  <div class="pagination" style="text-align:center; margin-top:20px;">
+    <c:if test="${paging.hasPrev()}">
+      <a href="inbox.do?page=${paging.startPage - 1}">&lt;</a>
+    </c:if>
 
+    <c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i">
+      <a href="inbox.do?page=${i}" style="${i == paging.nowPage ? 'font-weight:bold; color:red;' : ''}">
+        ${i}
+      </a>
+    </c:forEach>
+
+    <c:if test="${paging.hasNext()}">
+      <a href="inbox.do?page=${paging.endPage + 1}">&gt;</a>
+    </c:if>
+  </div>
+</c:if>
+		
+	</form>
+  </section>
+    
+  </div>
 <script>
 function openComposePopup() {
 	const width = 800;
@@ -71,10 +96,15 @@ function openComposePopup() {
 function openMessagePopup(messageId) {
 	const width = 800;
 	const height = 600;
-	const left = (window.screen.width - width) / 2;
-	const top = (window.screen.height - height) / 2;
-	window.open('messageView.jsp?messageId=' + messageId, 'messagePopup',
-		`width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+	const left = Math.floor((window.screen.width - width) / 2);
+	const top = Math.floor((window.screen.height - height) / 2);
+	window.open(
+		'messageView.jsp?messageId=' + messageId,
+		'messagePopup',
+		`width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`
+	);
+	console.log(window.screen.width - width);
+	console.log(window.screen.height - height);
 }
 
 function toggleAll(source) {
