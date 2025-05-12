@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <main>
+<div class="mypage-wrapper" style="display: flex; padding: 20px;">
+    
+    <!-- 좌측 서브 메뉴 -->
+    <jsp:include page="mypage_submenu.jsp" />
+     <section class="mypage-content" style="flex-grow: 1; margin-left: 40px;">
 	<h2>📤 보낸 쪽지함</h2>
 
 	<c:if test="${empty messageList}">
@@ -56,7 +61,9 @@
 			</table>
 		</c:if>
 	</form>
-
+  </section>
+    
+  </div>
 <script>
 function openComposePopup() {
 	const width = 800;

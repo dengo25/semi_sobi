@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <main>
+<div class="mypage-wrapper" style="display: flex; padding: 20px;">
+    
+    <!-- 좌측 서브 메뉴 -->
+    <jsp:include page="mypage_submenu.jsp" />
+     <section class="mypage-content" style="flex-grow: 1; margin-left: 40px;">
 	<h2>📥 받은 쪽지함</h2>
 
 	<c:if test="${empty messageList}">
@@ -56,7 +61,9 @@
 			</table>
 		</c:if>
 	</form>
-
+  </section>
+    
+  </div>
 <script>
 function openComposePopup() {
 	const width = 800;
@@ -71,10 +78,15 @@ function openComposePopup() {
 function openMessagePopup(messageId) {
 	const width = 800;
 	const height = 600;
-	const left = (window.screen.width - width) / 2;
-	const top = (window.screen.height - height) / 2;
-	window.open('messageView.jsp?messageId=' + messageId, 'messagePopup',
-		`width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+	const left = Math.floor((window.screen.width - width) / 2);
+	const top = Math.floor((window.screen.height - height) / 2);
+	window.open(
+		'messageView.jsp?messageId=' + messageId,
+		'messagePopup',
+		`width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`
+	);
+	console.log(window.screen.width - width);
+	console.log(window.screen.height - height);
 }
 
 function toggleAll(source) {

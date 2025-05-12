@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <main>
+<div class="mypage-wrapper" style="display: flex; padding: 20px;">
+    
+    <!-- 좌측 서브 메뉴 -->
+    <jsp:include page="mypage_submenu.jsp" />
+     <section class="mypage-content" style="flex-grow: 1; margin-left: 40px;">
 	<h2>💰 포인트 내역</h2>
 
 	<table border="1" width="100%" cellpadding="8" style="border-collapse: collapse; margin-top: 20px;">
@@ -40,4 +45,7 @@
 	<c:if test="${empty pointList}">
 		<p>포인트 내역이 없습니다.</p>
 	</c:if>
+	  </section>
+    
+  </div>
 </main>
