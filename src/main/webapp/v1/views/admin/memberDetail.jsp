@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<%-- 
 <style>
 main {
 	padding: 20px;
@@ -70,9 +71,9 @@ tr:hover {
 	background-color: #eef6ff;
 }
 </style>
-
-<main>
-	<h2>회원 정보 관리</h2>
+--%>
+		<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+<main class="admin">
 	<div class="dashboard">
 		<div class="card">
 			<p>작성한 후기</p>
@@ -137,6 +138,11 @@ tr:hover {
 			<th>댓글수</th>
 			<th>신고수</th>
 		</tr>
+		<c:if test="${empty memberReviewList}">
+			<tr class="table-is-empty">
+				<td colspan="4">검색된 결과가 없습니다.</td>
+			</tr>
+		</c:if>
 		<c:forEach var="r" items="${memberReviewList }">
 			<tr>
 				<td><a href="reviewDetail.do?reviewId=${r.reviewId}">
@@ -166,7 +172,11 @@ tr:hover {
 			<th>내용</th>
 			<th>접근시간</th>
 		</tr>
-
+		<c:if test="${empty memberLogList}">
+			<tr class="table-is-empty">
+				<td colspan="4">검색된 결과가 없습니다.</td>
+			</tr>
+		</c:if>
 		<c:forEach var="l" items="${memberLogList}">
 			<tr>
 				<td>${l.memberId }</td>
@@ -175,6 +185,7 @@ tr:hover {
 				<td>${l.memberLogCreated }</td>
 			</tr>
 		</c:forEach>
+
 	</table>
 	<div class="paging" style="margin-top: 15px; text-align: center;">
 		<c:forEach var="i" begin="1" end="${totalMemberLogPage}">

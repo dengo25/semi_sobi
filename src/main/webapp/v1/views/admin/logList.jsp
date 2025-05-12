@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%-- 
 <style>
   main {
     padding: 20px;
@@ -77,10 +79,9 @@
   td button:hover {
     background-color: #d76d3d;
   }
-</style>
-    
-<main>
-	<h3>로그 기록 조회</h3>
+</style> --%>
+	<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+<main class="admin">
 	<form action="logList.do">
 		<label>
 			<select name="level">

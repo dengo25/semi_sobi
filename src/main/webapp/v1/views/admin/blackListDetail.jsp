@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <style>
+<%-- 
+<style>
   table {
     width: 100%;
     border-collapse: collapse;
@@ -55,9 +56,9 @@
   input[type="submit"]:hover {
     background-color: #005c99;
   }
-</style>
-    
-<main>	
+</style>--%>
+    		<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+<main class="admin">	
 	<div>
 		<form action="insertBlackList.do?memberId=${memberId }" method="post">
 			<label for="id">ID</label> 
