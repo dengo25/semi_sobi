@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%-- 
 <style>
   main {
     padding: 20px;
@@ -32,9 +33,9 @@
   tr:hover {
     background-color: #eef6ff;
   }
-</style>
-
-<main>
+</style>--%>
+	<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+<main class="admin">
   <table>
     <tr>
       <th>ID</th>

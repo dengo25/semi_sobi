@@ -7,7 +7,7 @@
 </head>
 <body>
 <main>
-  <h2>mypage - 컨텐츠</h2>
+ 
   <div class="mypage-wrapper" style="display: flex; padding: 20px;">
     <!-- 좌측 메뉴 영역 -->
     <jsp:include page="mypage_submenu.jsp" />

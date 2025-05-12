@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%-- 
 <style>
   table {
     width: 100%;
@@ -29,8 +30,9 @@
   tr:hover {
     background-color: #eef6ff;
   }
-</style>
-<main>
+</style>--%>
+	<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+<main class="admin">
 	<table>
 		<tr>
 			<th>ID</th>

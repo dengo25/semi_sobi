@@ -17,13 +17,22 @@ public class CheckPasswordAction implements SobiAction {
         HttpSession session = request.getSession();
         MemberVO loginMember = (MemberVO) session.getAttribute("member");
 
+        
+
+        
+
+        if (loginMember == null) return "redirect:login.do";
+        
+        if (loginMember.getMemberPassword() == null || loginMember.getMemberPassword().isEmpty()) {
+            session.setAttribute("memberDetail", loginMember);
+            return "/v1/views/mypage/profile.jsp";
+        }
+        
         if (request.getMethod().equalsIgnoreCase("GET")) {
             return "/v1/views/mypage/confirmPassword.jsp";
         }
-
+        
         String inputPwd = request.getParameter("member_password");
-
-        if (loginMember == null) return "redirect:login.do";
 
         MemberDAO dao = new MemberDAO();
         MemberVO verified = dao.loginConfirm(loginMember.getMemberId(), inputPwd);
