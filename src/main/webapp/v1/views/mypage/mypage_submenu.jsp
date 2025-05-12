@@ -15,12 +15,10 @@
       <li style="margin-bottom: 10px;"><a href="history.do"> 포인트
         내역</a></li>
       <li style="margin-bottom: 10px;"><a href="grade.do"> 내 등급</a></li>
-      <li style="margin-bottom: 10px;"><a href="profile.do"> 내 정보
-        보기</a></li>
-      <li style="margin-bottom: 10px;"><a href="editProfile.do"> 내
-        정보 수정</a></li>
-      <li style="margin-bottom: 10px;"><a href="withdrawForm.do"
-                                          style="color: red;">🚫 회원 탈퇴</a></li>
+     <li style="margin-bottom: 10px;"><a href="checkPassword.do"> 내 정보 보기</a></li>
+
+     
+    
     </ul>
   </nav>
   <script>
@@ -37,4 +35,5 @@
                       `width=${width},height=${height},top=${top},left=${left},scrollbars=yes`);
     }
   </script>
+
 </main>
