@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <main>
+<%-- 
   <style>
     .login-wrap {
       max-width: 520px;
@@ -57,9 +58,9 @@
       text-decoration: underline;
     }
   </style>
-
+--%>
   <div class="login-wrap">
-    <h1>아이디 찾기</h1>
+    <h1 class="type1">아이디 찾기</h1>
 
     <form id="findIdForm">
       <input type="text" name="memberName" placeholder="이름을 입력해 주세요" required />

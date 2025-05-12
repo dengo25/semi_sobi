@@ -3,6 +3,7 @@
   <script>
     let isChecked = false; // 중복 확인 여부
   </script>
+  <%-- 
   <style>
     .join-wrap {
       max-width: 600px;
@@ -36,7 +37,7 @@
       border-radius: 10px;
     }
   </style>
-
+	--%>
   <div class="join-wrap">
     <h2>회원가입</h2>
     <form action="/createMemberProcess.do" method="post" onsubmit="return prepareAddress();">
@@ -44,18 +45,20 @@
         <input type="text" name="member_id" id="member_id" placeholder="아이디" required style="flex: 1;">
         <button type="button" onclick="checkId()" style="width: 130px;">중복확인</button>
       </div>
-      <span id="idCheckMsg" style="font-size: 14px;"></span>
+      <span id="idCheckMsg" class="idCheckMsg"></span>
       <input type="password" name="member_password" placeholder="비밀번호" required />
      <!-- <input type="text" name="member_name" placeholder="이름" required /> -->
       <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
         <input type="text" name="member_name" placeholder="이름" required style="flex: 1;" />
-
         <div style="display: flex; gap: 10px;">
-          <label>
-            <input type="radio" name="member_gender" value="M" required /> 남
+          
+          <label class="input-radio">
+            <input type="radio" name="member_gender" value="M" required />
+            <span class="radioMark"></span>남
           </label>
-          <label>
-            <input type="radio" name="member_gender" value="F" /> 여
+          <label class="input-radio">
+            <input type="radio" name="member_gender" value="F" />
+            <span class="radioMark"></span>여
           </label>
         </div>
       </div>
@@ -138,10 +141,12 @@
                 const msg = document.getElementById("idCheckMsg");
                 if (data.exists) {
                   msg.style.color = "red";
+                  msg.style.display = "block";
                   msg.textContent = "이미 존재하는 아이디입니다.";
                   isChecked = false; //중복체크 실패시 회원가입 못함.
                 } else {
                   msg.style.color = "green";
+                  msg.style.display = "block";
                   msg.textContent = "사용 가능한 아이디입니다.";
                   isChecked = true; //중복체크 확인
                 }
