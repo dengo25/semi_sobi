@@ -73,7 +73,14 @@ h1 {
 			<c:out value="${review.content}" escapeXml="false" />
 		</div>
 
+
+
 	</div>
+	<c:if test="${not empty member && member.memberId == review.memberId}">
+		<div style="text-align: right; margin: 20px 40px 0 0;">
+			<a href="reviewEdit.do?reviewId=${review.reviewId}" class="btn btn-warning">수정</a>
+		</div>
+	</c:if>
 
 	<c:if test="${member.role == 'A'}">
 		<div style="text-align: right; margin: 20px 40px 0 0;">

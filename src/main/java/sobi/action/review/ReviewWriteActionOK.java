@@ -16,7 +16,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import sobi.action.common.SobiAction;
 import sobi.dao.review.ReviewDAO;
-import sobi.dao.review.ReviewImageDAO; // ✅ 추가
+import sobi.dao.review.ReviewImageDAO;
 import sobi.util.s3.S3Uploader;
 import sobi.vo.member.MemberVO;
 import sobi.vo.review.ReviewImageVO;
@@ -29,7 +29,7 @@ public class ReviewWriteActionOK implements SobiAction {
   private static final String TEMP_DIR = "/uploads/tmp";
   
   private final ReviewDAO reviewDao = new ReviewDAO();
-  private final ReviewImageDAO reviewImageDao = new ReviewImageDAO(); // ✅ 추가
+  private final ReviewImageDAO reviewImageDao = new ReviewImageDAO();
   
   @Override
   public String process(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -37,13 +37,6 @@ public class ReviewWriteActionOK implements SobiAction {
     
     HttpSession session = request.getSession();
     MemberVO member = (MemberVO) session.getAttribute("member");
-    
-    // 로그인 체크 -> 이미 글 쓸 때 체크를해서 필요없을 듯
-//    if (member == null) {
-//      request.setAttribute("errorMsg", "로그인이 필요합니다.");
-//      return "/v1/views/member/login.jsp";
-//    }
-    
     String memberId = member.getMemberId();
     
     // Multipart 처리
@@ -63,6 +56,8 @@ public class ReviewWriteActionOK implements SobiAction {
     Pattern pattern = Pattern.compile("/uploads/tmp/([^\"]+)");
     Matcher matcher = pattern.matcher(content);
     
+    String thumbnailUrl = null; // 대표 이미지 URL
+    
     while (matcher.find()) {
       String filename = matcher.group(1);
       File tmpFile = new File(saveDir, filename);
@@ -74,14 +69,19 @@ public class ReviewWriteActionOK implements SobiAction {
         // 본문 내 이미지 경로 치환
         content = content.replace("/uploads/tmp/" + filename, s3Url);
         
-        // 이미지 메타 정보 생성
+        // 첫 번째 이미지를 썸네일로 사용
+        if (thumbnailUrl == null) {
+          thumbnailUrl = s3Url;
+        }
+        
+        // 이미지 메타 정보
         ReviewImageVO imageVO = new ReviewImageVO();
         imageVO.setOriginalFileName(filename);
         imageVO.setFileUrl(s3Url);
         imageVO.setFileType(Files.probeContentType(tmpFile.toPath()));
         imageList.add(imageVO);
         
-        tmpFile.delete(); // 임시 파일 삭제
+        tmpFile.delete();
       }
     }
     
@@ -93,17 +93,16 @@ public class ReviewWriteActionOK implements SobiAction {
     review.setContent(content);
     review.setRating(rating);
     review.setReviewCategoryId(categoryId);
+    review.setImageURL(thumbnailUrl);  // 썸네일 저장
     
     int reviewId = reviewDao.insertReview(review);
     
     // 이미지 정보 저장
     for (ReviewImageVO img : imageList) {
       img.setReviewId(reviewId);
-      reviewImageDao.insertReviewImage(img); // ✅ 여기가 핵심!
+      reviewImageDao.insertReviewImage(img);
     }
     
-    // 완료 페이지로 이동
-    request.setAttribute("writeInfo", reviewId);
     return "redirect:review.do";
   }
 }

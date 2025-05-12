@@ -1,6 +1,7 @@
 package sobi.dao.review;
 
 import sobi.db.ConnectionProvider;
+import sobi.vo.member.MemberVO;
 import sobi.vo.review.ReviewVO;
 
 import java.sql.Connection;
@@ -66,8 +67,8 @@ public class ReviewDAO {
   public int insertReview(ReviewVO review) {
     int generatedId = -1;
     
-    String sql = "INSERT INTO REVIEW (MEMBER_ID, PRODUCT_NAME, REVIEW_TITLE, RATING, REVIEW_CATEGORY_ID, CONTENT, IS_DELETED, CONFIRMED) " +
-        "VALUES (?, ?, ?, ?, ?, ?, 'N', 'N')";
+    String sql = "INSERT INTO REVIEW (MEMBER_ID, PRODUCT_NAME, REVIEW_TITLE, RATING, REVIEW_CATEGORY_ID, CONTENT, IMAGE_URL, IS_DELETED, CONFIRMED) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, 'N', 'N')";
     
     try (
         Connection conn = ConnectionProvider.getConnection();
@@ -79,7 +80,8 @@ public class ReviewDAO {
       pstmt.setInt(4, review.getRating());
       pstmt.setInt(5, review.getReviewCategoryId());
       pstmt.setString(6, review.getContent());
-      
+      pstmt.setString(7, review.getImageURL());
+
       int rows = pstmt.executeUpdate();
       
       if (rows > 0) {
@@ -134,5 +136,36 @@ public class ReviewDAO {
       System.out.println("updateConfirmed 오류: " + e.getMessage());
       e.printStackTrace();
     }
+  }
+  
+  
+  //main에 던저주는 메서드
+  public List<ReviewVO> getLatestReviews() {
+    List<ReviewVO> list = new ArrayList<>();
+    String sql = "SELECT REVIEW_ID, REVIEW_TITLE, MEMBER_ID, IMAGE_URL, CREATED_AT " +
+        "FROM REVIEW " +
+        "WHERE IS_DELETED = 'N' " +
+        "ORDER BY CREATED_AT DESC " +
+        "LIMIT 5";
+    
+    try (
+        Connection conn = ConnectionProvider.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery()
+    ) {
+      while (rs.next()) {
+        ReviewVO vo = new ReviewVO();
+        vo.setReviewId(rs.getInt("REVIEW_ID"));
+        vo.setReviewTitle(rs.getString("REVIEW_TITLE"));
+        vo.setMemberId(rs.getString("MEMBER_ID"));
+        vo.setImageURL(rs.getString("IMAGE_URL"));  // 썸네일 이미지
+        vo.setCreatedAt(rs.getString("CREATED_AT"));
+        list.add(vo);
+      }
+    } catch (Exception e) {
+      System.out.println("getLatestReviews 오류: " + e.getMessage());
+      e.printStackTrace();
+    }
+    return list;
   }
 }
