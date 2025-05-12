@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="sobi.db.ConnectionProvider" %>
 <main>
@@ -63,21 +64,44 @@
       color: #777;
     }
 
-    .login-wrap .sns-btns button {
+    .sns-btns a,
+    .sns-btns button {
       width: 100%;
-      padding: 16px;
+      height: 50px;
       margin: 8px 0;
       font-size: 17px;
       border: 1px solid #ccc;
-      border-radius: 10px;
+      border-radius: 12px;
       background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-sizing: border-box;
     }
 
-    .sns-naver { color: #1ec800; font-weight: bold; }
-    .sns-kakao { color: #3c1e1e; font-weight: bold; }
-    .sns-facebook { color: #1877f2; font-weight: bold; }
-  </style>
+    .sns-btns img {
+      height: 24px;
+      max-height: 80%;
+      object-fit: contain;
+    }
 
+    .sns-naver img {
+      height: 24px;
+    }
+
+    .sns-kakao {
+      background-color: #FEE500;
+      border: none;
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .sns-facebook {
+      color: #1877f2;
+      font-weight: bold;
+    }
+  </style>
 
   <div class="login-wrap">
     <h1>sobi</h1>
@@ -94,7 +118,7 @@
       <button type="submit" class="login-btn">로그인</button>
 
       <div class="link-line">
-        <a href="#">아이디찾기</a> | <a href="#">비밀번호 찾기</a>
+        <a href="findMemberId.do">아이디찾기</a> | <a href="findMemberPassword.do">비밀번호 찾기</a>
       </div>
 
       <button type="button" class="login-btn" onclick="location.href='${pageContext.request.contextPath}/v1/views/member/createMember.do'">
@@ -103,17 +127,31 @@
     </form>
 
     <div class="sns-btns">
-      <button class="sns-naver">네이버 아이디로 로그인</button>
+      <!-- 네이버 로그인 -->
+      <a href="${pageContext.request.contextPath}/naverLogin.do" class="sns-naver">
+        <img src="${pageContext.request.contextPath}/v1/static/images/logo-naver.png" alt="네이버 로그인" />
+      </a>
 
-      <!-- ✅ 카카오 로그인 버튼 -->
-      <button class="sns-kakao" onclick="loginWithKakao()">카카오 아이디로 로그인</button>
+      <!-- 카카오 로그인 -->
+      <button type="button" class="sns-kakao" onclick="loginWithKakao()">
+        <img src="${pageContext.request.contextPath}/v1/static/images/logo-kakao.png"
+             alt="카카오 로그인"
+             style="width: 100%; height: 100%; object-fit: contain;" />
+      </button>
 
-      <button class="sns-facebook">페이스북 아이디로 로그인</button>
+      <!-- 페이스북  -->
+      <button class="sns-facebook" disabled>페이스북 아이디로 로그인</button>
     </div>
   </div>
+
+  <c:if test="${not empty error}">
+    <script>
+      alert('${error}');
+    </script>
+  </c:if>
 </main>
 
-<!-- ✅ JS SDK + 로그인 호출 -->
+<!-- 카카오 로그인 호출부분 -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.5/kakao.min.js"
         integrity="sha384-dok87au0gKqJdxs7msEdBPNnKSRT+/mhTVzq+qOhcL464zXwvcrpjeWvyj1kCdq6"
         crossorigin="anonymous"></script>
@@ -129,3 +167,4 @@
     });
   }
 </script>
+

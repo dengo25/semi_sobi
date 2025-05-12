@@ -10,13 +10,73 @@ import java.sql.SQLException;
 
 public class MemberDAO {
   
+  public int updateMemberPassword(String memberId, String memberPassword) {
+    int cnt = 0;
+    String sql = "update MEMBER set MEMBER_PASSWORD = ? WHERE MEMBER_ID =?";
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, memberPassword);
+      pstmt.setString(2, memberId);
+      cnt = pstmt.executeUpdate();
+      ConnectionProvider.close(conn, pstmt);
+    } catch (Exception e) {
+      System.out.println("업데이트 예외 발생" + e.getMessage());
+    }
+    return cnt;
+  }
+  
+  
+  public MemberVO findMemberByIdAndEmail(String memberId, String memberEmail) {
+    MemberVO member = null;
+    String sql = "select * from MEMBER where MEMBER_ID = ? and MEMBER_EMAIL = ?";
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, memberId);
+      pstmt.setString(2, memberEmail);
+      
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        member = new MemberVO();
+        member.setMemberId(rs.getString("member_id"));
+        member.setMemberEmail(rs.getString("member_email"));
+        
+      }
+      ConnectionProvider.close(conn, pstmt, rs);
+    } catch (Exception e) {
+      System.out.println("예외발생 " + e.getMessage());
+    }
+    return member;
+  }
+  
+  public String  findMemberId(String memberName, String memberEmail) {
+    String sql = "select MEMBER_ID from MEMBER where MEMBER_NAME = ? and MEMBER_EMAIL = ?";
+    String memberId = null;
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, memberName);
+      pstmt.setString(2, memberEmail);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        memberId = rs.getString("MEMBER_ID");
+      }
+      ConnectionProvider.close(conn, pstmt, rs);
+    } catch (Exception e) {
+      System.out.println("예외발생 + "+e.getMessage());
+    }
+    return memberId;
+  }
+
+  
   public boolean isIdExist(String id) { //아이디 중복확인
     boolean result = false;
     String sql = "SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID = ?";
     
-    try (Connection conn = ConnectionProvider.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      
+    try {
+      Connection conn = ConnectionProvider.getConnection();
+      PreparedStatement pstmt = conn.prepareStatement(sql);
       pstmt.setString(1, id);
       ResultSet rs = pstmt.executeQuery();
       if (rs.next()) {
@@ -60,14 +120,14 @@ public class MemberDAO {
   
   
   
-  public MemberVO findById(int no) {
+  public MemberVO findById(String memberId) {
     MemberVO u = new MemberVO();
     
     String sql = "select * from MEMBER where member_id = ?";
     try {
       Connection conn = ConnectionProvider.getConnection();
       PreparedStatement pstmt = conn.prepareStatement(sql);
-      pstmt.setInt(1, no);
+      pstmt.setString(1, memberId);
       ResultSet rs = pstmt.executeQuery();
       if (rs.next()) {
         u.setMemberId(rs.getString("member_id"));
