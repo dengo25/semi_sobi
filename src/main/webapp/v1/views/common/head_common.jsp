@@ -9,6 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
+<script src="${pageContext.request.contextPath}/v1/static/js/ui.js"></script>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/v1/static/css/common.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/v1/static/css/style.css">
