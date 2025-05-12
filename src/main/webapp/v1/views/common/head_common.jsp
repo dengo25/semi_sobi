@@ -12,6 +12,7 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/v1/static/css/common.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/v1/static/css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/v1/static/css/content.css">
 
 <link rel="icon" href="${pageContext.request.contextPath}/v1/static/sobi-favicon.ico" type="image/x-icon">
 <link rel="icon" href="${pageContext.request.contextPath}/v1/static/sobi-favicon-32x32.png" type="image/png">

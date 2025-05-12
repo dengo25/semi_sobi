@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <main>
+<%-- 
   <style>
     .login-wrap {
       max-width: 520px;
@@ -57,9 +58,9 @@
       text-decoration: underline;
     }
   </style>
-
+--%>
   <div class="login-wrap">
-    <h1>비밀번호 찾기</h1>
+    <h1 class="type1">비밀번호 찾기</h1>
 
     <form action="findMemberPasswordOK.do" method="post">
       <input type="text" name="memberId" placeholder="아이디를 입력해 주세요" required />
