@@ -74,5 +74,14 @@ h1 {
 		</div>
 
 	</div>
+
+	<c:if test="${member.role == 'A'}">
+		<div style="text-align: right; margin: 20px 40px 0 0;">
+			<form action="confirmReview.do" method="post" style="display: inline;">
+				<input type="hidden" name="reviewId" value="${review.reviewId}" />
+				<button type="submit" class="btn btn-primary">인증</button>
+			</form>
+		</div>
+	</c:if>
 </body>
 </html>
