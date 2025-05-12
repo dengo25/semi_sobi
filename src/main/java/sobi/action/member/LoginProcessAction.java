@@ -1,6 +1,7 @@
 package sobi.action.member;
 
 import sobi.action.common.SobiAction;
+import sobi.dao.admin.BlackListDAO;
 import sobi.dao.member.MemberDAO;
 import sobi.vo.member.MemberVO;
 
@@ -26,8 +27,15 @@ public class LoginProcessAction implements SobiAction {
       
       HttpSession session = request.getSession();
       session.setAttribute("member", memberVO);
-      return "redirect:/v1/views/main/main.do";
+      BlackListDAO blacklistDao = new BlackListDAO();
+      int isBlack = blacklistDao.isBlackList(id); // status = 'blocked' 확인
 
+      if (isBlack == 1) {
+          request.setAttribute("error", "차단된 사용자입니다. 관리자에게 문의하세요.");
+          return "/v1/views/member/login.jsp";
+      }
+      return "redirect:/v1/views/main/main.do";
+      
     } else {
       System.out.println("[LoginProcessAction] 로그인 실패");
       request.setAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
