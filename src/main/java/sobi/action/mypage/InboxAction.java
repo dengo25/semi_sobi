@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import sobi.action.common.SobiAction;
 import sobi.dao.mypage.MessageDAO;
 import sobi.vo.mypage.MessageVO;
+import sobi.vo.mypage.PagingVO;
 import sobi.vo.member.MemberVO;
 
 public class InboxAction implements SobiAction {
@@ -29,10 +30,21 @@ public class InboxAction implements SobiAction {
 
         String memberId = member.getMemberId();
 
+        int nowPage = 1;
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) nowPage = Integer.parseInt(pageParam);
+        
         try {
             MessageDAO dao = new MessageDAO();
-            List<MessageVO> messageList = dao.getInboxMessages(memberId);
+            int totalCount = dao.countInboxMessages(memberId);
+            PagingVO paging = new PagingVO(nowPage, totalCount);
+            
+            List<MessageVO> messageList = dao.getInboxMessages(memberId, paging.getStartNo(), paging.getPageSize());
+            
             request.setAttribute("messageList", messageList);
+            request.setAttribute("paging", paging);
+            request.setAttribute("contentPage", "/v1/views/mypage/inbox.jsp");
+            
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("error", "받은 쪽지를 불러오는 중 오류가 발생했습니다.");

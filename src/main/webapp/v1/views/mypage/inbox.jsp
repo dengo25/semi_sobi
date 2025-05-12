@@ -60,6 +60,24 @@
 				</tbody>
 			</table>
 		</c:if>
+		<c:if test="${not empty paging}">
+  <div class="pagination" style="text-align:center; margin-top:20px;">
+    <c:if test="${paging.hasPrev()}">
+      <a href="inbox.do?page=${paging.startPage - 1}">&lt;</a>
+    </c:if>
+
+    <c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="i">
+      <a href="inbox.do?page=${i}" style="${i == paging.nowPage ? 'font-weight:bold; color:red;' : ''}">
+        ${i}
+      </a>
+    </c:forEach>
+
+    <c:if test="${paging.hasNext()}">
+      <a href="inbox.do?page=${paging.endPage + 1}">&gt;</a>
+    </c:if>
+  </div>
+</c:if>
+		
 	</form>
   </section>
     
