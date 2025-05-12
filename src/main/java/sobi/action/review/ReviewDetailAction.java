@@ -1,4 +1,4 @@
-package sobi.action.admin;
+package sobi.action.review;
 
 import java.io.IOException;
 
@@ -19,7 +19,15 @@ public class ReviewDetailAction implements SobiAction {
 		ReviewDAO reviewdao= new ReviewDAO();
 		ReviewVO review = reviewdao.getReviewsByReviewId(reviewId);
 		request.setAttribute("review", review);
-		return "/v1/views/admin/reviewDetail.jsp";
+		
+//		response.setContentType("text/html;charset=UTF-8");
+//		response.getWriter().println("<script>");
+//		response.getWriter().println("alert('인증되었습니다.');");
+//		response.getWriter().println("location.href='reviewDetail.do?reviewId=" + reviewId + "';");
+//		response.getWriter().println("</script>");
+//
+		
+		return "/v1/views/review/reviewDetail.jsp";
 	}
 
 }
