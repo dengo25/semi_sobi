@@ -13,6 +13,15 @@ public class MemberLogVO{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public MemberLogVO(String memberId, String accessedMenu, String memberActionType, Date memberLogCreated) {
+		super();
+		this.memberId = memberId;
+		this.accessedMenu = accessedMenu;
+		this.memberActionType = memberActionType;
+		this.memberLogCreated = memberLogCreated;
+	}
+
 	public MemberLogVO(int logNo, String memberId, String accessedMenu, String memberActionType, Date memberLogCreated) {
 		super();
 		this.logNo = logNo;

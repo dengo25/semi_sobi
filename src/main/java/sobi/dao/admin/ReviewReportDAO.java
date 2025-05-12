@@ -36,18 +36,20 @@ public class ReviewReportDAO {
 	}
 	public int reviewReportCount(String memberId) {
 		int cnt = 0;
-		String sql = "select count(*) from REVIEW_REPORT "
+		String sql = "select IFNULL(count(*),0) from REVIEW_REPORT "
 				+ "where review_id "
-				+ "in (select review_id from REVIEW"
+				+ "in (select review_id from REVIEW "
 				+ "WHERE member_id = ?) ";
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
 				cnt = rs.getInt(1);
 			}
+			ConnectionProvider.close(conn, pstmt, rs);
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		}

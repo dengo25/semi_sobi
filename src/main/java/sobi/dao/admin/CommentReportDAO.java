@@ -36,13 +36,14 @@ public class CommentReportDAO {
 	}
 	public int commentReportCount(String memberId) {
 		int cnt = 0;
-		String sql = "select count(*) from REVIEW_COMMENT "
+		String sql = "select IFNULL(count(*),0) from REVIEW_COMMENT "
 				+ "where comment_id "
-				+ "in (select comment_id from REVIEW_COMMENT"
+				+ "in (select comment_id from REVIEW_COMMENT "
 				+ "WHERE member_id = ?) ";
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {

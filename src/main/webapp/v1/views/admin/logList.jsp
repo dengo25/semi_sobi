@@ -81,39 +81,41 @@
     
 <main>
 	<h3>로그 기록 조회</h3>
-	<form method="get" action="logList.do?level=${level }&menu=?${menu }&type=${type }">
+	<form action="logList.do">
 		<label>
 			<select name="level">
-				<option value="all">전체</option>
-				<option value="admin">사용자</option>
-				<option value="member">관리자</option>
+	    		<option value="" ${empty level ? 'selected' : ''}>--선택 안 함--</option>
+				<option value="admin" ${level == 'admin' ? 'selected' : ''}>관리자</option>
+				<option value="member" ${level == 'member' ? 'selected' : ''}>사용자</option>
 			</select>
 		</label>
 	    <label>
 	    	<select name="menu">
-	    		<option disabled selected>--선택해주세요--</option>
-	    		<option value="로그인">로그인</option>
-	    		<option value="후기">후기</option>
-	    		<option value="댓글">댓글</option>
-	    		<option value="공지사항">공지사항</option>
-	    		<option value="FAQ">FAQ</option>
+	    		<option value="" ${empty menu ? 'selected' : ''}>--선택 안 함--</option>
+	    		<option value="로그인" ${menu == '로그인' ? 'selected' : ''}>로그인</option>
+	    		<option value="회원정보" ${menu == '회원정보' ? 'selected' : ''}>회원정보</option>
+	    		<option value="후기" ${menu == '후기' ? 'selected' : ''}>후기</option>
+	    		<option value="공지사항" ${menu == '공지사항' ? 'selected' : ''}>공지사항</option>
+	    		<option value="FAQ" ${menu == 'FAQ' ? 'selected' : ''}>FAQ</option>
 	    	</select>
 	    </label>
 	   	<label>
 	    	<select name="type">
-	    		<option disabled selected>--선택해주세요--</option>
-	    		<option value="로그인">로그인</option>
-	    		<option value="작성">작성</option>
-	    		<option value="조회">조회</option>
-	    		<option value="삭제">삭제</option>
-	    		<option value="수정">수정</option>
+	    		<option value="" ${empty type ? 'selected' : ''}>--선택 안 함--</option>
+	    		<option value="로그인" ${type == '로그인' ? 'selected' : ''}>로그인</option>
+	    		<option value="로그아웃" ${type == '로그아웃' ? 'selected' : ''}>로그아웃</option>	    		
+	    		<option value="회원가입" ${type == '회원가입' ? 'selected' : ''}>회원가입</option>	    		
+	    		<option value="회원탈퇴" ${type == '회원탈퇴' ? 'selected' : ''}>회원탈퇴</option>	    		
+	    		<option value="작성" ${type == '작성' ? 'selected' : ''}>작성</option>
+	    		<option value="조회" ${type == '조회' ? 'selected' : ''}>조회</option>
+	    		<option value="삭제" ${type == '삭제' ? 'selected' : ''}>삭제</option>
+	    		<option value="수정" ${type == '수정' ? 'selected' : ''}>수정</option>
 	    	</select>
 	    </label>
 	    <button type="submit" name="search">조회</button>
 	</form>
 	<table>
 		<tr>
-			<th>번호</th>
 			<th>ID</th>
 			<th>메뉴</th>
 			<th>내용</th>
@@ -124,7 +126,6 @@
 		
 		<c:forEach var="l" items="${list}">
 			<tr>
-				<td>${l.logNo }</td>
 				<td>${l.memberId }</td>
 				<td>${l.accessedMenu }</td>
 				<td>${l.memberActionType }</td>
@@ -134,5 +135,18 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div style="text-align: center; margin-top: 15px;">
+		<c:forEach var="i" begin="1" end="${totalPage}">
+			<c:choose>
+				<c:when test="${i == currentPage}">
+					<strong>[${i}]</strong>
+				</c:when>
+				<c:otherwise>
+					<a
+						href="logList.do?page=${i}&level=${level}&menu=${menu}&type=${type}">[${i}]</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	</div>
 
 </main>

@@ -127,7 +127,7 @@
 			</div>
 			<div class="card">
 				<h3>오늘 가입자</h3>
-				<p><c:out value="${todayJoin}" /></p>
+				<p><c:out value="${todayJoinCount}" /></p>
 			</div>
 			<div class="card">
 				<h3>블랙리스트</h3>

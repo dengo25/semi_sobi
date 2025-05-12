@@ -37,8 +37,6 @@
 			<th>이름</th>
 			<th>이메일</th>
 			<th>가입일</th>
-			<th>후기수</th>
-			<th>댓글수</th>
 			<th>상세보기</th>
 		</tr>
 		<c:forEach var="m" items="${list }">
@@ -47,10 +45,20 @@
 					<td>${m.memberName }</td>
 					<td>${m.memberEmail }</td>
 					<td><fmt:formatDate value="${m.memberReg }" pattern="yyyy-MM-dd" /></td>
-					<td><a href="memberReviewList.do?memberId${m.memberId }">${m.reviewCount }</a></td>
-					<td><a href="memberCommentList.do?memberId${m.memberId }">${m.commentCount }</a></td>
 					<td><a href="memberDetail.do?memberId=${m.memberId }">클릭</a></td>
 				</tr>
 		</c:forEach>
 	</table>
+	<div style="text-align: center; margin-top: 20px;">
+		<c:forEach var="i" begin="1" end="${totalPage}">
+			<c:choose>
+				<c:when test="${i == currentPage}">
+					<strong>[${i}]</strong>
+				</c:when>
+				<c:otherwise>
+					<a href="memberList.do?page=${i}">${i}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	</div>
 </main>

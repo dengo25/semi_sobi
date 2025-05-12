@@ -22,16 +22,18 @@ public class AdminMenuAction implements SobiAction {
 		MemberDAO memberdao = new MemberDAO();
 		ReviewDAO reviewdao = new ReviewDAO();
 		BlackListDAO blackListdao = new BlackListDAO();
-		MemberLogDAO memberLogDAO= new MemberLogDAO();
+		MemberLogDAO memberLogdao = new MemberLogDAO();
 		
 		int memberCount = memberdao.memberCount();
 		int reviewCount = reviewdao.reviewCount();
 		int blackListCount = blackListdao.blackListCount();
-		List<MemberLogVO> memberLogList = memberLogDAO.getRecentLog();
+		int todayJoinCount = memberdao.getTodayJoinMember();
+		List<MemberLogVO> memberLogList = memberLogdao.getRecentLog();
 		
 		request.setAttribute("memberCount", memberCount);
 		request.setAttribute("reviewCount", reviewCount);
 		request.setAttribute("blackListCount", blackListCount);
+		request.setAttribute("todayJoinCount", todayJoinCount);
 		request.setAttribute("memberLogList", memberLogList);
 
 		return "/v1/views/admin/adminMenu.jsp";

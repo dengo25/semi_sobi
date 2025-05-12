@@ -39,13 +39,13 @@ public class NoticeDAO {
 		int count = end - start + 1;	// mysql 용 변환 
 		
 		String sql = "SELECT NOTICE_NO, ROW_NUMBER() OVER (ORDER BY NOTICE_NO DESC) AS ROWNO,"
-		           + " NOTICE_TITLE, NOTICE_CONTENT, COUNT, NOTICE_CREATE_DATE"
-		           + " FROM NOTICE"
-		           + " WHERE IS_DELETED = 'N'"
-		           + " AND IS_VISIBLE = 'Y'"
-		           + " AND NOTICE_TITLE LIKE CONCAT('%', ?, '%')"
-		           + " ORDER BY NOTICE_NO DESC"
-		           + " LIMIT ?, ?";
+				+ " NOTICE_TITLE, NOTICE_CONTENT, COUNT, NOTICE_CREATE_DATE"
+				+ " FROM NOTICE"
+				+ " WHERE IS_DELETED = 'N'"
+				+ " AND IS_VISIBLE = 'Y'"
+				+ " AND NOTICE_TITLE LIKE CONCAT('%', ?, '%')"
+				+ " ORDER BY NOTICE_NO DESC"
+				+ " LIMIT ?, ?";
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement pstm = conn.prepareStatement(sql);
@@ -53,7 +53,7 @@ public class NoticeDAO {
 			pstm.setInt(2,offset);
 			pstm.setInt(3,count);
 			ResultSet rs = pstm.executeQuery();
-
+			
 			while(rs.next()) {
 				NoticeVO vo = new NoticeVO();
 				vo.setNoticeNo(rs.getInt(1));
@@ -174,7 +174,7 @@ public class NoticeDAO {
 		String sql = "INSERT INTO NOTICE ("
 				+ " MEMBER_ID, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_IMAGE_NUMBER,"
 				+ " NOTICE_CREATE_DATE, IS_DELETED, IS_VISIBLE )"
-				+ " VALUES(?, ?, ?, ?, SYSDATE(),'N','Y')"; 
+				+ " VALUES(?, ?, ?, ?, SYSDATE(),'N','Y')";
 		try {
 			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -203,28 +203,28 @@ public class NoticeDAO {
 	
 	
 	// NOTICE_IMAGE 테이블에 한 건의 이미지 메타정보를 삽입
-    public int insertImage(NoticeImageVO nivo) {
-        int re = -1;
-        String sql = "INSERT INTO NOTICE_IMAGE "
-        		   + " (NOTICE_NO, FILE_URL, UPLOAD_TIME, ORIGINAL_FILE_NAME, FILE_TYPE)"
-                   + " VALUES (?, ?, SYSDATE(), ?, ?)";
-        try {
-    		Connection conn = ConnectionProvider.getConnection();
+	public int insertImage(NoticeImageVO nivo) {
+		int re = -1;
+		String sql = "INSERT INTO NOTICE_IMAGE "
+				+ " (NOTICE_NO, FILE_URL, UPLOAD_TIME, ORIGINAL_FILE_NAME, FILE_TYPE)"
+				+ " VALUES (?, ?, SYSDATE(), ?, ?)";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
 			PreparedStatement psmt = conn.prepareStatement(sql);
-    			
-            psmt.setInt(1, nivo.getNoticeNo());
-            psmt.setString(2, nivo.getFileUrl());
-            psmt.setString(3, nivo.getOriginalFileName());
-            psmt.setString(4, nivo.getFileType());
-            re = psmt.executeUpdate();
-            
-            ConnectionProvider.close(conn, psmt);
-        } catch (Exception e) {
-        	System.out.println("insertImage Exception : "+e.getMessage());
+			
+			psmt.setInt(1, nivo.getNoticeNo());
+			psmt.setString(2, nivo.getFileUrl());
+			psmt.setString(3, nivo.getOriginalFileName());
+			psmt.setString(4, nivo.getFileType());
+			re = psmt.executeUpdate();
+			
+			ConnectionProvider.close(conn, psmt);
+		} catch (Exception e) {
+			System.out.println("insertImage Exception : "+e.getMessage());
 			e.printStackTrace();
-        }
-        return re;
-    }
+		}
+		return re;
+	}
 	
 	
 	// 선택한 게시글 수정할 내용을 반환 한다.
@@ -241,7 +241,7 @@ public class NoticeDAO {
 			psmt.setInt(3, nvo.getNoticeImageNumber());
 			psmt.setInt(4,nvo.getNoticeNo());
 			re = psmt.executeUpdate();
-
+			
 			ConnectionProvider.close(conn, psmt);
 		} catch (Exception e) {
 			System.out.println("editDetail Exception : "+e.getMessage());
@@ -253,33 +253,33 @@ public class NoticeDAO {
 	
 	// 선택한 게시글을 수정시 이미지를 선택적으로 삭제 할경우 결과를 반환한다.
 	public int deleteImg(ArrayList<String> fileUrls) {
-	    if (fileUrls == null || fileUrls.isEmpty()) return 0;
-
-	    int re = 0;
-	    String sql = "DELETE FROM NOTICE_IMAGE WHERE FILE_URL IN (";
-	    for (int i = 0; i < fileUrls.size(); i++) {
-	        sql += "?";
-	        if (i < fileUrls.size() - 1) {
-	            sql += ", ";
-	        }
-	    }
-	    sql += ")";
-
-	    try {
-	        Connection conn = ConnectionProvider.getConnection();
-	        PreparedStatement psmt = conn.prepareStatement(sql);
-	        for (int i = 0; i < fileUrls.size(); i++) {
-	            psmt.setString(i + 1, fileUrls.get(i));
-	        }
-	        re = psmt.executeUpdate();
-	        ConnectionProvider.close(conn, psmt);
-	    } catch (Exception e) {
-	        System.out.println("deleteImg Exception: " + e.getMessage());
-	        e.printStackTrace();
-	    }
-	    return re;
+		if (fileUrls == null || fileUrls.isEmpty()) return 0;
+		
+		int re = 0;
+		String sql = "DELETE FROM NOTICE_IMAGE WHERE FILE_URL IN (";
+		for (int i = 0; i < fileUrls.size(); i++) {
+			sql += "?";
+			if (i < fileUrls.size() - 1) {
+				sql += ", ";
+			}
+		}
+		sql += ")";
+		
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);
+			for (int i = 0; i < fileUrls.size(); i++) {
+				psmt.setString(i + 1, fileUrls.get(i));
+			}
+			re = psmt.executeUpdate();
+			ConnectionProvider.close(conn, psmt);
+		} catch (Exception e) {
+			System.out.println("deleteImg Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
+		return re;
 	}
-
+	
 	
 	// 선택한 게시글을 삭제한다.
 	public int setDelete(int no) {
@@ -293,7 +293,7 @@ public class NoticeDAO {
 			re = pstm.executeUpdate();
 		} catch (Exception e) {
 			System.out.println("setDelete Exception: " + e.getMessage());
-	        e.printStackTrace();
+			e.printStackTrace();
 		}
 		return re;
 	}
@@ -325,7 +325,7 @@ public class NoticeDAO {
 				nvo.setNoticeTitle(rs.getString(1));
 				nvo.setNoticeContent(rs.getString(2));
 				nvo.setNoticeImageNumber(rs.getInt(3));
-			
+				
 				NoticeImageVO nivo = new NoticeImageVO();
 				nivo.setFileUrl(rs.getString(4));
 				
