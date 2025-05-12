@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-  String actionUrl = "reviewWriteOk.do";
+  String actionUrl = (request.getAttribute("review") != null)
+          ? "reviewEditOk.do"
+          : "reviewWriteOk.do";
 %>
 
 <main>
   <h2>리뷰 작성</h2>
 
   <form id="postForm" action="<%= actionUrl %>" method="post" enctype="multipart/form-data">
+    <c:if test="${not empty review}">
+      <input type="hidden" name="reviewId" value="${review.reviewId}" />
+    </c:if>
+
     <table class="table-basic">
-      <caption>리뷰 작성 목록 - 제목, 상품명, 카테고리, 평점, 내용 구성</caption>
+      <caption>리뷰 작성</caption>
       <colgroup>
         <col style="width: 15%">
         <col style="width: 85%">
@@ -28,7 +34,8 @@
         <th>제목</th>
         <td>
           <div class="input-group w940">
-            <input type="text" name="reviewTitle" class="form-control" placeholder="제목을 입력하세요.">
+            <input type="text" name="reviewTitle" class="form-control"
+                   placeholder="제목을 입력하세요." value="${review.reviewTitle}">
           </div>
         </td>
       </tr>
@@ -36,7 +43,8 @@
         <th>상품명</th>
         <td>
           <div class="input-group w940">
-            <input type="text" name="productName" class="form-control" placeholder="상품명을 입력하세요.">
+            <input type="text" name="productName" class="form-control"
+                   placeholder="상품명을 입력하세요." value="${review.productName}">
           </div>
         </td>
       </tr>
@@ -45,7 +53,10 @@
         <td>
           <select name="reviewCategoryId" class="form-control w300">
             <c:forEach var="cat" items="${categoryList}">
-              <option value="${cat.reviewCategoryId}">${cat.reviewCategoryName}</option>
+              <option value="${cat.reviewCategoryId}"
+                      <c:if test="${review.reviewCategoryId == cat.reviewCategoryId}">selected</c:if>>
+                  ${cat.reviewCategoryName}
+              </option>
             </c:forEach>
           </select>
         </td>
@@ -55,7 +66,7 @@
         <td>
           <select name="rating" class="form-control w100">
             <c:forEach begin="1" end="5" var="i">
-              <option value="${i}">${i}점</option>
+              <option value="${i}" <c:if test="${review.rating == i}">selected</c:if>>${i}점</option>
             </c:forEach>
           </select>
         </td>
@@ -63,7 +74,7 @@
       </tbody>
     </table>
 
-    <!-- Toast UI Editor -->
+    <!-- Toast UI Editor 영역 -->
     <div id="editor"></div>
     <input type="hidden" name="reviewContent" id="reviewContent">
     <input type="hidden" name="reviewImageNumber" id="reviewImageNumber">
@@ -74,9 +85,15 @@
     </div>
   </form>
 
-  <!-- Toast UI Editor 스크립트 -->
+  <!-- Toast UI Editor -->
   <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css">
   <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+  <c:if test="${not empty review}">
+    <script>
+      const reviewContentFromServer = `<c:out value="${review.content}" escapeXml="false" />`;
+    </script>
+  </c:if>
 
   <script>
     let imageCount = 0;
@@ -104,6 +121,12 @@
       }
     });
 
+    // 기존 내용 불러오기 (수정 모드일 경우)
+    if (typeof reviewContentFromServer !== 'undefined') {
+      editor.setHTML(reviewContentFromServer);
+    }
+
+    // form 전송 전 editor 내용 반영
     document.getElementById('postForm').addEventListener('submit', function () {
       const content = editor.getHTML();
       document.getElementById('reviewContent').value = content;

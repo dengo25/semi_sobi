@@ -2,6 +2,7 @@ package sobi.dao.review;
 
 import sobi.db.ConnectionProvider;
 import sobi.vo.member.MemberVO;
+import sobi.vo.review.ReviewImageVO;
 import sobi.vo.review.ReviewVO;
 
 import java.sql.Connection;
@@ -167,5 +168,72 @@ public class ReviewDAO {
       e.printStackTrace();
     }
     return list;
+  }
+  
+  // 특정 리뷰 ID로 리뷰 상세 조회
+  public ReviewVO getReviewsByReviewId(int reviewId) {
+    ReviewVO vo = null;
+    String sql = "SELECT REVIEW_ID, MEMBER_ID, PRODUCT_NAME, REVIEW_TITLE, RATING, REVIEW_CATEGORY_ID, CONTENT, IMAGE_URL, CREATED_AT, CONFIRMED " +
+        "FROM REVIEW " +
+        "WHERE IS_DELETED = 'N' AND REVIEW_ID = ?";
+    
+    try (
+        Connection conn = ConnectionProvider.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)
+    ) {
+      pstmt.setInt(1, reviewId);
+      ResultSet rs = pstmt.executeQuery();
+      
+      if (rs.next()) {
+        vo = new ReviewVO();
+        vo.setReviewId(rs.getInt("REVIEW_ID"));
+        vo.setMemberId(rs.getString("MEMBER_ID"));
+        vo.setProductName(rs.getString("PRODUCT_NAME"));
+        vo.setReviewTitle(rs.getString("REVIEW_TITLE"));
+        vo.setRating(rs.getInt("RATING"));
+        vo.setReviewCategoryId(rs.getInt("REVIEW_CATEGORY_ID"));
+        vo.setContent(rs.getString("CONTENT"));
+        vo.setImageURL(rs.getString("IMAGE_URL"));
+        vo.setCreatedAt(rs.getString("CREATED_AT"));
+        vo.setConfirmed(rs.getString("CONFIRMED"));
+      }
+    } catch (Exception e) {
+      System.out.println("getReviewsByReviewId 오류: " + e.getMessage());
+      e.printStackTrace();
+    }
+    
+    return vo;
+  }
+  
+  
+  
+  // edit에서 사용하는 메서드
+  
+  public int updateReview(ReviewVO review) {
+    int result = 0;
+    String sql = "UPDATE REVIEW SET " +
+        "PRODUCT_NAME = ?, REVIEW_TITLE = ?, RATING = ?, " +
+        "REVIEW_CATEGORY_ID = ?, CONTENT = ?, IMAGE_URL = ?, UPDATED_AT = NOW() " +
+        "WHERE REVIEW_ID = ? AND IS_DELETED = 'N'";
+    
+    try (
+        Connection conn = ConnectionProvider.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)
+    ) {
+      pstmt.setString(1, review.getProductName());
+      pstmt.setString(2, review.getReviewTitle());
+      pstmt.setInt(3, review.getRating());
+      pstmt.setInt(4, review.getReviewCategoryId());
+      pstmt.setString(5, review.getContent());
+      pstmt.setString(6, review.getImageURL());
+      pstmt.setInt(7, review.getReviewId());
+      
+      result = pstmt.executeUpdate();
+    } catch (Exception e) {
+      System.out.println("updateReview 오류: " + e.getMessage());
+      e.printStackTrace();
+    }
+    
+    return result;
   }
 }

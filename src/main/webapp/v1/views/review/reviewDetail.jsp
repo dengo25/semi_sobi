@@ -65,9 +65,11 @@ h1 {
 			<fmt:formatDate value="${review.createdAt}" pattern="yyyy-MM-dd" />
 		</div>
 
+		<!--
 		<c:if test="${not empty review.imageUrl}">
 			<img src="${review.imageUrl}" alt="리뷰 이미지" class="image-preview">
 		</c:if>
+		-->
 
 		<div class="content">
 			<c:out value="${review.content}" escapeXml="false" />
@@ -75,10 +77,12 @@ h1 {
 
 
 
+
 	</div>
+
 	<c:if test="${not empty member && member.memberId == review.memberId}">
 		<div style="text-align: right; margin: 20px 40px 0 0;">
-			<a href="reviewEdit.do?reviewId=${review.reviewId}" class="btn btn-warning">수정</a>
+			<a href="reviewEdit.do?reviewId=${review.reviewId}" class="btn btn-primary">수정</a>
 		</div>
 	</c:if>
 
