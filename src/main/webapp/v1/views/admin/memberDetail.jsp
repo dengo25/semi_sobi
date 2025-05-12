@@ -1,89 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <style>
-  main {
-    padding: 20px;
-    font-family: 'Segoe UI', sans-serif;
-  }
+main {
+	padding: 20px;
+	font-family: 'Segoe UI', sans-serif;
+}
 
-  .dashboard {
-    display: flex;
-    gap: 20px;
-    margin-top: 20px;
-    margin-bottom: 30px;
-  }
+.dashboard {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin: 30px 0;
+}
 
-  .card {
-    flex: 1;
-    background-color: #f4f9ff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-    text-align: center;
-  }
+.card {
+	flex: 1 1 30%;
+	background: linear-gradient(to right, #e0f7fa, #f1f8ff);
+	padding: 20px;
+	border-radius: 12px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+	text-align: center;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-  .card h3 {
-    margin: 0;
-    font-size: 28px;
-    color: #007acc;
-  }
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
 
-  .card p {
-    margin-top: 8px;
-    font-size: 14px;
-    color: #555;
-  }
+.card h3 {
+	margin: 0;
+	font-size: 32px;
+	color: #0288d1;
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 30px;
-    font-size: 14px;
-  }
+.card p {
+	margin-top: 10px;
+	font-size: 15px;
+	font-weight: 500;
+	color: #555;
+}
 
-  th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-  }
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 30px;
+	font-size: 14px;
+}
 
-  th {
-    background-color: #f0f4f8;
-    color: #333;
-  }
+th, td {
+	border: 1px solid #ccc;
+	padding: 10px;
+	text-align: center;
+}
 
-  tr:nth-child(even) {
-    background-color: #fafafa;
-  }
+th {
+	background-color: #f0f4f8;
+	color: #333;
+}
 
-  tr:hover {
-    background-color: #eef6ff;
-  }
+tr:nth-child(even) {
+	background-color: #fafafa;
+}
+
+tr:hover {
+	background-color: #eef6ff;
+}
 </style>
 
 <main>
 	<h2>회원 정보 관리</h2>
 	<div class="dashboard">
 		<div class="card">
-			<h3>${memberReviewList.size()}</h3>
 			<p>작성한 후기</p>
+			<p>${totalReviewCount }</p>
 		</div>
 		<div class="card">
-			<h3>${loglist.size()}</h3>
 			<p>활동 로그 수</p>
+			<p>${totalMemberLogCount}</p>
 		</div>
 		<div class="card">
-			<h3>
-				<c:set var="reportCount" value="0" />
-				<c:forEach var="r" items="${memberReviewList}">
-					<c:set var="reportCount" value="${reportCount + r.reportCount}" />
-				</c:forEach>
-				${reportCount}
-			</h3>
 			<p>총 신고 수</p>
+			<p>${totalReportCount}</p>
 		</div>
 	</div>
 
@@ -99,20 +100,19 @@
 		<tr>
 			<th>성별</th>
 			<td>
-				<%-- 성별 값이 M 또는 F일 경우 텍스트 변환 --%>
-				<c:choose>
+				<%-- 성별 값이 M 또는 F일 경우 텍스트 변환 --%> <c:choose>
 					<c:when test="${memberDetail.memberGender eq 'M'}">남</c:when>
 					<c:when test="${memberDetail.memberGender eq 'F'}">여</c:when>
 					<c:otherwise>정보 없음</c:otherwise>
 				</c:choose>
-			</td>	
+			</td>
 		</tr>
 		<tr>
 			<th>이메일</th>
 			<td>${memberDetail.memberEmail }</td>
 		</tr>
 		<tr>
-			<th>생년월일</th>			
+			<th>생년월일</th>
 			<td>${memberDetail.memberBirth }</td>
 		</tr>
 		<tr>
@@ -121,12 +121,14 @@
 		</tr>
 		<tr>
 			<th>가입일자</th>
-			<td><fmt:formatDate value="${memberDetail.memberReg }" pattern="yyyy-MM-dd"/></td>
-		</tr>		
+			<td><fmt:formatDate value="${memberDetail.memberReg }"
+					pattern="yyyy-MM-dd" /></td>
+		</tr>
 		<tr>
 			<th>블랙리스트</th>
-			<td><a href="blackListDetail.do?memberId=${memberDetail.memberId }">보기</a></td>		
-		</tr>		
+			<td><a
+				href="blackListDetail.do?memberId=${memberDetail.memberId }">보기</a></td>
+		</tr>
 	</table>
 	<table>
 		<tr>
@@ -145,18 +147,28 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="paging" style="margin-top: 20px; text-align: center;">
+		<c:forEach var="i" begin="1" end="${totalReviewPage}">
+			<c:choose>
+				<c:when test="${i == currentReviewPage}">
+					<strong>[${i}]</strong>
+				</c:when>
+				<c:otherwise>
+					<a href="memberDetail.do?memberId=${memberId}&reviewPage=${i}">[${i}]</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	</div>
 	<table>
 		<tr>
-			<th>번호</th>
 			<th>ID</th>
 			<th>메뉴</th>
 			<th>내용</th>
 			<th>접근시간</th>
 		</tr>
-		
-		<c:forEach var="l" items="${loglist}">
+
+		<c:forEach var="l" items="${memberLogList}">
 			<tr>
-				<td>${l.logNo }</td>
 				<td>${l.memberId }</td>
 				<td>${l.accessedMenu }</td>
 				<td>${l.memberActionType }</td>
@@ -164,4 +176,26 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="paging" style="margin-top: 15px; text-align: center;">
+		<c:forEach var="i" begin="1" end="${totalMemberLogPage}">
+			<c:choose>
+				<c:when test="${i == currentMemberLogPage}">
+					<strong>[${i}]</strong>
+				</c:when>
+				<c:otherwise>
+					<a
+						href="memberDetail.do?memberId=${memberId}&reviewPage=${currentReviewPage}&memberLogPage=${i}">[${i}]</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+	</div>
+
+
+	<br>
+	<div class="btn-area">
+		<a href="memberList.do" class="btn btn-deepgrey">회원 목록</a>
+	</div>
+	
+	
+	
 </main>

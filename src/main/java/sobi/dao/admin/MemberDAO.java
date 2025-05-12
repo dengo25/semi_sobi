@@ -12,6 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDAO {
+	public int getTodayJoinMember() {
+		int count = 0;
+		String sql = "select IFNULL(count(*), 0) from MEMBER where DATE(member_reg) = CURDATE() and role = 'M'";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			ConnectionProvider.close(conn, stmt, rs);
+		} catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}
+		return count;
+	}
 	public int memberCount() {
 		int memberCount = 0;
 		String sql = "select IFNULL(count(*),0) from MEMBER where role='M'";
@@ -55,45 +71,22 @@ public class MemberDAO {
 		return m;
 	}
 
-	public List<MemberVO> findAllMember() {
+	public List<MemberVO> getReviewandCommentCount(int page, int pageSize) {
 		List<MemberVO> list = new ArrayList<MemberVO>();
-		String sql = "select * from MEMBER where role='M'";
+		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_EMAIL, MEMBER_REG "
+				+ "FROM MEMBER "
+				+ "WHERE ROLE = 'M' "
+				+ "ORDER BY MEMBER_REG DESC LIMIT ? OFFSET ?";
 		try {
 			Connection conn = ConnectionProvider.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pageSize);
+			pstmt.setInt(2, (page-1) * pageSize);
+			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				list.add(new MemberVO(rs.getString(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getDate(10),
-						rs.getString(11), rs.getString(12)));
+				list.add(new MemberVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4)));
 			}
-			ConnectionProvider.close(conn, stmt, rs);
-		} catch (Exception e) {
-			System.out.println("예외발생: " + e.getMessage());
-		}
-		return list;
-	}
-
-	public List<MemberVO> getReviewandCommentCount() {
-		List<MemberVO> list = new ArrayList<MemberVO>();
-		String sql = "SELECT " + "    m.MEMBER_ID, " + "    m.MEMBER_NAME, " + "    m.MEMBER_EMAIL, "
-				+ "    m.MEMBER_REG, " + "    IFNULL(r.review_count, 0) AS review_count, "
-				+ "    IFNULL(c.comment_count, 0) AS comment_count " + "FROM MEMBER m " + "LEFT JOIN ( "
-				+ "    SELECT MEMBER_ID, COUNT(*) AS review_count " + "    FROM REVIEW " + "    WHERE IS_DELETED = 'N' "
-				+ "    GROUP BY MEMBER_ID " + ") r ON m.MEMBER_ID = r.MEMBER_ID " + "LEFT JOIN ( "
-				+ "    SELECT MEMBER_ID, COUNT(*) AS comment_count " + "    FROM REVIEW_COMMENT "
-				+ "    GROUP BY MEMBER_ID " + ") c ON m.MEMBER_ID = c.MEMBER_ID " + "WHERE m.ROLE = 'M'";
-		try {
-			Connection conn = ConnectionProvider.getConnection();
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				list.add(new MemberVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getInt(5),
-						rs.getInt(6)));
-			}
-			ConnectionProvider.close(conn, stmt, rs);
+			ConnectionProvider.close(conn, pstmt, rs);
 		} catch (Exception e) {
 			System.out.println("예외발생: " + e.getMessage());
 		}

@@ -41,7 +41,13 @@ public class MemberVO {
 		this.reviewCount = reviewCount;
 		this.commentCount = commentCount;
 	}
-
+	public MemberVO(String memberId, String memberName, String memberEmail, Date memberReg) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberEmail = memberEmail;
+		this.memberReg = memberReg;
+	}
 	public int getReviewCount() {
 		return reviewCount;
 	}

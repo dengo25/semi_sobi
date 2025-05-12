@@ -20,10 +20,20 @@ public class MemberListAction implements SobiAction {
 			throws ServletException, IOException {
 		MemberDAO dao = new MemberDAO();
 		List<MemberVO> list = new ArrayList<MemberVO>();
-		list = dao.getReviewandCommentCount();
-
-		request.setAttribute("list", list);
+		
+		int page = 1;
+		int totalPageSize = 10;
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		int totalCount = dao.memberCount();
+		int totalPage = (int)Math.ceil((double)totalCount/totalPageSize);
+		
+		list = dao.getReviewandCommentCount(page, totalPageSize);
+		request.setAttribute("list", list);		
+		request.setAttribute("currentPage", page);		
+		request.setAttribute("totalPage", totalPage);		
+		
 		return "/v1/views/admin/memberList.jsp";
 	}
-
 }

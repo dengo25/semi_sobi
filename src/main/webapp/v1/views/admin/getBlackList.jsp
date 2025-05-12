@@ -4,7 +4,6 @@
 <main>
 	<table>
 		<tr>
-			<th>번호</th>
 			<th>ID</th>
 			<th>유형</th>
 			<th>일시</th>
@@ -12,7 +11,6 @@
 		</tr>
 		<c:forEach var="b" items="${list }">
 			<tr>
-				<td>${b.blackListNo }</td>
 				<td>${b.memberId }</td>
 				<td>${b.reportType }</td>
 				<td>${b.updateAt }</td>
