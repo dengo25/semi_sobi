@@ -15,13 +15,14 @@
 
     <!-- 📋 리뷰 테이블 -->
     <table class="table-basic">
-        <caption>리뷰 테이블 목록 - 번호, 제목, 작성자, 평점, 작성일</caption>
+        <caption>리뷰 테이블 목록 - 번호, 제목, 작성자, 평점, 작성일, 승인 여부</caption> 
         <colgroup>
             <col style="width:8%">
-            <col style="width:40%">
-            <col style="width:20%">
+            <col style="width:30%">
+            <col style="width:16%">
+            <col style="width:8%">
+            <col style="width:18%">
             <col style="width:10%">
-            <col style="width:22%">
         </colgroup>
         <thead>
         <tr>
@@ -30,6 +31,7 @@
             <th scope="col">작성자</th>
             <th scope="col">평점</th>
             <th scope="col">작성일</th>
+            <th scope="col">승인</th>
         </tr>
         </thead>
         <tbody>
@@ -44,12 +46,18 @@
                 <td>${review.memberId}</td>
                 <td>${review.rating}</td>
                 <td>${review.createdAt}</td>
+                <td> <!-- ✅ [5] 승인 여부 값 표시 -->
+                    <c:choose>
+                        <c:when test="${review.confirmed == 'Y'}">✅</c:when>
+                        <c:otherwise>❌</c:otherwise>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
 
         <c:if test="${empty list}">
             <tr class="table-is-empty">
-                <td colspan="5">검색된 리뷰가 없습니다.</td>
+                <td colspan="6">검색된 리뷰가 없습니다.</td>
             </tr>
         </c:if>
         </tbody>
