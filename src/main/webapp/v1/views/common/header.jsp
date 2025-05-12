@@ -14,7 +14,7 @@
 					</li>
 				</c:forEach>
 
-				<c:if test="${member.role == 'A'}">
+				<c:if test="${member.role eq 'A'}">
 					<li>
 						<a href="${ctx}${admin.link}">${admin.name}</a>
 					</li>

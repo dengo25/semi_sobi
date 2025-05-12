@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <style>
   table {
     width: 100%;
@@ -45,9 +46,9 @@
 					<td>${m.memberId }</td>
 					<td>${m.memberName }</td>
 					<td>${m.memberEmail }</td>
-					<td>${m.memberReg }</td>
-					<td>${m.reviewCount }</td>
-					<td>${m.commentCount }</td>
+					<td><fmt:formatDate value="${m.memberReg }" pattern="yyyy-MM-dd" /></td>
+					<td><a href="memberReviewList.do?memberId${m.memberId }">${m.reviewCount }</a></td>
+					<td><a href="memberCommentList.do?memberId${m.memberId }">${m.commentCount }</a></td>
 					<td><a href="memberDetail.do?memberId=${m.memberId }">클릭</a></td>
 				</tr>
 		</c:forEach>

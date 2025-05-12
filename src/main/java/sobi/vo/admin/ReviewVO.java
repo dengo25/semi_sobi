@@ -1,6 +1,7 @@
 package sobi.vo.admin;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class ReviewVO {
 	private int reviewId;
@@ -11,24 +12,24 @@ public class ReviewVO {
 	private int categoryId;
 	private String content;
 	private String imageUrl;
-	private Timestamp createdAt;
-	private Timestamp updatedAt;
-	private Timestamp noticeDeleteDate;
+	private Date createdAt;
+	private Date updatedAt;
+	private Date noticeDeleteDate;
 	private String isDeleted;
 	private String confirmed;
 	private int likeCount; // 좋아요 수
+	private int commentCount;
+	private int reportCount;
 
-	
-	
-
-	public int getReviewCount() {
-		return reviewCount;
+	public ReviewVO(int reviewId, String title, Date createdAt, int commentCount, int reportCount) {
+		super();
+		this.reviewId = reviewId;
+		this.title = title;
+		this.createdAt = createdAt;
+		this.commentCount = commentCount;
+		this.reportCount = reportCount;
 	}
-
-	public void setReviewCount(int reviewCount) {
-		this.reviewCount = reviewCount;
-	}
-
+	
 	public int getCommentCount() {
 		return commentCount;
 	}
@@ -37,21 +38,31 @@ public class ReviewVO {
 		this.commentCount = commentCount;
 	}
 
-	public int getCommentId() {
-		return commentId;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
-	public void setCommentId(int commentId) {
-		this.commentId = commentId;
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
+	public void setNoticeDeleteDate(Date noticeDeleteDate) {
+		this.noticeDeleteDate = noticeDeleteDate;
+	}
+
+	public int getReportCount() {
+	    return reportCount;
+	}
+	public void setReportCount(int reportCount) {
+	    this.reportCount = reportCount;
+	}
 	public ReviewVO() {
 		super();
 	}
 
 	public ReviewVO(int reviewId, String memberId, String productName, String title, int rating, int categoryId,
-	                String content, String imageUrl, Timestamp createdAt, Timestamp updatedAt,
-	                Timestamp noticeDeleteDate, String isDeleted, String confirmed) {
+	                String content, String imageUrl, Date createdAt, Date updatedAt,
+	                Date noticeDeleteDate, String isDeleted, String confirmed) {
 		this.reviewId = reviewId;
 		this.memberId = memberId;
 		this.productName = productName;
@@ -125,21 +136,21 @@ public class ReviewVO {
 		this.imageUrl = imageUrl;
 	}
 
-	public Timestamp getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Timestamp getUpdatedAt() {
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
-	public Timestamp getNoticeDeleteDate() {
+	public Date getNoticeDeleteDate() {
 		return noticeDeleteDate;
 	}
 	public void setNoticeDeleteDate(Timestamp noticeDeleteDate) {

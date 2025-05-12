@@ -12,6 +12,57 @@ import sobi.db.ConnectionProvider;
 import sobi.vo.admin.MemberLogVO;
 
 public class MemberLogDAO{
+	public List<MemberLogVO> getMemberLog(String memberId){
+		List<MemberLogVO> list = new ArrayList<MemberLogVO>();
+	    String sql = "SELECT * FROM MEMBER_LOG WHERE member_id=?";
+	     
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new MemberLogVO(
+							rs.getInt(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getDate(5)
+						));
+			}
+			ConnectionProvider.close(conn, pstmt, rs);
+		} catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}
+		return list;
+	}
+	public List<MemberLogVO> getRecentLog(){
+		List<MemberLogVO> list = new ArrayList<MemberLogVO>();
+	    String sql = "SELECT * FROM MEMBER_LOG "
+	               + "ORDER BY member_log_created DESC "
+	               + "LIMIT 5";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				list.add(new MemberLogVO(
+							rs.getInt(1),
+							rs.getString(2),
+							rs.getString(3),
+							rs.getString(4),
+							rs.getDate(5)
+						));
+			}
+			ConnectionProvider.close(conn, pstmt, rs);
+		} catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}
+		return list;
+	}
 	public int insertMemberLog(String memberId, String accessedMenu, String actionType) {
 		int re = -1;
 		String sql = "insert MEMBER_LOG(member_id, accessed_menu, member_action_type) values(?,?,?)";
@@ -66,7 +117,6 @@ public class MemberLogDAO{
 			for(int i = 0 ; i < setStr.size() ; i++) {
 				pstmt.setString(i+1, setStr.get(i));
 			}
-			System.out.println(sql);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
