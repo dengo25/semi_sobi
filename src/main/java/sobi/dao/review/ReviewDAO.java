@@ -49,7 +49,7 @@ public class ReviewDAO {
         vo.setReviewTitle(rs.getString("REVIEW_TITLE"));
         vo.setRating(rs.getInt("RATING"));
         vo.setReviewCategoryId(rs.getInt("REVIEW_CATEGORY_ID"));
-       // vo.setCategoryName(rs.getString("REVIEW_CATEGORY_NAME"));
+        // vo.setCategoryName(rs.getString("REVIEW_CATEGORY_NAME"));
         vo.setCreatedAt(rs.getString("CREATED_AT"));
         vo.setConfirmed(rs.getString("CONFIRMED")); // 👈 여기가 중요
         list.add(vo);
@@ -61,8 +61,6 @@ public class ReviewDAO {
     
     return list;
   }
-  
-  
   
   
   public int insertReview(ReviewVO review) {
@@ -82,7 +80,7 @@ public class ReviewDAO {
       pstmt.setInt(5, review.getReviewCategoryId());
       pstmt.setString(6, review.getContent());
       pstmt.setString(7, review.getImageURL());
-
+      
       int rows = pstmt.executeUpdate();
       
       if (rows > 0) {
@@ -206,7 +204,6 @@ public class ReviewDAO {
   }
   
   
-  
   // edit에서 사용하는 메서드
   
   public int updateReview(ReviewVO review) {
@@ -235,5 +232,24 @@ public class ReviewDAO {
     }
     
     return result;
+  }
+  
+  
+  /// 논리적 삭제
+  public boolean logicalDelete(int reviewId, String memberId) {
+    String sql = "UPDATE REVIEW SET IS_DELETED = 'Y' WHERE REVIEW_ID = ? AND MEMBER_ID = ?";
+    
+    try (
+        Connection conn = ConnectionProvider.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)
+    ) {
+      pstmt.setInt(1, reviewId);
+      pstmt.setString(2, memberId);
+      int affected = pstmt.executeUpdate();
+      return affected > 0;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    }
   }
 }

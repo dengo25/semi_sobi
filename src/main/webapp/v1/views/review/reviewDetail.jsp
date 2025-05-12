@@ -83,6 +83,11 @@ h1 {
 	<c:if test="${not empty member && member.memberId == review.memberId}">
 		<div style="text-align: right; margin: 20px 40px 0 0;">
 			<a href="reviewEdit.do?reviewId=${review.reviewId}" class="btn btn-primary">수정</a>
+			<a href="reviewDelete.do?reviewId=${review.reviewId}"
+			   class="btn btn-danger"
+			   onclick="return confirm('정말로 삭제하시겠습니까?');">
+				삭제
+			</a>
 		</div>
 	</c:if>
 
@@ -96,3 +101,12 @@ h1 {
 	</c:if>
 </body>
 </html>
+
+
+<script>
+	function confirmDelete(reviewId) {
+		if (confirm("정말로 삭제하시겠습니까?")) {
+			location.href = 'reviewDelete.do?reviewId=' + reviewId;
+		}
+	}
+</script>
