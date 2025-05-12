@@ -141,3 +141,19 @@
 }
 .join-wrap button:hover{cursor:pointer;}
 .idCheckMsg{margin-bottom:10px;font-size:14px;}
+
+
+
+/*========================================================
+ 메인 
+========================================================*/
+.main{overflow:hidden;margin:40px auto 70px;}
+.cont-wrap{width:calc(50% - 20px);float:left;}
+.cont-item.thm{margin-top:60px;}
+.cont-list{margin-top:48px;width:50%;float:right;}
+.cont-list [class*="thum-item"]{border:none;border-bottom: 1px solid #ddd;border-radius: 0;margin: 15px 0 0 20px;padding-left: 0;}
+.cont-list [class*="thum-item"].gallery-list .img{width:200px;height:150px;}
+
+
+
+

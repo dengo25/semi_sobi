@@ -151,4 +151,9 @@ public class ReviewVO {
   public void setRowNo(int rowNo) {
     this.rowNo = rowNo;
   }
+  
+  // 2025-05-12 왕 : html 태그 붙은 텍스트 가공 메서드 
+  public String getPlainTextContent() {
+      return content != null ? content.replaceAll("<[^>]*>", "") : "";
+  }
 }

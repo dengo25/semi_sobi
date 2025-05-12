@@ -3,6 +3,22 @@ $(function(){
 	if ($('.ui-acc').length > 0) { accMenu();}
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+  const swiper = new Swiper('.swiper', {
+    speed: 400,
+    spaceBetween: 100,
+	autoplay: {
+	    delay: 5000,
+	    disableOnInteraction: false
+	  },
+	loop: true,
+	scrollbar: {
+       el: ".swiper-scrollbar",
+       hide: true,
+	},
+  });
+});
+
 // Accodian(dl, dt, dd)
 function accMenu(){
 	const ah = $('.ui-acc dt');

@@ -141,7 +141,7 @@ public class ReviewDAO {
   //main에 던저주는 메서드
   public List<ReviewVO> getLatestReviews() {
     List<ReviewVO> list = new ArrayList<>();
-    String sql = "SELECT REVIEW_ID, REVIEW_TITLE, MEMBER_ID, IMAGE_URL, CREATED_AT " +
+    String sql = "SELECT REVIEW_ID, REVIEW_TITLE, CONTENT, MEMBER_ID, IMAGE_URL, CREATED_AT " +
         "FROM REVIEW " +
         "WHERE IS_DELETED = 'N' " +
         "ORDER BY CREATED_AT DESC " +
@@ -156,6 +156,7 @@ public class ReviewDAO {
         ReviewVO vo = new ReviewVO();
         vo.setReviewId(rs.getInt("REVIEW_ID"));
         vo.setReviewTitle(rs.getString("REVIEW_TITLE"));
+        vo.setContent(rs.getString("CONTENT")); // 컨텐츠 내용 추가 
         vo.setMemberId(rs.getString("MEMBER_ID"));
         vo.setImageURL(rs.getString("IMAGE_URL"));  // 썸네일 이미지
         vo.setCreatedAt(rs.getString("CREATED_AT"));

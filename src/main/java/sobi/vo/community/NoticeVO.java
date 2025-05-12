@@ -133,4 +133,9 @@ public class NoticeVO {
 	public void setNoticeImageVO(NoticeImageVO noticeImageVO) {
 		this.noticeImageVO = noticeImageVO;
 	}
+	
+	// 2025-05-12 왕 : html 태그 붙은 텍스트 가공 메서드 
+	public String getPlainTextContent() {
+      return noticeContent != null ? noticeContent.replaceAll("<[^>]*>", "") : "";
+	}
 }

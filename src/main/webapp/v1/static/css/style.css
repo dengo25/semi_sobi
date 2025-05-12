@@ -32,6 +32,7 @@ footer .footer-list li{flex:0 1 auto;text-align:center;align-content:center;padd
 
 /* Title, Text ===============================================*/
 h2{overflow:hidden;color:#4c4c4c;font-size:36px;font-weight:bold;line-height:52px;}
+h3{overflow:hidden;color:#4c4c4c;font-size:30px;font-weight:bold;line-height:48px;}
 .deco-txt{margin:auto 8px;color:#4c4c4c;font-size:14px;line-height:20px;}
 
 /* Size ===============================================*/
@@ -381,8 +382,8 @@ table[class*="table"] td .required + [class*="ico-"]{margin-left:5px;}
 [class*="thum-item"] .img a{display:block;width:100%;height:100%;}
 [class*="thum-item"] .count{margin-top:10px;font-size:12px;}
 
-[class*="thum-item"].gallery-list { overflow: hidden; } 
-[class*="thum-item"].gallery-list .img { float:left; margin-right: 60px;width: 556px;height: 313px; text-align:center; background:#000;overflow:hidden;} 
+[class*="thum-item"].gallery-list { overflow: hidden; margin-top:15px;} 
+[class*="thum-item"].gallery-list .img { float:left; margin-right: 60px;width: 390px;height: 250px; text-align:center; background:#000;overflow:hidden;}/* width: 556px;height: 313px; */ 
 [class*="thum-item"].gallery-list .desc { margin-right: 44px;} 
 [class*="thum-item"].gallery-list .desc .category-badge-area { margin-top:44px; } 
 [class*="thum-item"].gallery-list .desc .tit { margin-top:16px; } 
