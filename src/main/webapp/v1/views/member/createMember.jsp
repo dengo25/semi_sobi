@@ -62,7 +62,7 @@
           </label>
         </div>
       </div>
-      <input type="text" name="member_email" placeholder="이메일" required />
+      <input type="email" name="member_email" placeholder="이메일" required />
       <input type="text" name="member_birth" placeholder="생년월일 (예: 990101)" required />
 
       <!-- 주소 영역 -->

@@ -29,7 +29,7 @@
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a href="${ctx}${logout.link}"><span>${logout.name}</span></a>
+							<a href="#" onclick="confirmLogout()"><span>${logout.name}</span></a>
 						</li>
 						<li>
 							<a href="${ctx}${mypage.link}"><span>${mypage.name}</span></a>
@@ -40,3 +40,11 @@
 		</nav>
 	</div>
 </header>
+
+<script>
+	function confirmLogout() {
+		if (confirm("정말 로그아웃 하시겠습니까?")) {
+			location.href = "${ctx}${logout.link}";
+		}
+	}
+</script>
