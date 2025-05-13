@@ -8,7 +8,7 @@ main,
 .wrap{max-width:1260px;margin:0 auto;}
 
 header nav{display:flex;height:70px;align-items:center;}
-header nav ul{display:flex;flex:1 0 auto;margin-left:150px;}
+header nav ul{display:flex;flex:1 0 auto;margin-left:11.9048vw;}
 header nav ul li{flex:1 0 auto;text-align:center;align-content:center;}
 header h1{height:70px;overflow:hidden;}
 header h1 img{width:80px;}
@@ -372,8 +372,8 @@ table[class*="table"] td .required + [class*="ico-"]{margin-left:5px;}
 [class*="thum-item"] .count{margin-top:10px;font-size:12px;}
 
 [class*="thum-item"].gallery-list { overflow: hidden; margin-top:15px;} 
-[class*="thum-item"].gallery-list .img { float:left; margin-right: 60px;width: 390px;height: 250px; text-align:center; background:#000;overflow:hidden;}/* width: 556px;height: 313px; */ 
-[class*="thum-item"].gallery-list .desc { margin-right: 44px;} 
+[class*="thum-item"].gallery-list .img { float:left; margin-right: 30px;width: 300px;height: 250px; text-align:center; background:#000;overflow:hidden;}/* width: 556px;height: 313px; */ 
+[class*="thum-item"].gallery-list .desc { margin-right: 20px;} 
 [class*="thum-item"].gallery-list .desc .category-badge-area { margin-top:44px; } 
 [class*="thum-item"].gallery-list .desc .tit { margin-top:16px; } 
 [class*="thum-item"].gallery-list .desc .date { margin-top:8px; } 
@@ -435,7 +435,7 @@ table[class*="table"] td .required + [class*="ico-"]{margin-left:5px;}
 
 
 /* Accodian : ui-acc(type-faq) ---------------------------------------- */
-.ui-acc.type-faq{margin-bottom:24px;background-color:transparent;}/* border-top:1px solid #4c4c4c;background-color:#fff; */
+.ui-acc.type-faq{margin-bottom:24px;background-color:transparent;border-top:1px solid #4c4c4c;}
 .ui-acc.type-faq dl{overflow:hidden;border-radius:4px;border-bottom:16px solid #f5f6f7;}
 .ui-acc.type-faq dt{position:relative;min-height:56px;padding:16px;border-bottom:none;border-radius:4px;background-color:#fff;}/* min-height:80px;padding:24px; */
 .ui-acc.type-faq dl.on dt::after{content:'';overflow:hidden;display:block;position:absolute;right:16px;left:16px;bottom:0; clear:both;width:calc(100% - 16px);border-bottom:2px dashed #e5e5e5; border-spacing:2px;}

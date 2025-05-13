@@ -16,24 +16,24 @@
 --%>
 	<div class="cont-wrap">
 		<div class="cont-item banner">
-			<h3>SOBI PICK! 최신 리뷰</h3>
+			<h3>🏆 SOBI PICK! 최신 리뷰</h3>
 			<div class="swiper">
 				<div class="swiper-wrapper">
 					<c:forEach var="review" items="${list}">
 						<div class="swiper-slide">
-							<div class="thum-item gallery-list reverse">
+							<div class="thum-item gallery-list">
 								<figure class="img">
-									<a href="javascript:void(0);"> <img class=""
+									<a href="reviewDetail.do?reviewId=${review.reviewId}"> <img class=""
 										src="${review.imageURL}">
 									</a>
 								</figure>
 								<div class="desc">
 									<p class="tit">
-										<a href="javascript:void(0);">${review.reviewTitle}</a>
+										<a href="reviewDetail.do?reviewId=${review.reviewId}">${review.reviewTitle}</a>
 									</p>
 									<p class="date">${review.createdAt}</p>
 									<p class="cont">
-										<a href="javascript:void(0);">${review.plainTextContent}</a>
+										<a href="reviewDetail.do?reviewId=${review.reviewId}">${review.plainTextContent}</a>
 									</p>
 								</div>
 							</div>
@@ -44,20 +44,20 @@
 			</div>
 		</div>
 		<div class="cont-item thm">
-			<h3>SOBI 공지사항</h3>
+			<h3>📢 SOBI 공지사항</h3>
 			<c:forEach var="notice" items="${noticeList}">
 				<div class="thum-item gallery-list">
 					<figure class="img">
-						<a href="javascript:void(0);"> <img class=""
+						<a href="noticeDetail.do?noticeNo=${notice.noticeNo}"> <img class=""
 							src="${notice.noticeImageVO.fileUrl}">
 						</a>
 					</figure>
 					<div class="desc">
 						<p class="tit">
-							<a href="javascript:void(0);">${notice.noticeTitle}</a>
+							<a href="noticeDetail.do?noticeNo=${notice.noticeNo}">${notice.noticeTitle}</a>
 						</p>
 						<p class="cont">
-							<a href="javascript:void(0);">${notice.plainTextContent}</a>
+							<a href="noticeDetail.do?noticeNo=${notice.noticeNo}">${notice.plainTextContent}</a>
 						</p>
 					</div>
 				</div>
@@ -65,21 +65,21 @@
 		</div>
 	</div>
 	<div class="cont-list">
-		<h3 class="blind">SOBI 리뷰</h3>
+		<h3 class="blind">📝 SOBI 리뷰</h3>
 		<c:forEach var="review" items="${list}">
 			<div class="thum-item gallery-list reverse">
 				<figure class="img">
-					<a href="javascript:void(0);"> <img class=""
+					<a href="reviewDetail.do?reviewId=${review.reviewId}"> <img class=""
 						src="${review.imageURL}">
 					</a>
 				</figure>
 				<div class="desc">
 					<p class="tit">
-						<a href="javascript:void(0);">${review.reviewTitle}</a>
+						<a href="reviewDetail.do?reviewId=${review.reviewId}">${review.reviewTitle}</a>
 					</p>
-					<p class="date">2025-05-08</p>
+					<p class="date">${review.createdAt}</p>
 					<p class="cont">
-						<a href="javascript:void(0);">${review.plainTextContent}</a>
+						<a href="reviewDetail.do?reviewId=${review.reviewId}">${review.plainTextContent}</a>
 					</p>
 				</div>
 			</div>

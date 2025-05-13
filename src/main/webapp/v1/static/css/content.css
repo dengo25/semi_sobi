@@ -152,6 +152,8 @@
 .main h3{font-size:30px;}
 .cont-wrap{width:calc(50% - 20px);float:left;}
 .cont-item.thm{margin-top:60px;}
+.cont-item.thm [class*="thum-item"].gallery-list .img{float:none;margin:0;width:100%;}
+.cont-item.thm [class*="thum-item"] .desc .tit a{min-height:28px;}
 .cont-list{margin-top:48px;width:50%;float:right;}
 .cont-list [class*="thum-item"]{border:none;border-bottom: 1px solid #ddd;border-radius: 0;margin: 15px 0 0 20px;padding-left: 0;}
 .cont-list [class*="thum-item"].gallery-list .img{width:200px;height:150px;}
@@ -172,15 +174,96 @@
  마이페이지 
 ========================================================*/
 .mypage-wrapper{display:flex;}
-.mypage-content{flex:1 1 0;}/* flex-grow: 1; */
+.mypage-content{flex:1 1 0;}
 .mypage-sidebar{margin-top:110px;margin-right:20px;width:130px;}
-.mypage-sidebar ul{}
-.mypage-sidebar ul li{}
-.mypage-sidebar ul li a{font-size:16px;line-heihgtL:20px;padding:5px 0px;}
+.mypage-sidebar ul li a{display:inline-block;font-size:16px;line-height:20px;padding:5px 0px;}
 
 
 
+/*========================================================	
+ 미디어쿼리 
+========================================================*/
+@media (max-width: 890px){
+	header{border-bottom:1px solid #e8e8e8;position:fixed;top:0;left:0;right:0;background:#fff;z-index:999;}
+	header nav{flex-direction:column;height:136px;}
+	header nav ul{margin-left:0;margin-bottom:10px;}
+	header h1{height:auto;}
+	header h1 img{position:relative;top:-10px;width:100px;}
+	.menu-list li a{font-size:14px;}
+	.util-box li a{font-size:12px;}
+	
+	header ~ main{margin-top:176px;padding:0 15px;}
+	
+	footer .footer-list{flex-direction:column;}
+	footer .footer-list li{padding:3px 10px;text-align:left;font-size:12px;}
+	.copyright{margin-top:5px;font-size:12px;}
+	
+	h2{margin-top:30px;padding-bottom:15px;font-size:22px;text-align:center;}
+	
+	.search-area{width:100%;}
+	.search-area [class*="input-group"]{flex-direction:column;}
+	.search-area .form-control{width:100%;}
+	.search-area .btn{margin-top:5px;}
+	
+	.ui-acc.type-faq dt .tit,
+	.ui-acc.type-faq dd .cont-txt{font-size:14px;}
+	
+	.input-group input ~ input, 
+	.input-group input + input, 
+	.input-group input ~ .btn, 
+	.input-group input + .btn, 
+	.input-group select ~ .btn, 
+	.input-group select + .btn, 
+	.input-group select ~ select, 
+	.input-group select + select, 
+	.input-group select ~ input, 
+	.input-group select + input, 
+	.input-group input ~ select, 
+	.input-group input + select, 
+	.input-group .custom-select ~ .custom-select, 
+	.input-group .custom-select + .custom-select{margin-left:0;}
+	
+	table[class*="table"] th, table[class*="table"] td{height:20px;padding:8px 7px;font-size:14px;}
+	
+	.scroll-area{overflow-x:scroll;}
+	.scroll-area .scroll-wrap{min-width:1024px;padding-bottom:15px;}
+	
+	.mypage-wrapper{flex-direction:column-reverse;}
+	.mypage-wrapper ul {display:flex;}
+	.mypage-sidebar{width:100%;min-height:60px;margin:15px 0 0;padding-top:15px;overflow-y:scroll;border-top:1px solid #ddd;background:#fff;}
+	.mypage-sidebar::before{content:' 메뉴 바로가기';font-size:14px;font-weight:bold;}
+	.mypage-sidebar ul li{position:relative;flex:1 0 auto;}
+	.mypage-sidebar ul li a{width:100%;padding:5px 5px;font-size:12px;text-align:center;}
+	.mypage-content{margin-bottom:20px;}
+	
+	.login-wrap .login-btn{font-size:14px;padding:12px;}
+	.login-wrap input[type="text"], 
+	.login-wrap input[type="password"]{font-size:14px;padding:9px 12px;margin-bottom:8px;}
+	.login-wrap .link-line,
+	.login-wrap .link-line a{font-size:12px;}
+	.sns-btns a, 
+	.sns-btns button{height:40px;}
+	
+	.join-wrap h2{margin-bottom:10px;font-size:22px;}
+	.join-wrap button{font-size:14px;padding:10px;}
+	.join-wrap input[type="text"], 
+	.join-wrap input[type="password"],
+	.join-wrap input[type="button"]{padding:9px 10px;}
+	.join-wrap input{font-size:14px;}
 
+	.main{margin:176px auto 70px;}
+	.main h3{font-size:24px;line-height:32px;}
+	.cont-wrap,
+	.cont-list{width:100%;float:none;}	
+	.cont-item.thm{margin-top:40px;}
+	.cont-item.banner [class*="thum-item"].gallery-list .img{float:none}
+	/* .cont-list{border-top:1px solid #e5e5e5;} */
+	.cont-list .blind{position:relative;width:100%;height:auto;}
+	.cont-list [class*="thum-item"].gallery-list.reverse .desc{margin-left:0;}
+	.cont-list [class*="thum-item"] .desc .tit a{min-height:28px;}
+	.cont-list [class*="thum-item"].gallery-list .img{float:none;margin:0 auto;width:100%;height:190px;}
+	.cont-list [class*="thum-item"].gallery-list .desc .cont{margin-top:20px;}
+}
 
 
 
