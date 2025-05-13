@@ -38,9 +38,10 @@
 				삭제 </a>
 		</c:if>
 	</div>
+
 	<c:if test="${member.role == 'A'}">
-		<div class="btn-area-right">		
-			<form action="confirmReview.do" method="post" >
+		<div class="btn-area-right">
+			<form action="confirmReview.do" method="post" onsubmit="return confirmReview();">
 				<input type="hidden" name="reviewId" value="${review.reviewId}" />
 				<button type="submit" class="btn btn-primary">인증</button>
 			</form>
@@ -48,6 +49,12 @@
 	</c:if>
 </main>
 
+
+<script>
+	function confirmReview() {
+		return confirm("인증하시겠습니까?");
+	}
+</script>
 
 <script>
 	function confirmDelete(reviewId) {
