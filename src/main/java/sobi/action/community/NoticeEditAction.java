@@ -26,6 +26,7 @@ public class NoticeEditAction implements SobiAction {
 		
 		request.setAttribute("noticeDetail",dao.getDetail(noticeNo));
 		request.setAttribute("noticeImg",dao.getImgByNoticeNo(noticeNo));
+		request.setAttribute("title", "공지사항");
 		
 		return "/v1/views/community/noticeWrite.jsp";
 	}

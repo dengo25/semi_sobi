@@ -131,10 +131,12 @@ public class NoticeEditActionOK implements SobiAction {
 			for (NoticeImageVO img : images) {
                 dao.insertImage(img);
             }
+			request.setAttribute("title", "공지사항");
 			response.sendRedirect("noticeDetail.do?noticeNo=" + noticeNo);
 			return null;
 		} else { // 수정 실패 시
 			request.setAttribute("errorMsg", "게시글 수정에 실패했습니다.");
+			request.setAttribute("title", "공지사항");
 			return "/v1/views/community/noticeWriteCheck.jsp";
 		}
 	}

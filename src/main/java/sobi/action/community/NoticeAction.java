@@ -40,6 +40,7 @@ public class NoticeAction implements SobiAction {
 		request.setAttribute("count", dao.getCount(keyword));
 		request.setAttribute("totalPaging", dao.totalPage);
 		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("title", "공지사항");
 			
 		System.out.println("keyword : "+keyword);
 		System.out.println("pageNum : "+pageNum);

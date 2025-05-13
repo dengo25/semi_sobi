@@ -4,7 +4,7 @@
 <html>
 <head>
  <%@ include file="head_common.jsp" %>
- <title>${title}</title>
+ <title>SOBI : <c:out value="${title}"/></title>
 </head>
 <body>
 <%@ include file="header.jsp" %>
