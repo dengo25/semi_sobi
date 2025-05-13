@@ -13,27 +13,37 @@
     <h2>내 정보 보기</h2>
     <form action="updateProfile.do" method="post" onsubmit="return prepareAddress();">
 
-      <input type="text" name="member_id" value="<%= member.getMemberId() %>" readonly />
-      <input type="password" name="member_password" placeholder="새 비밀번호 (선택)" />
+      <input type="text" name="member_id" class="form-control" value="<%= member.getMemberId() %>" readonly />
+      <input type="password" name="member_password" class="form-control" placeholder="새 비밀번호 (선택)" />
 
-      <input type="text" name="member_name" value="<%= member.getMemberName() %>" readonly />
+      <input type="text" name="member_name" class="form-control" value="<%= member.getMemberName() %>" readonly />
 
-      <div>
-        <label><input type="radio" value="M" disabled <%= "M".equals(member.getMemberGender()) ? "checked" : "" %>> 남</label>
-        <label><input type="radio" value="F" disabled <%= "F".equals(member.getMemberGender()) ? "checked" : "" %>> 여</label>
-      </div>
+
+	<div class="input-group">
+	    <label for="radioM" class="input-radio">
+	        <input type="radio" id="radioM" class="form-control" value="M" disabled <%= "M".equals(member.getMemberGender()) ? "checked" : "" %>>
+	        <span class="radioMark"></span>
+	        <em>남</em>
+	    </label>
+	
+	    <label for="radioF" class="input-radio">
+	        <input type="radio" id="radioF" class="form-control" value="F" disabled <%= "F".equals(member.getMemberGender()) ? "checked" : "" %>>
+	        <span class="radioMark"></span>
+	        <em>여</em>
+	    </label>
+	</div>
 
       <input type="text" name="member_email" value="<%= member.getMemberEmail() %>" readonly />
       <input type="text" name="member_birth" value="<%= member.getMemberBirth() %>" readonly />
 
       <!-- 주소 수정 -->
-      <div style="display: flex; gap: 8px; margin-top: 12px;">
-        <input type="text" name="member_zip" id="sample4_postcode" value="<%= member.getMemberZip() %>" readonly />
+      <div style="display: flex; gap: 8px; margin:10px 0;">
+        <input type="text" name="member_zip" class="form-control" id="sample4_postcode" value="<%= member.getMemberZip() %>" readonly />
         <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" />
       </div>
 
-      <input type="text" id="sample4_roadAddress" value="<%= member.getMemberAddr() %>" readonly />
-      <input type="text" id="sample4_detailAddress" placeholder="상세주소" />
+      <input type="text" class="form-control" id="sample4_roadAddress" value="<%= member.getMemberAddr() %>" readonly />
+      <input type="text" class="form-control" id="sample4_detailAddress" placeholder="상세주소" />
       <input type="hidden" name="member_addr" id="member_addr_final" />
 
       <button type="submit" style="margin-top: 12px;">수정</button>
@@ -65,29 +75,4 @@
       return true;
     }
   </script>
-
-  <style>
-    .join-wrap {
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 30px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      font-family: 'Helvetica', sans-serif;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 6px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-  </style>
 </main>

@@ -6,12 +6,12 @@
 	
 	<div class="search-area">
 		<form class="input-group" action="notice.do" method="post">
-	        <input type="search" name="keyword" class="form-control">
+	        <input type="search" name="keyword" placeholder="제목을 입력하세요" class="form-control">
 	        <button type="submit" class="btn btn-deepgrey">검색</button>
 	    </form>
 	</div>	
 	
-	<p>총 ${count}건</p>
+	<p class="txt-count">총 ${count}건</p>
 	<table class="table-basic">
 	    <caption>공지사항 테이블 목록 - no, 제목, 작성일, 조회수로 구성</caption>
 	    <colgroup>

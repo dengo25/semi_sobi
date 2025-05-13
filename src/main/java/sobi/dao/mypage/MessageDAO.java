@@ -11,6 +11,106 @@ import sobi.db.ConnectionProvider;
 import sobi.vo.mypage.MessageVO;
 
 public class MessageDAO {
+	//페이징
+	public List<MessageVO> getInboxMessages(String memberId, int start, int size) throws SQLException {
+	    List<MessageVO> list = new ArrayList<>();
+	    String sql = 
+	        "SELECT M.MESSAGE_ID, M.SENDER_ID, M.MESSAGE_TITLE, M.MESSAGE_SEND_DATE, M.MESSAGE_IS_READ, " +
+	        "       U.MEMBER_NAME AS SENDER_NAME " +
+	        "FROM MESSAGE M " +
+	        "JOIN MEMBER U ON M.SENDER_ID = U.MEMBER_ID " +
+	        "WHERE M.RECEIVER_ID = ? AND M.DELETED_BY_RECEIVER != 'Y' " +
+	        "ORDER BY M.MESSAGE_SEND_DATE DESC LIMIT ?, ?";
+	    
+	    try (Connection conn = ConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, memberId);
+	        pstmt.setInt(2, start);
+	        pstmt.setInt(3, size);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                MessageVO msg = new MessageVO();
+	                msg.setMessageId(rs.getInt("MESSAGE_ID"));
+
+	                String senderId = rs.getString("SENDER_ID");
+	                String senderName = rs.getString("SENDER_NAME");
+	                msg.setSenderId(senderName + " (" + senderId + ")");
+
+	                msg.setMessageTitle(rs.getString("MESSAGE_TITLE"));
+	                msg.setMessageSendDate(rs.getTimestamp("MESSAGE_SEND_DATE"));
+	                msg.setMessageIsRead(rs.getString("MESSAGE_IS_READ")); // ✅ 요게 없었음!
+
+	                list.add(msg);
+	            }
+	        }
+	    }
+	    return list;
+	}
+	public List<MessageVO> getSentMessages(String memberId, int start, int size) throws SQLException {
+	    List<MessageVO> list = new ArrayList<>();
+
+	    String sql =
+	        "SELECT M.MESSAGE_ID, M.RECEIVER_ID, M.MESSAGE_TITLE, M.MESSAGE_SEND_DATE, M.MESSAGE_IS_READ, " +
+	        "       U.MEMBER_NAME AS RECEIVER_NAME " +
+	        "FROM MESSAGE M " +
+	        "JOIN MEMBER U ON M.RECEIVER_ID = U.MEMBER_ID " +
+	        "WHERE M.SENDER_ID = ? AND M.DELETED_BY_SENDER != 'Y' " +
+	        "ORDER BY M.MESSAGE_SEND_DATE DESC LIMIT ?, ?";
+
+	    try (Connection conn = ConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, memberId);
+	        pstmt.setInt(2, start);
+	        pstmt.setInt(3, size);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            while (rs.next()) {
+	                MessageVO vo = new MessageVO();
+	                vo.setMessageId(rs.getInt("MESSAGE_ID"));
+
+	                String receiverId = rs.getString("RECEIVER_ID");
+	                String receiverName = rs.getString("RECEIVER_NAME");
+	                vo.setReceiverId(receiverName + " (" + receiverId + ")");
+
+	                vo.setMessageTitle(rs.getString("MESSAGE_TITLE"));
+	                vo.setMessageSendDate(rs.getTimestamp("MESSAGE_SEND_DATE"));
+	                vo.setMessageIsRead(rs.getString("MESSAGE_IS_READ"));
+
+	                list.add(vo);
+	            }
+	        }
+	    }
+
+	    return list;
+	}
+
+
+	
+	//받은 쪽지 개수
+	public int countInboxMessages(String memberId) throws SQLException {
+	    String sql = "SELECT COUNT(*) FROM MESSAGE WHERE RECEIVER_ID = ? AND DELETED_BY_RECEIVER != 'Y'";
+	    try (Connection conn = ConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, memberId);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) return rs.getInt(1);
+	        }
+	    }
+	    return 0;
+	}
+	public int countSentMessages(String memberId) throws SQLException {
+	    String sql = "SELECT COUNT(*) FROM MESSAGE WHERE SENDER_ID = ? AND DELETED_BY_SENDER != 'Y'";
+	    try (Connection conn = ConnectionProvider.getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, memberId);
+	        try (ResultSet rs = pstmt.executeQuery()) {
+	            if (rs.next()) return rs.getInt(1);
+	        }
+	    }
+	    return 0;
+	}
+
+
+	
     // 받은쪽지목록 
 	public List<MessageVO> getInboxMessages(String memberId) throws SQLException {
         List<MessageVO> list = new ArrayList<>();

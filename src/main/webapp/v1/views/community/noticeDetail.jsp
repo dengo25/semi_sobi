@@ -2,11 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <main>
-	<h2>공지사항 - 상세보기</h2>
-	
+	<h2>공지사항</h2>
 	<div class="content-area">
-		<p>${noticeDetail.noticeCreateDate} <b>관리자</b></p>
-		<h3>${noticeDetail.noticeTitle}</h3>
+		<div class="cont-top-area">
+	        <h3>${noticeDetail.noticeTitle}</h3>
+	        <div class="info-wrap">
+	            <span class="date">작성일 : ${noticeDetail.noticeCreateDate}</span>
+	            <span class="writer">작성자 : 관리자</span>
+	        </div>
+        </div>
+        
+		
 		<div class="content">
 			${noticeDetail.noticeContent}
 			<%-- 이미지 호출 미사용 

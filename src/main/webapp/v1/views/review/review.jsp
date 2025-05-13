@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <main>
-    <h2>리뷰 게시판</h2>
+    <h2>후기</h2>
 
     <!-- 🔍 검색 영역 -->
     <div class="search-area">
         <form class="input-group" action="review.do" method="get">
-            <input type="search" name="keyword" class="form-control" placeholder="제목 또는 작성자 검색" value="${param.keyword}">
+            <input type="search" name="keyword" class="form-control" placeholder="제목 또는 작성자를 입력하세요" value="${param.keyword}">
             <button type="submit" class="btn btn-deepgrey">검색</button>
         </form>
     </div>
 
-    <p>총 ${count}건</p>
+    <p class="txt-count">총 ${count}건</p>
 
     <!-- 📋 리뷰 테이블 -->
     <table class="table-basic">

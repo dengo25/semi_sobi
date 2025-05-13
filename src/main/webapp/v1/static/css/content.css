@@ -129,7 +129,8 @@
 .join-wrap form > input{ width:calc(100% - 25px);}
 .join-wrap form > div input{margin-bottom:0;}
 .join-wrap input[type="button"]:hover{cursor:pointer;}
-.join-wrap input[type="text"]{ }/* width:100%; */
+.join-wrap input[type="text"],
+.join-wrap input[type="password"]{height:20px;padding:12px;}/* width:100%; */
 .join-wrap button {
   width: 100%;
   padding: 14px;
@@ -141,3 +142,45 @@
 }
 .join-wrap button:hover{cursor:pointer;}
 .idCheckMsg{margin-bottom:10px;font-size:14px;}
+
+
+
+/*========================================================
+ 메인 
+========================================================*/
+.main{overflow:hidden;margin:40px auto 70px;}
+.main h3{font-size:30px;}
+.cont-wrap{width:calc(50% - 20px);float:left;}
+.cont-item.thm{margin-top:60px;}
+.cont-list{margin-top:48px;width:50%;float:right;}
+.cont-list [class*="thum-item"]{border:none;border-bottom: 1px solid #ddd;border-radius: 0;margin: 15px 0 0 20px;padding-left: 0;}
+.cont-list [class*="thum-item"].gallery-list .img{width:200px;height:150px;}
+
+
+
+/*========================================================	
+ 상세구성 
+========================================================*/
+.cont-top-area{display:flex;flex-direction:column;align-items: center;margin: 0;padding: 25px 0 24px 0;border-bottom: 2px solid #4c4c4c;text-align:center;}
+.cont-top-area h3{line-height:26px;margin-bottom:15px;}
+.cont-top-area ~ .content{padding:10px 20px;margin-bottom:30px;}
+#editor{margin-bottom:30px;}
+
+
+
+/*========================================================	
+ 마이페이지 
+========================================================*/
+.mypage-wrapper{display:flex;}
+.mypage-content{flex:1 1 0;}/* flex-grow: 1; */
+.mypage-sidebar{margin-top:110px;margin-right:20px;width:130px;}
+.mypage-sidebar ul{}
+.mypage-sidebar ul li{}
+.mypage-sidebar ul li a{font-size:16px;line-heihgtL:20px;padding:5px 0px;}
+
+
+
+
+
+
+
