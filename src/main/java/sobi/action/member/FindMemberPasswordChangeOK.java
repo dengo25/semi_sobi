@@ -16,6 +16,8 @@ public class FindMemberPasswordChangeOK implements SobiAction {
     request.setCharacterEncoding("utf-8");
     response.setContentType("text/html;charset=utf-8");
     
+    
+    
     HttpSession session = request.getSession(false);
     if (session == null || session.getAttribute("authenticationCode") == null || session.getAttribute("memberId") == null) {
       PrintWriter out = response.getWriter();
@@ -36,6 +38,15 @@ public class FindMemberPasswordChangeOK implements SobiAction {
     String confirmPassword = request.getParameter("confirmPassword");
     
     PrintWriter out = response.getWriter();
+    
+    //디버그
+    System.out.println("sessionAuthCode = " + sessionAuthCode);
+    System.out.println("inputAuthCode = " + inputAuthCode);
+    System.out.println("newPassword = " + newPassword);
+    System.out.println("confirmPassword = " + confirmPassword);
+    System.out.println("sessionMemberId = " + sessionMemberId);
+    
+    
     
     // 비밀번호 불일치 검사
     if (!newPassword.equals(confirmPassword)) {

@@ -23,7 +23,7 @@ public class FindMemberPasswordActionOK implements SobiAction {
     HttpSession session = request.getSession(true);
     
     // 로그인 상태면 접근 차단
-    if (session.getAttribute("loginUser") != null) {
+    if (session.getAttribute("member") != null) {
       session.invalidate();
       PrintWriter out = response.getWriter();
       out.println("<script>");
@@ -58,7 +58,8 @@ public class FindMemberPasswordActionOK implements SobiAction {
       // 인증코드와 아이디를 세션에 저장
       session.setAttribute("authenticationCode", authCode);
       session.setAttribute("memberId", memberId);
-      
+      // 세션 시간 설정
+      session.setMaxInactiveInterval(5 * 60);
       // 비밀번호 변경 화면으로 리다이렉트
       return "redirect:memberChangePw.do";
       
