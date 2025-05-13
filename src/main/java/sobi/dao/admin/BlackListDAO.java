@@ -31,7 +31,7 @@ public class BlackListDAO {
 	}
 	public int isBlackList(String memberId) {
 		int re = -1;
-		String sql = "select * from BLACK_LIST where member_id = ?";
+		String sql = "select * from BLACK_LIST where member_id = ? and status ='blocked'";
 
 		try {
 			Connection conn = ConnectionProvider.getConnection();

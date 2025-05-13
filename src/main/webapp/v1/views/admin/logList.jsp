@@ -80,7 +80,8 @@
     background-color: #d76d3d;
   }
 </style> --%>
-	<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+<!-- 서브메뉴 -->
+<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
 <main class="admin">
 	<form action="logList.do">
 		<label>
