@@ -50,7 +50,7 @@
 		<!-- Toast UI Editor 영역 -->
 		<div id="editor"></div>
 		<input type="hidden" name="noticeContent" id="noticeContent">
-		<input type="hidden" name="noticeImageNumber" id="noticeImageNumber">
+		<input type="hidden" name="noticeImageNumber" id="noticeImageNumber" value="0">
 
 		<div class="btn-area">
 			<button type="submit" class="btn btn-primary">저장</button>

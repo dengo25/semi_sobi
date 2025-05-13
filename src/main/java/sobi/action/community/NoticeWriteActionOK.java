@@ -54,7 +54,19 @@ public class NoticeWriteActionOK implements SobiAction {
         // 폼값 꺼내기
         String title   = multi.getParameter("noticeTitle");
         String content = multi.getParameter("noticeContent");
-        int fileNumber = Integer.parseInt(multi.getParameter("noticeImageNumber")); 
+        // int fileNumber = Integer.parseInt(multi.getParameter("noticeImageNumber")); 
+        String fileNumberStr = multi.getParameter("noticeImageNumber");
+        int fileNumber = 0; // 기본값 설정
+
+        if (fileNumberStr != null && !fileNumberStr.trim().isEmpty()) {
+            try {
+                fileNumber = Integer.parseInt(fileNumberStr);
+            } catch (NumberFormatException e) {
+                System.out.println("파일 번호 파싱 오류: " + fileNumberStr);
+                fileNumber = 0; // fallback 값
+            }
+        }
+
 
         // System.out.println("제목: " + title);
         // System.out.println("원본 content (치환 전): " + content);

@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	등록 완료!
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<main>
+	<h2>공지사항</h2>
 	
-	<br>writeInfo : ${writeInfo}
-</body>
-</html>
+	<div class="info-area">
+		<img src="/v1/static/images/img-check.svg">
+		<p>게시글 작성이<br>완료 되었습니다.</p>
+	</div>	
+	<%-- writeInfo : ${writeInfo} --%>
+</main>
