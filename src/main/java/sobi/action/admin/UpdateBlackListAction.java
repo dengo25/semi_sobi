@@ -25,6 +25,7 @@ public class UpdateBlackListAction implements SobiAction {
 			blackListHistorydao.insertBlackListHistory(memberId, blackListNo,"해제");
 			List<BlackListVO> list = blackListdao.getAllBlackList(); // 모든 블랙리스트 가져오기
 			request.setAttribute("list", list);
+			request.setAttribute("title", "블랙리스트");
 			return "/v1/views/admin/getBlackList.jsp";
 
 		}

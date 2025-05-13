@@ -72,6 +72,8 @@ public class MemberDetailAction implements SobiAction {
 		request.setAttribute("currentMemberLogPage", memberLogPage);
 		request.setAttribute("totalMemberLogPage", totalMemberLogPage);
 		request.setAttribute("memberId", memberId);
+		
+		request.setAttribute("title", "회원 상세");
 
 
 		return "/v1/views/admin/memberDetail.jsp";

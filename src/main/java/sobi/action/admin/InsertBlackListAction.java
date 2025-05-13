@@ -26,7 +26,7 @@ public class InsertBlackListAction implements SobiAction {
 		
 		boolean isSuccess = false;
 		int isBlackList = blackListdao.isBlackList(memberId);
-		
+		request.setAttribute("title", "블랙리스트");
 		if(isBlackList != 1) {
 			isSuccess = blackListdao.insertBlackList(memberId, reportType, "blocked") == 1;
 		} else {

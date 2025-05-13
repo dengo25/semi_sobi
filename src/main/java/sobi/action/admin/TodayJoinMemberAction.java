@@ -26,7 +26,8 @@ public class TodayJoinMemberAction implements SobiAction {
 		
 		request.setAttribute("todayJoinMemberList", todayJoinMemberList);
 		request.setAttribute("currentPage", page);		
-		request.setAttribute("totalPage", totalPage);	
+		request.setAttribute("totalPage", totalPage);
+		request.setAttribute("title", "회원 목록");
 		return "/v1/views/admin/todayJoinMemberList.jsp";
 	}
 

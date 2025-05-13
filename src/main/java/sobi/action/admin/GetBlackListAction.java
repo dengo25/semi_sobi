@@ -19,6 +19,7 @@ public class GetBlackListAction implements SobiAction {
 		BlackListDAO dao = new BlackListDAO();
 		List<BlackListVO> list = dao.getAllBlackList(); 
 		request.setAttribute("list", list);
+		request.setAttribute("title", "블랙리스트");
 
 		return "/v1/views/admin/getBlackList.jsp";
 	}

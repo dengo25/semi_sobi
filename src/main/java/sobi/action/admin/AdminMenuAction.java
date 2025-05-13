@@ -35,7 +35,7 @@ public class AdminMenuAction implements SobiAction {
 		request.setAttribute("blackListCount", blackListCount);
 		request.setAttribute("todayJoinCount", todayJoinCount);
 		request.setAttribute("memberLogList", memberLogList);
-
+		request.setAttribute("title", "관리자");
 		return "/v1/views/admin/adminMenu.jsp";
 	}
 

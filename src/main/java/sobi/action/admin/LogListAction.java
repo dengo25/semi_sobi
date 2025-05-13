@@ -43,7 +43,7 @@ public class LogListAction implements SobiAction {
 		request.setAttribute("level", level);
 		request.setAttribute("menu", menu);
 		request.setAttribute("type", type);
-
+		request.setAttribute("title", "로그 기록");
 		return "/v1/views/admin/logList.jsp";
 	}
 

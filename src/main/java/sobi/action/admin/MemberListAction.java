@@ -33,7 +33,7 @@ public class MemberListAction implements SobiAction {
 		request.setAttribute("list", list);		
 		request.setAttribute("currentPage", page);		
 		request.setAttribute("totalPage", totalPage);		
-		
+		request.setAttribute("title", "회원 목록");
 		return "/v1/views/admin/memberList.jsp";
 	}
 }
