@@ -58,7 +58,7 @@ public class FrontController extends HttpServlet {
 			System.out.println("메뉴 프로퍼티 로드 완료!");
 			
 			ArrayList<MenuVO> menuList = new ArrayList<>();
-			for (int i = 2; i <= 5; i++) {
+			for (int i = 3; i <= 5; i++) {
 				String name = menuProp.getProperty("menu." + i + ".name");
 				String link = menuProp.getProperty("menu." + i + ".link");
 				if (name != null && link != null) {
