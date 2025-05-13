@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class MemberDAO {
   
-  public int updateMemberPassword(String memberId, String memberPassword) {
+  public int updateMemberPassword(String memberPassword, String memberId) {
     int cnt = 0;
     String sql = "update MEMBER set MEMBER_PASSWORD = ? WHERE MEMBER_ID =?";
     try {
