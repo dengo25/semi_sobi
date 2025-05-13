@@ -19,8 +19,8 @@ public class NoticeDetailAction implements SobiAction {
 		
 		request.setAttribute("noticeDetail",dao.getDetail(noticeNo));
 		request.setAttribute("noticeImg",dao.getImgByNoticeNo(noticeNo));
-		
-		System.out.println("session : "+ noticeNo);
+		request.setAttribute("title", "공지사항");
+		// System.out.println("session : "+ noticeNo);
 		
 		return "/v1/views/community/noticeDetail.jsp";
 	}

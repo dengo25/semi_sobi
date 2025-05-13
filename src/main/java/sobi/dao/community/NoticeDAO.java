@@ -302,7 +302,7 @@ public class NoticeDAO {
 	// 공지사항 중 최근 글 2건을 반환한다.(썸네일 포함)
 	public ArrayList<NoticeVO> getNewNotice() {
 		ArrayList<NoticeVO> list = new ArrayList<>();
-		String sql = "SELECT n.NOTICE_TITLE, n.NOTICE_CONTENT, n.NOTICE_IMAGE_NUMBER, ni.FILE_URL "
+		String sql = "SELECT n.NOTICE_TITLE, n.NOTICE_NO, n.NOTICE_CONTENT, n.NOTICE_IMAGE_NUMBER, ni.FILE_URL "
 				+ " FROM NOTICE n LEFT JOIN ( "
 				+ "	SELECT NOTICE_NO, FILE_URL "
 				+ "	FROM NOTICE_IMAGE ni "
@@ -323,11 +323,12 @@ public class NoticeDAO {
 			while(rs.next()){
 				NoticeVO nvo = new NoticeVO();
 				nvo.setNoticeTitle(rs.getString(1));
-				nvo.setNoticeContent(rs.getString(2));
-				nvo.setNoticeImageNumber(rs.getInt(3));
+				nvo.setNoticeNo(rs.getInt(2));
+				nvo.setNoticeContent(rs.getString(3));
+				nvo.setNoticeImageNumber(rs.getInt(4));
 				
 				NoticeImageVO nivo = new NoticeImageVO();
-				nivo.setFileUrl(rs.getString(4));
+				nivo.setFileUrl(rs.getString(5));
 				
 				nvo.setNoticeImageVO(nivo);
 				list.add(nvo);

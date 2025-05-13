@@ -27,6 +27,7 @@ public class NoticeWriteAction implements SobiAction {
 		request.setAttribute("memberId",memberId);
 		
 		System.out.println("session : "+ memberId);
+		request.setAttribute("title", "공지사항");
 		return "/v1/views/community/noticeWrite.jsp";
 	}
 

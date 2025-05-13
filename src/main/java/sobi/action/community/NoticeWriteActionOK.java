@@ -113,6 +113,7 @@ public class NoticeWriteActionOK implements SobiAction {
 
         // forward
         request.setAttribute("writeInfo", noticeId);
+        request.setAttribute("title", "공지사항");
         return "/v1/views/community/noticeWriteCheck.jsp";
     }
 }
