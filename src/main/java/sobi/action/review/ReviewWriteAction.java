@@ -25,7 +25,7 @@ public class ReviewWriteAction implements SobiAction {
     request.setAttribute("member", (MemberVO) session.getAttribute("loginUser"));
     
     request.setAttribute("categoryList", categoryList);
-    
+    request.setAttribute("title", "리뷰 글쓰기");
     return "/v1/views/review/reviewWrite.jsp";
   }
 }

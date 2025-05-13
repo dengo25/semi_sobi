@@ -11,6 +11,7 @@ public class FindMemberPasswordChange implements SobiAction {
   
   @Override
   public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    request.setAttribute("title", "비밀번호 변경");
     return "/v1/views/member/memberChangePassword.jsp";
   }
 }

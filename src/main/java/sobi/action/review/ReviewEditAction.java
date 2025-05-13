@@ -42,6 +42,7 @@ public class ReviewEditAction implements SobiAction {
     // request에 데이터 바인딩
     request.setAttribute("review", review);
     request.setAttribute("categoryList", categoryList);
+    request.setAttribute("title", "리뷰 수정");
     
     return "/v1/views/review/reviewWrite.jsp";
   }

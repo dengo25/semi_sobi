@@ -10,6 +10,7 @@ import java.io.IOException;
 public class FindMemberIdAction implements SobiAction {
   @Override
   public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    request.setAttribute("title", "아이디 찾기");
     return "/v1/views/member/findMemberId.jsp";
   }
 }

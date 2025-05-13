@@ -44,6 +44,7 @@ public class ReviewAction implements SobiAction {
     request.setAttribute("count", totalCount);
     request.setAttribute("pageNum", pageNum);
     request.setAttribute("totalPaging", totalPaging);
+    request.setAttribute("title", "리뷰 목록");
     
     return "/v1/views/review/review.jsp";
   }
