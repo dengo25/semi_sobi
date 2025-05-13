@@ -63,20 +63,30 @@
 	<div><%@ include file="/v1/views/admin/adminSidebar.jsp" %></div>
 </div>
 	<div>
-		<form action="insertBlackList.do?memberId=${memberId }" method="post">
-			<label for="id">ID</label> 
-			<input type="text" name="id" value="${memberId }" readonly> 
-			<label for="reportType">콘텐츠 유형</label>
-				<select name="reportType">
+		<form action="insertBlackList.do?memberId=${memberId }" method="post" class="form-list">
+			<div class="input-group">
+				<label for="id">ID</label>
+				<input type="text" id="id" name="id" class="form-control" value="${memberId }" readonly> 
+			</div>
+			
+			<div class="input-group">
+				<label for="reportType">콘텐츠 유형</label>
+				<select name="reportType" class="form-select" id="reportType">
 					<option disabled selected>--선택해주세요--</option>
 					<option value="가짜/조작된 리뷰">가짜/조작된 리뷰</option>
 					<option value="부적절한 표현 및 혐오 콘텐츠">부적절한 표현 및 혐오 콘텐츠</option>
 					<option value="스팸 및 상업적 광고">스팸 및 상업적 광고</option>
 					<option value="민감한 주제의 표현">민감한 주제의 표현</option>
 				</select>
-			<label for="description">상세 설명</label>
-			<textarea name="description" rows="8" required></textarea>
-			<input type="submit" value="저장">
+			</div>
+			
+			
+			<div class="input-group">
+				<label for="description">상세 설명</label>
+				<textarea name="description" id="description" class="form-control" rows="8" required></textarea>
+			</div>
+			
+			<button type="submit">저장</button>
 		</form>
 	</div>
 </main>
