@@ -42,13 +42,19 @@
       <th>유형</th>
       <th>일시</th>
       <th>현재 상태</th>
+      <th>변경</th>
     </tr>
     <c:forEach var="b" items="${list}">
       <tr>
         <td>${b.memberId}</td>
         <td>${b.reportType}</td>
         <td>${b.updateAt}</td>
-        <td>${b.status}</td>
+        <c:if test="${b.status eq 'blocked'}">
+       		<td>접속 차단</td>
+        </c:if>
+		<c:if test="${b.status eq 'blocked'}">
+       		<td><a href="updateBlacKList.do?memberId=${b.memberId}">해제</a></td>
+        </c:if>
       </tr>
     </c:forEach>
   </table>
