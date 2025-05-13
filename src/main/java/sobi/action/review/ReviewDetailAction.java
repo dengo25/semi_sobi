@@ -19,6 +19,7 @@ public class ReviewDetailAction implements SobiAction {
 		ReviewDAO reviewdao= new ReviewDAO();
 		ReviewVO review = reviewdao.getReviewsByReviewId(reviewId);
 		request.setAttribute("review", review);
+		request.setAttribute("title", "리뷰 상세");
 		
 //		response.setContentType("text/html;charset=UTF-8");
 //		response.getWriter().println("<script>");

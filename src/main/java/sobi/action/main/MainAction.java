@@ -19,7 +19,7 @@ public class MainAction implements SobiAction {
 		
 		request.setAttribute("list", rdao.getLatestReviews());
 		request.setAttribute("noticeList", ndao.getNewNotice());
-		
+		request.setAttribute("title", "메인");
 		return "/v1/views/main/main.jsp";
 	}
 
