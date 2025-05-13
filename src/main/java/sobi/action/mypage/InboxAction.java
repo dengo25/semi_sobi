@@ -40,7 +40,7 @@ public class InboxAction implements SobiAction {
             PagingVO paging = new PagingVO(nowPage, totalCount);
             
             List<MessageVO> messageList = dao.getInboxMessages(memberId, paging.getStartNo(), paging.getPageSize());
-            
+            request.setAttribute("title", "받은 쪽지함");
             request.setAttribute("messageList", messageList);
             request.setAttribute("paging", paging);
             request.setAttribute("contentPage", "/v1/views/mypage/inbox.jsp");

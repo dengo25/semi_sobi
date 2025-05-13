@@ -25,10 +25,12 @@ public class CheckPasswordAction implements SobiAction {
         
         if (loginMember.getMemberPassword() == null || loginMember.getMemberPassword().isEmpty()) {
             session.setAttribute("memberDetail", loginMember);
+            request.setAttribute("title", "내 정보 보기");
             return "/v1/views/mypage/profile.jsp";
         }
         
         if (request.getMethod().equalsIgnoreCase("GET")) {
+        	request.setAttribute("title", "비밀번호 확인");
             return "/v1/views/mypage/confirmPassword.jsp";
         }
         
@@ -39,9 +41,11 @@ public class CheckPasswordAction implements SobiAction {
 
         if (verified != null) {
             session.setAttribute("memberDetail", verified);
+            request.setAttribute("title", "내 정보 보기");
             return "/v1/views/mypage/profile.jsp";
         } else {
             request.setAttribute("errorMsg", "비밀번호가 틀렸습니다.");
+            request.setAttribute("title", "비밀번호 확인");
             return "/v1/views/mypage/confirmPassword.jsp";
         }
     }

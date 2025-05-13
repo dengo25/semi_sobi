@@ -40,7 +40,7 @@ public class SentAction implements SobiAction {
             PagingVO paging = new PagingVO(nowPage, totalCount);
 
             List<MessageVO> messageList = dao.getSentMessages(memberId, paging.getStartNo(), paging.getPageSize());
-            
+            request.setAttribute("title", "보낸 쪽지함");
             request.setAttribute("messageList", messageList);
             request.setAttribute("paging", paging);
             request.setAttribute("contentPage", "/v1/views/mypage/sent.jsp");
