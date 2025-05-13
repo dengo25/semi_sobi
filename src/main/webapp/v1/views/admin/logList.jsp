@@ -81,8 +81,13 @@
   }
 </style> --%>
 <!-- 서브메뉴 -->
-<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+
 <main class="admin">
+<div class="admin-header">
+	<h3 class="main-header">로그 기록</h3>
+	<div><%@ include file="/v1/views/admin/adminSidebar.jsp" %></div>
+</div>
+
 	<form action="logList.do">
 		<label>
 			<select name="level">
@@ -94,7 +99,6 @@
 	    <label>
 	    	<select name="menu">
 	    		<option value="" ${empty menu ? 'selected' : ''}>--선택 안 함--</option>
-	    		<option value="로그인" ${menu == '로그인' ? 'selected' : ''}>로그인</option>
 	    		<option value="회원정보" ${menu == '회원정보' ? 'selected' : ''}>회원정보</option>
 	    		<option value="후기" ${menu == '후기' ? 'selected' : ''}>후기</option>
 	    		<option value="공지사항" ${menu == '공지사항' ? 'selected' : ''}>공지사항</option>

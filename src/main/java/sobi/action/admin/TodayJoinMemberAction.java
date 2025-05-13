@@ -1,10 +1,7 @@
 package sobi.action.admin;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,28 +9,25 @@ import sobi.action.common.SobiAction;
 import sobi.dao.admin.MemberDAO;
 import sobi.vo.admin.MemberVO;
 
-
-public class MemberListAction implements SobiAction {
+public class TodayJoinMemberAction implements SobiAction {
 
 	@Override
-	public String process(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public String process(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		MemberDAO dao = new MemberDAO();
-		List<MemberVO> list = new ArrayList<MemberVO>();
-		
 		int page = 1;
 		int totalPageSize = 10;
 		if(request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-		int totalCount = dao.memberCount();
+		int totalCount = dao.getTodayJoinMember();
 		int totalPage = (int)Math.ceil((double)totalCount/totalPageSize);
+
+		List<MemberVO> todayJoinMemberList = dao.getPagedTodayJoinMemberList(page, totalPageSize);
 		
-		list = dao.getPagedMemberList(page, totalPageSize);
-		request.setAttribute("list", list);		
+		request.setAttribute("todayJoinMemberList", todayJoinMemberList);
 		request.setAttribute("currentPage", page);		
-		request.setAttribute("totalPage", totalPage);		
-		
-		return "/v1/views/admin/memberList.jsp";
+		request.setAttribute("totalPage", totalPage);	
+		return "/v1/views/admin/todayJoinMemberList.jsp";
 	}
+
 }

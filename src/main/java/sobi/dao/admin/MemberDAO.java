@@ -12,6 +12,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MemberDAO {
+	public List<MemberVO> getPagedTodayJoinMemberList(int page, int pageSize) {
+		List<MemberVO> list = new ArrayList<MemberVO>();
+		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_EMAIL, MEMBER_REG "
+				+ "FROM MEMBER "
+				+ "WHERE DATE(member_reg) = CURDATE() AND ROLE = 'M' "
+				+ "ORDER BY MEMBER_REG DESC LIMIT ? OFFSET ?";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pageSize);
+			pstmt.setInt(2, (page-1) * pageSize);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				list.add(new MemberVO(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4)));
+			}
+			ConnectionProvider.close(conn, pstmt, rs);
+		} catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}
+		return list;
+	}
 	public int getTodayJoinMember() {
 		int count = 0;
 		String sql = "select IFNULL(count(*), 0) from MEMBER where DATE(member_reg) = CURDATE() and role = 'M'";
@@ -71,7 +92,7 @@ public class MemberDAO {
 		return m;
 	}
 
-	public List<MemberVO> getReviewandCommentCount(int page, int pageSize) {
+	public List<MemberVO> getPagedMemberList(int page, int pageSize) {
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		String sql = "SELECT MEMBER_ID, MEMBER_NAME, MEMBER_EMAIL, MEMBER_REG "
 				+ "FROM MEMBER "

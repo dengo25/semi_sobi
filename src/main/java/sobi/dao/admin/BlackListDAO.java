@@ -28,6 +28,24 @@ public class BlackListDAO {
 		}
 		return re;
 	}
+	public int updateBlackList(String memberId, String reportType, String status) {
+		int re = -1;
+		String sql = "update BLACK_LIST set report_type = ?, update_at=NOW(), status=? where member_id=?";
+		try {
+			Connection conn = ConnectionProvider.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reportType);
+			pstmt.setString(2, status);
+			pstmt.setString(3, memberId);
+
+			re = pstmt.executeUpdate();
+			
+			ConnectionProvider.close(conn, pstmt);
+		} catch (Exception e) {
+			System.out.println("예외발생: " + e.getMessage());
+		}
+		return re;
+	}
 	public int isBlackList(String memberId) {
 		int re = -1;
 		String sql = "select * from BLACK_LIST where member_id = ? and status ='blocked'";

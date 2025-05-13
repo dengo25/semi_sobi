@@ -72,8 +72,12 @@ tr:hover {
 }
 </style>
 --%>
-		<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
+		
 <main class="admin">
+<div class="admin-header">
+	<h3 class="main-header">회원 상세</h3>
+	<div><%@ include file="/v1/views/admin/adminSidebar.jsp" %></div>
+</div>
 	<div class="dashboard">
 		<div class="card">
 			<p>작성한 후기</p>

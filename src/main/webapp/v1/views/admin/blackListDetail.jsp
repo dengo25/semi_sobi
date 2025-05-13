@@ -57,8 +57,11 @@
     background-color: #005c99;
   }
 </style>--%>
-    		<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
-<main class="admin">	
+<main class="admin">
+<div class="admin-header">
+	<h3 class="main-header">회원 상세</h3>
+	<div><%@ include file="/v1/views/admin/adminSidebar.jsp" %></div>
+</div>
 	<div>
 		<form action="insertBlackList.do?memberId=${memberId }" method="post">
 			<label for="id">ID</label> 

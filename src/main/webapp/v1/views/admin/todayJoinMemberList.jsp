@@ -31,12 +31,8 @@
     background-color: #eef6ff;
   }
 </style>--%>
-
+	<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
 <main class="admin">
-<div class="admin-header">
-	<h3 class="main-header">회원 목록</h3>
-	<div><%@ include file="/v1/views/admin/adminSidebar.jsp" %></div>
-</div>
 	<table>
 		<tr>
 			<th>ID</th>
@@ -45,13 +41,13 @@
 			<th>가입일</th>
 			<th>상세보기</th>
 		</tr>
-		<c:forEach var="m" items="${list }">
+		<c:forEach var="t" items="${todayJoinMemberList }">
 				<tr>
-					<td>${m.memberId }</td>
-					<td>${m.memberName }</td>
-					<td>${m.memberEmail }</td>
-					<td><fmt:formatDate value="${m.memberReg }" pattern="yyyy-MM-dd" /></td>
-					<td><a href="memberDetail.do?memberId=${m.memberId }">클릭</a></td>
+					<td>${t.memberId }</td>
+					<td>${t.memberName }</td>
+					<td>${t.memberEmail }</td>
+					<td><fmt:formatDate value="${t.memberReg }" pattern="yyyy-MM-dd" /></td>
+					<td><a href="memberDetail.do?memberId=${t.memberId }">클릭</a></td>
 				</tr>
 		</c:forEach>
 	</table>
@@ -62,7 +58,7 @@
 					<strong>[${i}]</strong>
 				</c:when>
 				<c:otherwise>
-					<a href="memberList.do?page=${i}">${i}</a>
+					<a href="todayJoinMemberList.do?page=${i}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>

@@ -2,23 +2,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<meta charset="UTF-8">
 	<main class="admin">
-	<%@ include file="/v1/views/admin/adminSidebar.jsp" %>
-
+<div class="admin-header">
+	<h3 class="main-header">메인</h3>
+	<div><%@ include file="/v1/views/admin/adminSidebar.jsp" %></div>
+</div>
 		<!-- 요약 통계 -->
 		<div class="stats">
-			<div class="card">
+			<div class="card" onclick="location.href='memberList.do'">
 				<h3>전체 회원 수</h3>
-				<p><c:out value="${memberCount}" /></p>
+				<p>${memberCount}</p>
 			</div>
-			<div class="card">
+			<div class="card" onclick="location.href='todayJoinMember.do'">
 				<h3>오늘 가입자</h3>
-				<p><c:out value="${todayJoinCount}" /></p>
+				<p>${todayJoinCount}</p>
 			</div>
-			<div class="card">
+			<div class="card" onclick="location.href='getBlackList.do'">
 				<h3>블랙리스트</h3>
-				<p><c:out value="${blackListCount}" /></p>
+				<p>${blackListCount}</p>
 			</div>
-			<div class="card">
+			<div class="card" onclick="location.href='review.do'">
 				<h3>총 후기 수</h3>
 				<p>${reviewCount}</p>
 			</div>
