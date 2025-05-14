@@ -1,7 +1,9 @@
 # 📝 SOBI - 내돈내산 리뷰 플랫폼
 > 신뢰 기반 후기 문화 형성을 위한 리뷰 중심 블로그 플랫폼
+>
 > 
 -----------------------------------------------------
+
 ## 👥 팀원 소개  4℃
 | 이름     | 역할                          | GitHub ID       |
 |----------|-------------------------------|------------------|
@@ -11,15 +13,21 @@
 |왕시은|프론트, 공지 |[alo-wang](https://github.com/alo-wang)|
 |최산하| 마이페이지 |[Sana2d2v](https://github.com/Sana2d2v)|
 
+
+
 ## 📆 프로젝트 기간
+
 **2025.05.07 ~ 2025.05.14 ** 
 
+
 ## 🧾 프로젝트 개요
+
 
 **SOBI**는 신뢰할 수 있는 "내돈내산" 리뷰를 중심으로  
 블로그처럼 자유롭게 작성하고 공유할 수 있는 후기 플랫폼입니다.  
 리뷰 기반 SNS 형태로 리뷰, 댓글, 채팅, 쪽지 등  
 사용자 간의 교류를 중심으로 한 후기 문화를 형성합니다.
+
 
 ## 🔧 사용 기술 스택
 
@@ -40,6 +48,7 @@
 - Figma, Notion (기획 및 설계)
 - ERDCloud, Google Docs
 - Eclipse IDE, Maven(썼나?)
+
 
 
 ## 🖥️ 주요 기능
@@ -90,9 +99,14 @@ semi_sobi/
  **ERDcloud로 작성**
  
 [초안]
+
 <img width="1057" alt="image" src="https://github.com/user-attachments/assets/9c3927e4-3b4e-4e06-9a4a-e1ac31d12382" />
+
 [최종]
+
 <img width="1093" alt="image" src="https://github.com/user-attachments/assets/58a68405-e8ed-4af5-a496-fbd9854dc0ab" />
+
+
 
 
 
