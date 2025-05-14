@@ -86,8 +86,9 @@ semi_sobi/
 
 
 
-##📁 DB 설계
+## 📁 DB 설계
  **ERDcloud로 작성**
+ 
 [초안]
 <img width="1057" alt="image" src="https://github.com/user-attachments/assets/9c3927e4-3b4e-4e06-9a4a-e1ac31d12382" />
 [최종]
