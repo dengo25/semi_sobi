@@ -1,22 +1,69 @@
-# 🛍️ SOBI - Save, Or Buy Immediately
+# 📝 SOBI - 내돈내산 리뷰 플랫폼
+> 신뢰 기반 후기 문화 형성을 위한 리뷰 중심 블로그 플랫폼
+>
+> 
+-----------------------------------------------------
 
-> **내돈내산 리뷰 커뮤니티 플랫폼**  
-SOBI는 **"Save, Or Buy Immediately"**를 모토로, 실제 사용자들의 소비 경험을 공유하고 공감할 수 있는 리뷰 기반 커뮤니티입니다.  
-광고가 아닌 **진짜 후기**, 리뷰를 중심으로 한 사용자 간의 건강한 소비 문화를 만들어 갑니다.
+## 👥 팀원 소개  4℃
+| 이름     | 역할                          | GitHub ID       |
+|----------|-------------------------------|------------------|
+|오창진| 로그인|[dengo25](https://github.com/dengo-dev)|
+|최완빈|관리자|[wanbinchoi](https://github.com/wanbinchoi)|
+|김유진| 글쓰기 |[YooJin-Danny](https://github.com/YooJin-Danny)|
+|왕시은|프론트, 공지 |[alo-wang](https://github.com/alo-wang)|
+|최산하| 마이페이지 |[Sana2d2v](https://github.com/Sana2d2v)|
 
----
 
-## 🔧 현재 제공 기능
 
-- ✅ **회원가입 및 로그인** (카카오/네이버 소셜 로그인 지원)
-- 📝 **리뷰 작성 및 조회** (최신순, 좋아요순, 카테고리별 정렬)
-- ❤️ **리뷰 좋아요 기능**
-- 📬 **쪽지 기능 (1:1 사용자 간 커뮤니케이션)**
-- 📁 **이미지 포함 후기 작성**
-- 📄 **마이페이지에서 내가 작성한 콘텐츠 관리**
+## 📆 프로젝트 기간
 
----
+**2025.05.07 ~ 2025.05.14 ** 
 
+
+## 🧾 프로젝트 개요
+
+
+**SOBI**는 신뢰할 수 있는 "내돈내산" 리뷰를 중심으로  
+블로그처럼 자유롭게 작성하고 공유할 수 있는 후기 플랫폼입니다.  
+리뷰 기반 SNS 형태로 리뷰, 댓글, 채팅, 쪽지 등  
+사용자 간의 교류를 중심으로 한 후기 문화를 형성합니다.
+
+
+## 🔧 사용 기술 스택
+
+### Backend
+- Java 21, JSP/Servlet
+- MySQL (AWS RDS)
+- JDBC, DAO/VO 패턴
+- Properties 기반 액션 매핑
+- 파일 업로드 / S3 연동
+
+- ### Frontend
+- JSP, HTML/CSS, JavaScript
+- jQuery, AJAX, JSON
+- JSTL, EL
+
+- ### 협업 & 배포
+- Git & GitHub
+- Figma, Notion (기획 및 설계)
+- ERDCloud, Google Docs
+- Eclipse IDE, Maven(썼나?)
+
+
+
+## 🖥️ 주요 기능
+
+### 👤 일반 사용자
+- 회원가입 / 로그인 (소셜 연동 포함)
+- 리뷰 게시판 (검색, 페이징, 좋아요, 신고)
+- 댓글, 대댓글, 댓글 좋아요
+- 쪽지함 (보내기, 받기, 읽음 처리, 페이징)
+- 마이페이지
+  - 내 정보 확인 및 수정
+  - 포인트 내역 / 등급 조회
+  - 쪽지 관리
+
+    
 ## 🚀 향후 확장 예정 기능
 
 | 기능명           | 설명 |
@@ -29,15 +76,50 @@ SOBI는 **"Save, Or Buy Immediately"**를 모토로, 실제 사용자들의 소�
 
 ---
 
-## 🧑‍💻 기술 스택
+## 📁 프로젝트 폴더 구조
 
-- **Frontend**: HTML, CSS, JavaScript, JSP, jQuery, AJAX
-- **Backend**: Java (Servlet & JSP, MVC 패턴)
-- **Database**: MySQL
-- **Hosting**: AWS S3 (이미지 저장)
-- **Tooling**: Eclipse, GitHub, Maven
+```
+semi_sobi/
+├── src/
+│   ├── sobi.action.*           ← 각 도메인별 Action 클래스
+│   ├── sobi.dao.*              ← DAO 클래스
+│   ├── sobi.vo.*               ← VO 클래스
+│   ├── sobi.util               ← 공통 유틸리티 (DB 연결, 암호화 등)
+│   └── sobi.db                 ← DB 연결(ConnectionProvider 등)
+│
+├── webapp/
+│   ├── v1/
+│   │   ├── views/
+│   │   │   ├── common/         ← head.jsp, layout.jsp 등 공통 요소
+│   │   │   ├── member/         ← 로그인, 회원가입, 내정보
+│   │   │   ├── review/         ← 리뷰 목록, 작성, 상세
+│   │   │   ├── message/        ← 쪽지함, 쪽지쓰기 팝업
+│   │   │   ├── mypage/         ← 마이페이지, 등급, 포인트
+│   │   │   ├── chat/           ← 채팅방 UI
+│   │   │   └── admin/          ← 관리자 페이지
+│   └── assets/                 ← 이미지, JS, CSS
+│
+└── sobi.properties             ← Action 매핑용 설정 파일
+```
 
----
+
+## 📷 서비스 화면
+
+
+
+## 📁 DB 설계
+ **ERDcloud로 작성**
+ 
+[초안]
+
+<img width="1057" alt="image" src="https://github.com/user-attachments/assets/9c3927e4-3b4e-4e06-9a4a-e1ac31d12382" />
+
+[최종]
+
+<img width="1093" alt="image" src="https://github.com/user-attachments/assets/58a68405-e8ed-4af5-a496-fbd9854dc0ab" />
+
+
+
 ## 📊 데이터베이스 테이블 구조
 
 > SOBI 프로젝트는 총 **17개 이상의 테이블**로 구성되어 있으며,  
@@ -109,8 +191,6 @@ SOBI는 **"Save, Or Buy Immediately"**를 모토로, 실제 사용자들의 소�
 추후 쇼핑몰 연동, 포인트 시스템, 추천 알고리즘 등의 기능 확장을 위한 기반이 마련되어 있습니다.
 
 ---
-
-
 ## 📘 SOBI 커뮤니티 유저 가이드라인
 
 > SOBI는 'Save, Or Buy Immediately'를 모토로, 내돈내산 기반의 **진짜 소비 경험을 나누는 리뷰 커뮤니티**입니다.  
@@ -171,19 +251,5 @@ SOBI는 **"Save, Or Buy Immediately"**를 모토로, 실제 사용자들의 소�
 
 ---
 
-## 👥 프로젝트 참여자
 
-- 오창진  
-- 최완빈  
-- 왕시은  
-- 최산하  
-- 김유진  
-
----
-
-📮 **문의 및 피드백**
-
-SOBI 프로젝트에 대해 궁금한 점이나 개선 제안이 있다면,  
-언제든지 **[Issues](../../issues)** 탭에 남겨 주세요.  
-여러분의 소중한 의견이 SOBI를 더 나은 서비스로 만듭니다.
 
