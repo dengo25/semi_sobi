@@ -2,7 +2,7 @@
 > 신뢰 기반 후기 문화 형성을 위한 리뷰 중심 블로그 플랫폼
 > 
 -----------------------------------------------------
-## 👥 팀원 소개 - 4℃
+## 👥 팀원 소개  4℃
 | 이름     | 역할                          | GitHub ID       |
 |----------|-------------------------------|------------------|
 |오창진| 로그인|[dengo25](https://github.com/dengo-dev)|
@@ -83,3 +83,15 @@ semi_sobi/
 
 
 ## 📷 서비스 화면
+
+
+
+##📁 DB 설계
+ **ERDcloud로 작성**
+[초안]
+<img width="1057" alt="image" src="https://github.com/user-attachments/assets/9c3927e4-3b4e-4e06-9a4a-e1ac31d12382" />
+[최종]
+<img width="1093" alt="image" src="https://github.com/user-attachments/assets/58a68405-e8ed-4af5-a496-fbd9854dc0ab" />
+
+
+
