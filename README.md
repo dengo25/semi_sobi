@@ -5,11 +5,11 @@
 ## 👥 팀원 소개 - 4℃
 | 이름     | 역할                          | GitHub ID       |
 |----------|-------------------------------|------------------|
-|오창진| 로그인|dengo25(https://github.com/dengo-dev)|
-|최완빈|관리자|wanbinchoi(https://github.com/wanbinchoi)|
-|김유진| 글쓰기 |YooJin-Danny(https://github.com/YooJin-Danny)|
-|왕시은|프론트, 공지 |alo-wang(https://github.com/alo-wang)|
-|최산하| 마이페이지 |Sana2d2v(https://github.com/Sana2d2v)|
+|오창진| 로그인|[dengo25](https://github.com/dengo-dev)|
+|최완빈|관리자|[wanbinchoi](https://github.com/wanbinchoi)|
+|김유진| 글쓰기 |[YooJin-Danny](https://github.com/YooJin-Danny)|
+|왕시은|프론트, 공지 |[alo-wang](https://github.com/alo-wang)|
+|최산하| 마이페이지 |[Sana2d2v](https://github.com/Sana2d2v)|
 
 ## 📆 프로젝트 기간
 **2025.05.07 ~ 2025.05.14 ** 
