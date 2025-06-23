@@ -47,7 +47,7 @@
 - Git & GitHub
 - Figma, Notion (기획 및 설계)
 - ERDCloud, Google Docs
-- Eclipse IDE, Maven(썼나?)
+- Eclipse IDE, Intellij
 
 
 
